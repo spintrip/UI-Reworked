@@ -1,0 +1,48 @@
+.content {
+    height: 100vh;
+    @include margin-padding(null, 40px 0);
+    .content-header {
+        padding-bottom: 40px;
+        @include respond-below(custom767) {
+            padding-bottom: 20px;
+        }
+        h4 {
+            font-size: $__font__size__32;
+            font-weight: $__bold;
+            color: $__black;
+            margin-bottom: 0;
+            @include respond-below(custom991) {
+                font-size: $__font__size__28;
+            }
+            @include respond-below(custom767) {
+                font-size: $__font__size__26;
+            }
+        }
+    }
+    .content-settings-header {
+        padding-bottom: 15px;
+    }
+    &.dashboard-content {
+        padding-bottom: 16px;
+    }
+}
+.error-container-time {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: easeIn 1s ease-in;
+    z-index: 10000;
+  }
+
+  .error-message-time {
+    border: 1px solid rgb(200, 46, 46);
+    background-color: rgb(199, 57, 57);
+    color: white;
+    border-radius: 5px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    min-width: 300px;
+  }

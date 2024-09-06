@@ -1,0 +1,63 @@
+/*-----------------
+	3. General
+-----------------------*/
+
+body{
+	font-family: $__body__font__family;
+	font-size: $__body__font__size;
+	color: $__secondarycolor__light;
+	background: $__cylindrical;
+	
+	@include respond-below(custom991){
+		font-size:$__font__size__15;
+	}
+}
+a {
+	cursor: pointer;
+	@include transition(all 0.2s ease);
+	&:hover{
+		@include transition(all 0.2s ease);
+	}
+	&:focus {
+		outline: 0;
+	}
+}
+p {
+	&:last-child{
+		margin-bottom:0;
+	}
+}
+strong{
+	font-weight: $__bold;
+}
+.form-control {
+	&:focus {
+		border-color: #bbb;
+		box-shadow: none;
+		outline: 0 none;
+	}
+    
+}
+/* Ensure text remains visible when accordion is open */
+.card-header-new h6.filter-title,
+.card-body-chat {
+  color: #000; /* or any color you prefer */
+  opacity: 1;
+}
+
+.collapse.show .card-header-new h6.filter-title,
+.collapse.show .card-body-chat {
+  color: #000; /* Ensure the color is set correctly */
+  opacity: 1;  /* Ensure opacity is set to 1 */
+}
+
+/* Specific styles for the accordion links to ensure visibility */
+.card-header-new h6.filter-title a {
+  color: #000; /* Ensure links are visible */
+  opacity: 1;
+}
+
+/* Preventing any transparency issues */
+.card-header-new h6.filter-title a .float-end i {
+  color: inherit; /* Ensures the icon inherits the text color */
+}

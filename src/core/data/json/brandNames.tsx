@@ -1,0 +1,27 @@
+const brandNames = [
+  "abarth",
+  "byd",
+  "citroen",
+  "datsun",
+  "fiat",
+  "force-motors",
+  "ford",
+  "honda",
+  "hyundai",
+  "isuzu",
+  "jeep",
+  "kia",
+  "mahindra",
+  "mg",
+  "mitsubishi",
+  "nissan",
+  "renault",
+  "skoda",
+  "ssangyong",
+  "suzuki",
+  "tata",
+  "toyota",
+  "volkswagen",
+];
+
+export default brandNames;

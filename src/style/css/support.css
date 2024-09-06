@@ -1,0 +1,43 @@
+.chat-message {
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  max-width: 60%;
+}
+
+.admin-message {
+  background-color: #e6e2e2; /* Light gray background for admin */
+  text-align: left; /* Align the text content to the left */
+  margin-left: 0; /* Align the entire message box to the left */
+  margin-right: auto;
+  color: rgb(6, 5, 5);
+}
+
+.user-message {
+  background-color: #1a1919; /* Dark background for users */
+  text-align: right; /* Align the text content to the right */
+  margin-left: auto;
+  margin-right: 0; /* Align the entire message box to the right */
+  color: rgb(229, 225, 225);
+}
+
+.chat-messages {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.chat-message p {
+  margin: 0;
+}
+
+.chat-message strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.chat-message small {
+  display: block;
+  color: #888;
+  margin-top: 5px;
+  text-align: right; /* Keep the timestamp aligned to the right for both */
+}
