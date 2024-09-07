@@ -1,7 +1,7 @@
 
 # SpinTrip - Car Rentals Platform
 
-This is a web application for SpinTrip Car Rentals, built using React and Vite. It offers a platform for users to rent cars and for hosts to list their cars, providing a seamless self-drive car rental experience.
+ A web application for SpinTrip Car Rentals, built using React and Vite.
 
 ## Table of Contents
 - [Installation](#installation)
