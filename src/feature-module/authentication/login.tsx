@@ -122,7 +122,7 @@ const Login = () => {
         <header className="bg-white py-3 d-flex align-items-center justify-content-center">
           <Link to={route.home}>
             <ImageWithBasePath
-              className="max-w-[150px]"
+              className="spintrip-logo"
               src="assets/img/Spintrip_logo.png"
               alt="Logo"
             />
@@ -144,7 +144,7 @@ const Login = () => {
                         viewBox="0 0 24 24"
                         strokeWidth="1.5"
                         stroke="currentColor"
-                        className="size-6 mx-2"
+                        className="back-icon"
                       >
                         <path
                           strokeLinecap="round"
@@ -156,19 +156,19 @@ const Login = () => {
                     Back To Home
                   </Link>
                 </div>
-                <h2 className="mt-1 text-3xl font-bold text-center tracking-tight text-gray-900">
+                <h2 className="create-account-text">
                   Sign in to your Spintrip account
                 </h2>
                 <p className="mt-2 text-center text-sm text-gray-600">
                   Or{" "}
                   <Link
                     to={route.signup}
-                    className="font-medium text-amber-600 hover:text-amber-500"
+                    className="authorization-link"
                   >
                     <span></span> create an account here
                   </Link>
                 </p>
-                <div className="switch-container">
+                <div className="authorization-check">
                   <div className="flex items-center justify-center full mt-10">
                     <span className="font-semibold text-amber-600 mx-2">
                       User

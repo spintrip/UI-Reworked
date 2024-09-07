@@ -850,7 +850,7 @@ const ListingGrid: React.FC = () => {
                               />
                             </div>
                             <div className="fav-item">
-                              <span className="featured-text border">
+                              <span className="featured-text text-black font-mono">
                                 {item?.brand}
                               </span>
                               <Link
@@ -867,7 +867,7 @@ const ListingGrid: React.FC = () => {
                               <div>
                                 <h3 className="listing-title">
                                   <div
-                                    className="car-model font-mono fw-bold text-black text-2xl"
+                                    className="car-model "
                                     onClick={() => handleRentNowClick(item)}
                                   >
                                     {item?.carModel || 'N/A'}

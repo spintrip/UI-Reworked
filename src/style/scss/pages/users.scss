@@ -718,6 +718,10 @@
 }
 .car-model{
     overflow-y: hidden;
+    //font-mono fw-bold text-black text-xl
+    font-weight: bold;
+    font-size: x-large;
+    font-family:  sans-serif;
 }
 
 .filter-group {
@@ -4300,11 +4304,42 @@ input.form-control.rounded-pill {
 .alert-success {
     background-color: #d4edda;
     color: #155724;
+    padding: 10px;
 }
 
 .alert-danger {
     background-color: #f8d7da;
     color: #721c24;
+}
+.alert-status{
+    border-radius: 20px ;
+    margin-right: 10px;
+}
+.alert-content{
+    border-radius: 20px;
+}
+.location-alert {
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.location-alert span {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
+
+.bg-green-800 {
+    background-color: #2f855a;
+}
+
+.bg-green-500 {
+    background-color: #48bb78;
+}
+
+.text-green-100 {
+    color: #f0fff4;
 }
 
 /* Form group styles */
@@ -4609,7 +4644,7 @@ textarea.form-control {
     font-size: 14px;
   }
   
-  .image-preview img {
+  .document-image-preview img {
     margin: 5px;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
@@ -4773,5 +4808,13 @@ textarea.form-control {
   .loading-gif {
     width: 24px;
     height: 24px;
+  }
+  .document-photo{
+    //w-20 cursor-pointer hover:opacity-80 h-20 mx-1 object-fit-contain border border-2 rounded-xl
+    max-width: 100%;
+    cursor: pointer;
+    height: 18vh;
+    object-fit: contain;
+    border: 1px solid black;
   }
     

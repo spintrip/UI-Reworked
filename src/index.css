@@ -227,11 +227,6 @@ z-index: 9999;
   width: 100%;
   overflow: hidden;
 }
-.car-brand-logo{
-  max-width: 100%;
-  max-height: 30px;
-  
-}
 .car-name{
   font-size: 40px;
   font-weight: 700;

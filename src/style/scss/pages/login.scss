@@ -9,9 +9,10 @@
         padding: 22px;
         box-shadow: 0px 4px 24px rgba(225, 225, 225, 0.25);
     }
-    .spintrip-logo{
-        width: 100px !important;
-    }
+}
+
+.spintrip-logo{
+    max-width: 130px;
 }
 
 .logo-dark{
@@ -26,7 +27,7 @@
     background: $__cylindrical;
         @include respond-below(custom991) {
             @include margin-padding(0, 50px 0);
-        }    
+        } 
         @include respond-below(custom575) {
             @include margin-padding(0, 0);
         }   
@@ -74,6 +75,11 @@
                             color: $__primarycolor;
                         }
                     }
+                    .back-icon{
+                        max-width: 100%;
+                        width: 20px;
+                        margin: 0 5px;
+                    }
                 }
                 .input-block {
                     label {
@@ -85,6 +91,25 @@
                     font-size: 28px;
                     font-weight: $__bold;
                 }
+            }
+            .create-account-text{
+                text-align: center;
+                color: rgb(0, 0, 0);
+                font-weight: bold;
+            }
+            .authorization-link{
+                color: rgb(255, 109, 4);
+                font-size: medium;
+            }
+            .authorization-link:hover {
+                color: rgb(92, 31, 13);
+            }
+            .authorization-check{
+                //flex items-center justify-center full mt-10
+                margin-top: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
             .forgotpass a {
                 color: $__gray__lightdark;
@@ -230,6 +255,7 @@
   }
   
   .phone-input-container .react-tel-input .form-control {
-    padding-left: 52px; /* Adjust padding to align with flag */
+    padding-left: 52px; 
   }
+  
   

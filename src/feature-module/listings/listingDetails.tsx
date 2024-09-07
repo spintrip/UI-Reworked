@@ -561,7 +561,7 @@ const listingDetails = () => {
                             <div className="px-2">
                               {getBrandLogo(carResponse.cars.brand) && (
                                 <img
-                                  className="car-brand-logo"
+                                  className="car-detail-brand-logo"
                                   src={getBrandLogo(carResponse.cars.brand)}
                                   alt={`${carResponse.cars.brand} logo`}
                                 />
@@ -1399,9 +1399,9 @@ const listingDetails = () => {
             <Modal.Title>Booking Sucessful</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <div className="payment-success d-flex align-items-center justify-content-center">
+            <div className="booking-success d-flex align-items-center justify-content-center">
               <div>
-                <span className="check">
+                <span className="booking-check">
                   <i className="fa-solid fa-check-double"></i>
                 </span>
                 <h5>Booking Request Sent</h5>
@@ -1418,7 +1418,7 @@ const listingDetails = () => {
           </Modal.Body>
           <Modal.Footer>
             <div className="modal-footer p-3">
-              <Link to={routes.userbookings} className="btn btn-back">
+              <Link to={routes.userbookings} className="details-booking-btn">
                 Go to User Bookings
                 <i className="fa-solid fa-arrow-right" />
               </Link>

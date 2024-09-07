@@ -577,8 +577,10 @@
                 }
             .featured-text {
                 background: $__white;
+                border: 2px solid black;
                 border-radius: 5px;
-                min-width: 75px;
+                min-width: 85px;
+                min-height: 40px;
                 padding: 2px;
                 font-size: $__font__size__14;
                 color: $__sandstone;
@@ -588,6 +590,11 @@
                         font-size: $__font__size__12;
                     }
             }
+            .car-brand-logo{
+                max-width: 100%;
+                max-height: 30px;
+                width: 50px;
+              }
             .fav-icon {
                 width: 26px;
                 height: 26px;

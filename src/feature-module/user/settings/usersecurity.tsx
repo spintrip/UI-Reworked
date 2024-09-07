@@ -172,7 +172,6 @@ const UserSecurity: React.FC = () => {
     }
 
     try {
-      
       await putVerify(formData, (error: any, data: { message: React.SetStateAction<string>; }) => {
         if (error) {
             console.error('Callback received an error:', error);
@@ -185,7 +184,6 @@ const UserSecurity: React.FC = () => {
               setIsUploadSuccess(false);
             }, 5000); 
             console.log('Callback received data:', data);
-            
         }
       });
       setSuccessMessage("File uploaded successfully");
@@ -268,7 +266,7 @@ const UserSecurity: React.FC = () => {
           <i className="fas fa-upload"></i>{" "}
          
         </div>
-        <div className="image-preview d-flex flex-row mx-5 flex-wrap align-items-center justify-content-start">
+        <div className="document-image-preview ">
           {selectedFile &&
             selectedFile.length > 0 &&
             selectedFile.map((file: File, index: number) =>
@@ -372,7 +370,7 @@ const UserSecurity: React.FC = () => {
                           <ImageWithBasePath1
                             src={profileData.dlFile}
                             alt="DL Preview"
-                            className="w-20 cursor-pointer hover:opacity-80 h-20 mx-1 object-fit-contain border border-2 rounded-xl"
+                            className="document-photo"
                           />
                           <div
                             onClick={() => setModalShow((prev) => ({ ...prev, dl: true }))}
@@ -422,7 +420,7 @@ const UserSecurity: React.FC = () => {
                           <ImageWithBasePath1
                             src={profileData.aadharFile}
                             alt="Aadhaar Preview"
-                            className="w-20 cursor-pointer hover:opacity-80 h-20 mx-2 object-fit-contain border border-2 rounded-xl"
+                            className="document-photo"
                           />
                           <div
                             onClick={() => setModalShow((prev) => ({ ...prev, aadhaar: true }))}
@@ -473,7 +471,7 @@ const UserSecurity: React.FC = () => {
                             <ImageWithBasePath1
                               src={profileData.profilePic}
                               alt="Profile Picture Preview"
-                              className="w-20 cursor-pointer hover:opacity-80 h-20 mx-1 object-fit-contain border border-2 rounded-xl"
+                              className="document-photo"
                             />
                             <div
                               onClick={() => setModalShow((prev) => ({ ...prev, profilePic: true }))}
@@ -523,20 +521,17 @@ const UserSecurity: React.FC = () => {
         </div>
       </div>
       {isUploadSuccess && (
-          <div className="alert error-login-message mt-2" role="alert">
-            <div
-              className="p-2 location-alert shadow bg-green-800 items-center text-green-100 leading-none rounded-full flex lg:inline-flex"
-              role="alert"
-            >
-              <span className="flex rounded-full bg-green-500 uppercase px-2 py-1 text-xs font-bold mr-3">
-                Success
-              </span>
-              <span className="font-semibold mr-2 text-left flex-auto">
-                {notificationMessage}
-              </span>
-            </div>
+        <div className="alert alert-success mt-2" role="alert">
+          <div className="p-2 location-alert bg-green-800 text-green-100 alert-content ">
+            <span className="bg-green-500 uppercase px-2 py-1 text-xs font-bold mr-3 alert-status">
+              Success
+            </span>
+            <span className="font-semibold mr-2 text-left flex-auto">
+              {notificationMessage}
+            </span>
           </div>
-        )}
+        </div>
+      )}
       {/* /Page Content */}
     </div>
   );
