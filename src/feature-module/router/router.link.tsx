@@ -7,6 +7,7 @@ import Login from "../authentication/login";
 import ForgotPassword from "../authentication/forgotpassword";
 import ResetPassword from "../authentication/resetpassword";
 import AboutUs from "../pages/aboutus";
+import AboutCompany from "../pages/about-company";
 import ListingGrid from "../listings/listinggrid";
 import Gallerys from "../pages/gallery";
 import BlogList from "../blog/bloglist";
@@ -33,30 +34,18 @@ import UserWishList from "../user/wishlist/userwishlist";
 import UserMessages from "../user/usermessages";
 import UserReview from "../user/userreview";
 import UserTicket from "../user/UserTicket";
-//import UserBookingCancelled from "../user/userbookingcancelled";
 import UserBookings from "../user/userbookings";
-//import UserBookingUpcoming from "../user/user-booking-upcoming";
-//import UserBookingComplete from "../user/user-booking-complete";
-//import { UserBookingInprogress } from "../user/user-booking-inprogress";
-//import UserWallet from "../user/wallet/userwallet";
 import UserPayment from "../user/userpayment";
 import HostSettings from "../host/settings/hostsettings";
 import HostDashboard from "../host/hostdashboard";
-//import HostIntegration from "../host/settings/hostintegration";
 import HostSecurity from "../host/settings/hostsecurity";
-//import HostPreferences from "../host/settings/hostpreferences";
-//import HostNotification from "../host/settings/hostnotification";
 import HostListing from "../host/wishlist/hostlisting";
 import HostMessages from "../host/hostmessages";
 import HostReview from "../host/hostreview";
-//import HostBookingCancelled from "../host/hostbookingcancelled";
 import HostBookings from "../host/hostbookings";
 import HostCarDetails from "../host/hostListingPreview";
 import HostTicket from "../host/HostTicket";
 import DownloadApp from "../pages/downloadApp/downloadApp";
-//import HostBookingUpcoming from "../host/host-booking-upcoming";
-//import HostBookingComplete from "../host/host-booking-complete";
-//import { HostBookingInprogress } from "../host/host-booking-inprogress";
 import HostPayment from "../host/hostpayment";
 const routes = all_routes;
 
@@ -109,6 +98,12 @@ export const pageroutes = [
     path: routes.aboutus,
     name: "aboutus",
     element: <AboutUs />,
+    route: Route,
+  },
+  {
+    path: routes.aboutcompany,
+    name: "aboutcompany",
+    element: <AboutCompany />,
     route: Route,
   },
   {
@@ -258,13 +253,6 @@ export const usermodule = [
     element: <UserSecurity />,
     route: Route,
   },
-
-  // {
-  //   path: routes.wallet,
-  //   name: "wallet",
-  //   element: <UserWallet />,
-  //   route: Route,
-  // },
   {
     path: routes.wishlist,
     name: "wishlist",
@@ -295,47 +283,12 @@ export const usermodule = [
     element: <UserTicket />,
     route: Route,
   },
-  // {
-  //   path: routes.bookingcancelled,
-  //   name: "bookingcancelled",
-  //   element: <UserBookingCancelled />,
-  //   route: Route,
-  // },
-  // {
-  //   path: routes.bookingcancelled,
-  //   name: "bookingcancelled",
-  //   element: <UserBookingCancelled />,
-  //   route: Route,
-  // },
   {
     path: routes.userBookings,
     name: "user-bookings",
     element: <UserBookings />,
     route: Route,
   },
-  // {
-  //   path: routes.userBookingUpcoming,
-  //   name: "user-booking-upcoming",
-  //   element: <UserBookingUpcoming />,
-  // },
-  // {
-  //   path: routes.userBookingComplete,
-  //   name: "user-booking-complete",
-  //   element: <UserBookingComplete />,
-  //   route: Route,
-  // },
-  // {
-  //   path: routes.userBookingCancelled,
-  //   name: "user-booking-cancelled",
-  //   element: <UserBookingCancelled />,
-  //   route: Route,
-  // },
-  // {
-  //   path: routes.userBookingInprogress,
-  //   name: "user-booking-inprogress",
-  //   element: <UserBookingInprogress />,
-  //   route: Route,
-  // },
 ];
 
 export const hostmodule = [
@@ -351,30 +304,12 @@ export const hostmodule = [
     element: <HostSettings />,
     route: Route,
   },
-  // {
-  //   path: routes.hostintegration,
-  //   name: "host-integration",
-  //   element: <HostIntegration />,
-  //   route: Route,
-  // },
   {
     path: routes.hostsecurity,
     name: "hostsecurity",
     element: <HostSecurity />,
     route: Route,
   },
-  // {
-  //   path: routes.hostpreference,
-  //   name: "hostpreference",
-  //   element: <HostPreferences />,
-  //   route: Route,
-  // },
-  // {
-  //   path: routes.hostnotification,
-  //   name: "notification",
-  //   element: <HostNotification />,
-  //   route: Route,
-  // },
 
   {
     path: routes.hostListing,
@@ -406,18 +341,6 @@ export const hostmodule = [
     element: <HostTicket />,
     route: Route,
   },
-  // {
-  //   path: routes.hostbookingcancelled,
-  //   name: "bookingcancelled",
-  //   element: <HostBookingCancelled />,
-  //   route: Route,
-  // },
-  // {
-  //   path: routes.hostbookingcancelled,
-  //   name: "bookingcancelled",
-  //   element: <HostBookingCancelled />,
-  //   route: Route,
-  // },
   {
     path: routes.hostBookings,
     name: "host-bookings",
@@ -430,27 +353,4 @@ export const hostmodule = [
     element: <HostCarDetails />,
     route: Route,
   },
-  // {
-  //   path: routes.hostBookingUpcoming,
-  //   name: "host-booking-upcoming",
-  //   element: <HostBookingUpcoming />,
-  // },
-  // {
-  //   path: routes.hostBookingComplete,
-  //   name: "host-booking-complete",
-  //   element: <HostBookingComplete />,
-  //   route: Route,
-  // },
-  // {
-  //   path: routes.hostBookingCancelled,
-  //   name: "host-booking-cancelled",
-  //   element: <HostBookingCancelled />,
-  //   route: Route,
-  // },
-  // {
-  //   path: routes.hostBookingInprogress,
-  //   name: "host-booking-inprogress",
-  //   element: <HostBookingInprogress />,
-  //   route: Route,
-  // },
 ];

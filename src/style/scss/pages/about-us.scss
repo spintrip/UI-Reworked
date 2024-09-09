@@ -86,3 +86,240 @@
 		}
 	}
 }
+.main-company{
+	overflow-x: hidden;
+	position: relative;
+	top: 85px;
+	min-height: 80vh;
+	margin-bottom: 30%;
+}
+
+.company-section{
+	margin: 0px 0px 0 10px;
+	.company-about-img {
+		@include margin-padding(0 0 14px 0, null);
+		position: $__relative;
+		.abt-company-img {
+			padding: 0px 0 0px 2px;
+			position: $__relative;
+			z-index: 1;
+		}
+		.company-img {
+			@include margin-padding(null, 0 0 0 0px);
+			max-width: 100%;
+			max-height: 100%;
+			width: 120vh;
+			height: 75vh;
+			object-fit: cover;
+		}
+		
+	}
+}
+.about-company-content {
+	@include margin-padding(0 0 0 50px, null);
+	@include respond-below(custom991) {
+	  @include margin-padding(0, null);
+	}
+  
+	h6 {
+	  font-size: 30px;
+	  color: rgb(0, 0, 0);
+	  font-weight: $__bold; 
+	  font-family:Georgia, 'Times New Roman', Times, serif;
+	  text-transform: uppercase;
+	  @include margin-padding(0 0 30px, null);
+	}
+  
+	p {
+	  font-size: 16px; 
+	  font-family: 'Arial, sans-serif'; 
+	  font-weight: 500;
+	  color: black;
+	  @include margin-padding(0 0 20px, null);
+	}
+  
+	ul {
+	  li {
+		position: $__relative;
+		@include margin-padding(10px 0 0px, 0 0 10px 25px); // Tighter spacing for bullets
+		color: black;
+		
+		&::before {
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		  content: '\f058';
+		  font-family: 'FontAwesome';
+		  color: $__dark__blues;
+		}
+  
+		&:last-child {
+		  @include margin-padding(0, null);
+		}
+	  }
+	}
+  }
+  .stickyNavFiller {
+	position: -webkit-sticky; 
+	position: sticky;
+	margin-top: 5vh;
+	width: 100%;
+	background-color: #030101; 
+  }
+  
+  #spintrip-sticky-navbar {
+	display: flex;
+	flex-direction: row; 
+	justify-content: space-between;
+	padding: 7px 50px;
+  }
+  
+  .navItem-sticky {
+	position: relative;
+	display: flex;
+	align-items: center;
+  }
+  
+  .navItem-sticky .vertical-line {
+	display: none; 
+  }
+  
+  .navItem-sticky:not(:last-child) .vertical-line {
+	display: block;
+	width: 1px;
+	height: 100%;
+	background-color: #ffffff;
+	margin-left: 15px;
+  }
+  
+  .tmna-sticky-tabs-link {
+	text-decoration: none;
+	color: #ffffff; 
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 16px; 
+	padding: 10px 15px; 
+	margin-right: 8vh;
+	display: block; 
+	border-radius: 5px;
+	transition: background-color 0.3s ease; 
+  }
+  
+  .tmna-sticky-tabs-link:hover {
+	background-color: #f0f0f0; 
+	color: #000; 
+  }
+
+  .company-services {  
+	padding: 30px 0 36px;
+	@include respond-below(custom991){
+		padding: 50px 0 36px;
+	}
+	.service-right {
+		position: absolute;
+		top: 0;
+		right: 0;
+			@include respond-below(custom991) {
+				display: none;
+			}
+	}
+	.company-services-group {        
+		text-align: center;
+		background-color: white;
+		position: $__relative;
+		object-fit: contain;
+		.icon-img {     
+			max-width: 100%; 
+			width: 100vh;      
+			border-radius: 10px;
+			
+			@include margin-padding(null, 0px);
+				@include respond-below(custom991) {
+					@include margin-padding(null, 8px);
+				}
+		}
+	}
+} 
+.effect-group {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	padding: 20px;
+  }
+  
+  .impact-heading {
+	font-size: 36px; 
+	font-weight: 700; 
+	color: #1a1a1a; 
+	margin-bottom: 15px; 
+  }
+  
+  .impact-paragraph {
+	font-size: 18px; 
+	color: #555555; 
+	line-height: 1.6; 
+	max-width: 90%; 
+	margin: 0 auto;
+	padding: 10px 0;
+  }
+  .history-paragraph {
+	font-size: 18px;
+	line-height: 1.6; 
+	color: #333; 
+	margin-top: 12px; 
+	margin-bottom: 20px; 
+	color: #000;
+	text-align: justify; 
+  }
+  .history-heading {
+	font-size: 24px;
+	font-weight: bold;
+	color: #000;
+	margin-bottom: 15px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+  }
+  
+  @media (max-width: 768px) {
+	.impact-heading {
+	  font-size: 28px; 
+	}
+  
+	.impact-paragraph {
+	  font-size: 16px; 
+	}
+  }
+  .spintrip-image-container{
+	max-width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	object-fit: contain;
+  }
+  .philosophy-image{
+	max-width: 60%;
+	margin: 20px;
+	margin-bottom: 30px;
+	transition: all 0.5s ease-in-out;
+  }
+  .philosophy-content{
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	color: #f0f0f0;
+	max-width: 60%;
+	margin-bottom: 20px;
+	h4{
+		color: #ffffff;
+		font-weight: bold;
+		font-family: Arial, Helvetica, sans-serif;
+		margin-bottom: 10px ;
+	}
+	.purpose-para{
+		font-family:Arial, Helvetica, sans-serif;
+		padding: 10px 0;
+		margin-bottom: 30px;
+	}
+  }
+  

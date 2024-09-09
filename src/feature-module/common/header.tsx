@@ -12,16 +12,13 @@ const Header = () => {
   const [host, setHost] = useState(localStorage.getItem("Host"));
   const [activeSubMenu, setActiveSubMenu] = useState(null);
 
-  // const toggleMenu = () => {
-  //   setIsMenuOpen(!isMenuOpen);
-  // };
+ 
 
   const toggleSubMenu = (index: number | React.SetStateAction<any>) => {
     setActiveSubMenu(activeSubMenu === index ? null : index);
   };
 
   useEffect(() => {
-    // This effect will run whenever the token changes, ensuring the header updates
     setToken(localStorage.getItem("authToken"));
     setHost(localStorage.getItem("Host"));
   }, [token, host]);
@@ -31,7 +28,7 @@ const Header = () => {
     localStorage.removeItem("Host");
     setToken(null);
     setHost(null);
-    navigate(routes.home); // Redirect to the homepage or login page
+    navigate(routes.home); 
     window.location.reload();
   };
   //host header
@@ -70,21 +67,7 @@ const Header = () => {
           showSubRoute: false,
           subMenus: [],
         },
-        // {
-        //   menuValue: "Messages",
-        //   routes: routes.hostmessages,
-        //   hasSubRoute: false,
-        //   showSubRoute: false,
-        //   subMenus: []
-        // },
-        // {
-        //   menuValue: "My Wallet",
-        //   routes: routes.hostwallet,
-        //   hasSubRoute: false,
-        //   showSubRoute: false,
-        //   subMenus: []
-        // },
-        {
+       {
           menuValue: "Payment",
           routes: routes.hostpayment,
           hasSubRoute: false,
@@ -100,34 +83,6 @@ const Header = () => {
         },
       ],
     },
-    // {
-    //   tittle: "Blog",
-    //   showAsTab: false,
-    //   separateRoute: false,
-    //   menu: [
-    //     {
-    //       menuValue: "Blog List",
-    //       routes: routes.bloglist,
-    //       hasSubRoute: false,
-    //       showSubRoute: false,
-    //       subMenus: []
-    //     },
-    //     {
-    //       menuValue: "Blog Grid",
-    //       routes: routes.bloggrid,
-    //       hasSubRoute: false,
-    //       showSubRoute: false,
-    //       subMenus: []
-    //     },
-    //     {
-    //       menuValue: "Blog Details",
-    //       routes: routes.blogdetails,
-    //       hasSubRoute: false,
-    //       showSubRoute: false,
-    //       subMenus: []
-    //     },
-    //   ],
-    // },
     {
       tittle: "Blog",
       showAsTab: false,
@@ -149,6 +104,14 @@ const Header = () => {
       showAsTab: false,
       separateRoute: true,
       routes: routes.aboutus,
+      hasSubRoute: false,
+      showSubRoute: false,
+    },
+    {
+      tittle: "About Company",
+      showAsTab: false,
+      separateRoute: true,
+      routes: routes.aboutcompany,
       hasSubRoute: false,
       showSubRoute: false,
     },
@@ -200,13 +163,6 @@ const Header = () => {
             },
           ],
         },
-        // {
-        //   menuValue: "Reviews",
-        //   routes: routes.reviews,
-        //   hasSubRoute: false,
-        //   showSubRoute: false,
-        //   subMenus: []
-        // },
         {
           menuValue: "Wishlist",
           routes: routes.wishlist,
@@ -214,20 +170,6 @@ const Header = () => {
           showSubRoute: false,
           subMenus: [],
         },
-        // {
-        //   menuValue: "Messages",
-        //   routes: routes.messages,
-        //   hasSubRoute: false,
-        //   showSubRoute: false,
-        //   subMenus: []
-        // },
-        // {
-        //   menuValue: "My Wallet",
-        //   routes: routes.wallet,
-        //   hasSubRoute: false,
-        //   showSubRoute: false,
-        //   subMenus: []
-        // },
         {
           menuValue: "Payment",
           routes: routes.payment,
@@ -244,34 +186,6 @@ const Header = () => {
         },
       ],
     },
-    // {
-    //   tittle: "Blog",
-    //   showAsTab: false,
-    //   separateRoute: false,
-    //   menu: [
-    //     {
-    //       menuValue: "Blog List",
-    //       routes: routes.bloglist,
-    //       hasSubRoute: false,
-    //       showSubRoute: false,
-    //       subMenus: []
-    //     },
-    //     {
-    //       menuValue: "Blog Grid",
-    //       routes: routes.bloggrid,
-    //       hasSubRoute: false,
-    //       showSubRoute: false,
-    //       subMenus: []
-    //     },
-    //     {
-    //       menuValue: "Blog Details",
-    //       routes: routes.blogdetails,
-    //       hasSubRoute: false,
-    //       showSubRoute: false,
-    //       subMenus: []
-    //     },
-    //   ],
-    // },
     {
       tittle: "Blog",
       showAsTab: false,
@@ -293,6 +207,14 @@ const Header = () => {
       showAsTab: false,
       separateRoute: true,
       routes: routes.aboutus,
+      hasSubRoute: false,
+      showSubRoute: false,
+    },
+    {
+      tittle: "About Company",
+      showAsTab: false,
+      separateRoute: true,
+      routes: routes.aboutcompany,
       hasSubRoute: false,
       showSubRoute: false,
     },
