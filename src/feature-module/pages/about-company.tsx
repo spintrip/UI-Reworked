@@ -47,8 +47,8 @@ const AboutCompany = () => {
   const [selectedTab, setSelectedTab] = useState('Seamless-Experience');
 
   const images: { [key: string]: string } = {
-    'Seamless-Experience': '/assets/img/spintrip-effect.jpg',
-    'Advanced-Security': '/assets/img/zooo.jpg',
+    'Seamless-Experience': '/assets/img/seamless-experience.jpg',
+    'Advanced-Security': '/assets/img/car-security.jpg',
     'Dynamic-Pricing': '/assets/img/dynamic-pricing.jpg',
     'Verified-Quality': '/assets/img/verified.jpg',
     'Community-Driven': '/assets/img/community-driven.jpg',
