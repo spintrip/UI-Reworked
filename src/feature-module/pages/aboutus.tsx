@@ -86,9 +86,7 @@ const AboutUs = () => {
                   <p>
                     At Spintrip Car Rentals, we pride ourselves on providing
                     top-notch car rental services that cater to all your travel
-                    needs. With over 12 years of experience in the industry, we
-                    have perfected the art of customer satisfaction. Our
-                    extensive fleet of vehicles ensures that you have the
+                    needs. Our extensive fleet of vehicles ensures that you have the
                     perfect car for any occasion, whether it's a business trip,
                     family vacation, or a special event.
                   </p>
