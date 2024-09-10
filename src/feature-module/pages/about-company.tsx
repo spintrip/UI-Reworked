@@ -1,29 +1,57 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState, useRef } from "react";
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 
 // import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Breadcrumbs from "../common/Breadcrumbs";
 import Aos from "aos";
-import faqData from "../../core/data/json/faq";
 import useScrollToTop from "../../hooks/useScrollToTop";
 
 
 const AboutCompany = () => {
   useScrollToTop();
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const toggleFAQ = (index: number | null) => {
-    setActiveIndex(activeIndex === index ? null : index);
+  const SpintripEffect = useRef<HTMLDivElement>(null);
+  const PhilosophyinPractice = useRef<HTMLDivElement>(null);
+  const OurHistory = useRef<HTMLDivElement>(null);
+  const ourleadership = useRef<HTMLDivElement>(null);
+  const thespintripway = useRef<HTMLDivElement>(null);
+
+
+
+  const scrollToSpintripEffect = () => {
+    if (SpintripEffect.current) {
+      SpintripEffect.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const scrollToPhilosophyinPractice = () => {
+    if (PhilosophyinPractice.current) {
+      PhilosophyinPractice.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+  const scrollToOurHistory = () => {
+    if (OurHistory.current) {
+      OurHistory.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+  const scrollToOurleadership = () => {
+    if (ourleadership.current) {
+      ourleadership.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+  const scrollToSpintripWay = () => {
+    if (thespintripway.current) {
+      thespintripway.current.scrollIntoView({ behavior: 'smooth' });
+    }
   };
   const [selectedTab, setSelectedTab] = useState('Seamless-Experience');
 
   const images: { [key: string]: string } = {
     'Seamless-Experience': '/assets/img/spintrip-effect.jpg',
     'Advanced-Security': '/assets/img/zooo.jpg',
-    'Dynamic-Pricing': '/assets/img/spintrip-effect.jpg',
-    'Verified-Quality': '/assets/img/spintrip-effect.jpg',
-    'Community-Driven': '/assets/img/spintrip-effect.jpg',
+    'Dynamic-Pricing': '/assets/img/dynamic-pricing.jpg',
+    'Verified-Quality': '/assets/img/verified.jpg',
+    'Community-Driven': '/assets/img/community-driven.jpg',
   };
 
 
@@ -98,29 +126,29 @@ const AboutCompany = () => {
           <div className="stickyNavFiller">
             <div id="spintrip-sticky-navbar">
               <div className="navItem-sticky">
-                <a className="tmna-sticky-tabs-link" href="#services-icon" title="Spintrip Effect">Spintrip Effect</a>
+                <a className="tmna-sticky-tabs-link" onClick={scrollToSpintripEffect} title="Spintrip Effect">Spintrip Effect</a>
                 <div className="vertical-line"></div>
               </div>
               <div className="navItem-sticky">
-                <a className="tmna-sticky-tabs-link" href="#philosophy-practice" title="Philosophy in Practice">Philosophy in Practice</a>
+                <a className="tmna-sticky-tabs-link" onClick={scrollToPhilosophyinPractice} title="Philosophy in Practice">Philosophy in Practice</a>
                 <div className="vertical-line"></div>
               </div>
               <div className="navItem-sticky">
-                <a className="tmna-sticky-tabs-link" href="#our-history" title="Our History">Our History</a>
+                <a className="tmna-sticky-tabs-link" onClick={scrollToOurHistory} title="Our History">Our History</a>
                 <div className="vertical-line"></div>
               </div>
               <div className="navItem-sticky">
-                <a className="tmna-sticky-tabs-link" href="#our-leadership" title="Our Leadership">Our Leadership</a>
+                <a className="tmna-sticky-tabs-link" onClick={scrollToOurleadership} title="Our Leadership">Our Leadership</a>
                 <div className="vertical-line"></div>
               </div>
               <div className="navItem-sticky">
-                <a className="tmna-sticky-tabs-link" href="#spintrip-way" title="The Spintrip Way">The Spintrip Way</a>
+                <a className="tmna-sticky-tabs-link" onClick={scrollToSpintripWay} title="The Spintrip Way">The Spintrip Way</a>
               </div>
             </div>
           </div>
         </div>
         {/* services */}
-        <section className="section company-services bg-light-secondary">
+        <section ref={SpintripEffect} className="section company-services bg-light-secondary">
           <div className="service-right">
             <ImageWithBasePath
               src="assets/img/bg/service-right.svg"
@@ -161,7 +189,7 @@ const AboutCompany = () => {
     
 
         {/* Why Choose Us */}
-        <section className="section">
+        <section ref={PhilosophyinPractice} className="section">
             <div className="section-heading" data-aos="fade-down">
               <h2>Philosophy in Practice</h2>
             </div>
@@ -198,7 +226,7 @@ const AboutCompany = () => {
         </section>
         {/* /Why Choose Us */}
         {/* About us Testimonials */}
-        <section className="section company-services ">
+        <section ref={OurHistory} className="section company-services ">
           <div className="container ">
             {/* Heading title*/}
             <div className="section-heading" data-aos="fade-down">
@@ -212,8 +240,8 @@ const AboutCompany = () => {
                     <div className="effect-content">
                       <h3 className="history-heading">Past Milestones and Future Horizons</h3>
                       <p className="history-paragraph">
-                      SpinTrip Car Rentals began as a vision to revolutionize
-                       car rentals by blending technology and convenience. We started with a few hosts and users, focusing on delivering a seamless experience with AI-driven security and dynamic pricing. Since then, we've evolved into a trusted platform with a vibrant community. Our Indian-made GPS devices, AI-based image technology, and thoroughly verified cars have built our reputation for safety and reliability. Looking ahead, we are committed to expanding our community, enhancing our technology, and making SpinTrip the premier car rental platform, with advanced features and continuous improvements to ensure it feels like driving your own car.           
+                        SpinTrip Car Rentals began as a vision to revolutionize
+                        car rentals by blending technology and convenience. We started with a few hosts and users, focusing on delivering a seamless experience with AI-driven security and dynamic pricing. Since then, we've evolved into a trusted platform with a vibrant community. Our Indian-made GPS devices, AI-based image technology, and thoroughly verified cars have built our reputation for safety and reliability. Looking ahead, we are committed to expanding our community, enhancing our technology, and making SpinTrip the premier car rental platform, with advanced features and continuous improvements to ensure it feels like driving your own car.           
                       </p>
                     </div>
                   </div>
@@ -230,23 +258,100 @@ const AboutCompany = () => {
           </div>
         </section>
         {/* About us Testimonials */}
-        <section className="section company-services ">
-            <div className="section-heading" data-aos="fade-down">
-              <h2>Our Leadership</h2>
-            </div>
-            <div className="profile-history">
-              <h4>Ceo</h4>
-              <div >
-                <ImageWithBasePath
-                    src="assets/img/zooo.jpg"
-                    className="company-img"
-                    alt="About us"
+        <section ref={ourleadership} className="leadership-section">
+          <div className="section-heading" data-aos="fade-down">
+            <h2>Our Leadership</h2>
+          </div>
+          <div className="leadership-row">
+            {/* CEO */}
+            <div className="leadership-profile">
+              <h4>CEO</h4>
+              <div className="leadership-img-profile" data-aos="fade-down">
+              <ImageWithBasePath
+                  className="leadership-img"
+                  src="assets/img/ceo.jpg"
+                  alt="Choose Locations"
                 />
               </div>
-              <div>
-                <p>SpinTrip Car Rentals began as a vision to revolutionize car rentals by blending technology and convenience.</p>
+              <div className="leadership-name">
+                <h4>Pranjal Saxena</h4>
+              </div>
+              <div className="leadership-story">
+                <p>Our CEO leads SpinTrip with a vision to revolutionize car rentals by blending cutting-edge technology and customer-centric services.</p>
               </div>
             </div>
+            
+            {/* CTO */}
+            <div className="leadership-profile">
+              <h4>CTO</h4>
+              <div className="leadership-img-profile" data-aos="fade-down">
+                <ImageWithBasePath
+                  src="assets/img/cto.jpg"
+                  className="leadership-img"
+                  alt="CTO"
+                />
+              </div>
+              <div className="leadership-name">
+                <h4>Saswat Pandey</h4>
+              </div>
+              <div className="leadership-story">
+                <p>Our CTO spearheads innovation at SpinTrip, ensuring that our platform remains technologically advanced and user-friendly.</p>
+              </div>
+            </div>
+
+            {/* CSO */}
+            <div className="leadership-profile">
+              <h4>CSO</h4>
+              <div className="leadership-img-profile" data-aos="fade-down">
+              <ImageWithBasePath
+                  className="leadership-img"
+                  src="assets/img/cso.jpg"
+                  alt="Choose Locations"
+                />
+              </div>
+              <div className="leadership-name">
+                <h4>Pratyay Mazumdar</h4>
+              </div>
+              <div className="leadership-story">
+                <p>Our CSO focuses on strategic growth, building partnerships, and expanding SpinTrip's reach in the car rental industry.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section ref={thespintripway} className="section way-effect bg-light-secondary">
+          <div className="container">
+            {/* Heading title*/}
+            <div className="section-heading" data-aos="fade-down">
+              <h2>The Spintrip Way</h2>
+            </div>
+            {/* /Heading title */}
+            <div className="way-effect-work">
+              <div className="row">
+                <div className="col-lg-6 d-flex align-items-center justify-content-between" data-aos="fade-left">
+                  <div className="effect-group">
+                    <div className="effect-content">
+                      <h3 className="impact-heading">The Way we work</h3>
+                      <p className="impact-paragraph">
+                        The SpinTrip Way
+                        We focus on creating a superior car rental experience by prioritizing both hosts and users.
+                        Unlike others, we ensure a smooth, personalized process, offering top-notch support and flexibility.
+                        Our goal is to make every rental feel effortless, ensuring satisfaction for hosts and drivers alike, while
+                        building a trusted and growing community.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-5 company-services-group"  data-aos="fade-left">
+                  <ImageWithBasePath
+                    src="assets/img/teamwork.jpg"
+                    className="icon-img"
+                    alt="services right"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
       </>
     </div>
