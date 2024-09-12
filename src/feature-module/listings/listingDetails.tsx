@@ -157,7 +157,7 @@ const listingDetails = () => {
   // retuern the logo specific to the car brand
   const getBrandLogo = (brandName: string): string | undefined => {
     const brand = brands.find(
-      (b) => b.brand_name.toLowerCase() === brandName.toLowerCase(),
+      (b) => b.brand_name?.toLowerCase() === brandName?.toLowerCase(),
     );
     return brand ? brand.logo_path : undefined;
   };

@@ -255,8 +255,8 @@ const ListingGrid: React.FC = () => {
     if (searchQuery) {
       filteredCars = filteredCars.filter(
         (car: { carModel: string; brand: string }) =>
-          car.carModel.toLowerCase().includes(searchQuery) ||
-          car.brand.toLowerCase().includes(searchQuery),
+          car.carModel?.toLowerCase().includes(searchQuery) ||
+          car.brand?.toLowerCase().includes(searchQuery),
       );
     }
 

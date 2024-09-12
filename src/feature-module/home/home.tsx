@@ -27,7 +27,6 @@ import {
 } from "../redux/action";
 import faqData from "../../core/data/json/faq";
 import { findCars, getCars } from "../api/Cars";
-//import { fetchUserBookings } from "../user/userbookings_data";
 const LocationInput = React.lazy(() => import('../common/locationInput'));
 const LocationDisplay = React.lazy(() => import('../common/LocationDisplay'));
 import { postWishlist, postCancelWishlist } from "../api/Cars";
@@ -889,6 +888,7 @@ const Home: React.FC = () => {
                               />
                             )}
                           </span>
+                          {token && (
                           <Link
                             to="#"
                             className={`fav-icon ${
@@ -903,6 +903,7 @@ const Home: React.FC = () => {
                           >
                             <i className="feather icon-heart" />
                           </Link>
+                          )}
                         </div>
                       </div>
                       <div className="listing-content">

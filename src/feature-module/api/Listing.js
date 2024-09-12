@@ -55,18 +55,13 @@ export const updateListing = async (pauseData) => {
 };
 
 export const getTopReviews = async () => {
-    const token = localStorage.getItem('authToken');
-    if(!token){
-        console.error('No token Found');
-        return;
-    }
     try {
       const apiUrl = 'users/top-rating';
       const response = await fetch(serverApiUrl + apiUrl, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'token' : token,
+          
         }
       });
       if (!response.ok) {
