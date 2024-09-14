@@ -5,6 +5,7 @@ import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 import { all_routes } from "../router/all_routes";
 import { getBlogs } from "../api/Blogs";
 import { Helmet } from "react-helmet";
+import useScrollToTop from "../../hooks/useScrollToTop";
 
 type Blog = {
   blogId: string;
@@ -30,6 +31,7 @@ const getUniqueKeywords = (blogs: any[]) => {
 };
 
 const BlogList = () => {
+  useScrollToTop();
   const [searchTerm, setSearchTerm] = useState("");
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
