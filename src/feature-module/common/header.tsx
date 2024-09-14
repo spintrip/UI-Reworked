@@ -36,8 +36,11 @@ const Header = () => {
       },
     ];
     
-    localStorage.setItem('joyride-steps', JSON.stringify(steps));
-    setSteps(steps);
+    if (steps.length === 0) {
+      localStorage.setItem('joyride-steps', JSON.stringify(steps));
+      setSteps(steps); // Trigger state update only if necessary
+      startTour(); // Start the tour once steps are set
+    }
     startTour();
   }, [setSteps,startTour]);
 
