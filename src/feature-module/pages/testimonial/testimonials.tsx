@@ -5,7 +5,7 @@ import "aos/dist/aos.css";
 import { useSelector } from "react-redux";
 import ImageWithBasePath from "../../../core/data/img/ImageWithBasePath";
 import { Link } from "react-router-dom";
-import { Review } from "../../../core/data/interface/interface";
+import { Review } from "../../common/interface";
 
 const Testimonials = () => {
   const data = useSelector((state: Review) => state.testimonialdata);

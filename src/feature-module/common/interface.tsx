@@ -113,3 +113,34 @@ export interface UserPaymentData {
   total: string; // Assuming total is a string like "+ $300"
   status: string;
 }
+
+export interface JoyrideProviderProps {
+  children: ReactNode; // Specify children as a prop
+}
+
+export interface Brand {
+  brand_name: string;
+  logo_path: string;
+}
+
+export interface Testimonial {
+  carId: string;
+  userName: string;
+  rating: number;
+  comment: string;
+}
+export interface DateTimeState {
+  startDate: string;
+  endDate: string;
+  startTime: string;
+  endTime: string;
+  location: Location;
+}
+export interface WishlistState {
+  wishlist: { carId: number }[];
+}
+
+export interface RootState {
+  dateTime: DateTimeState;
+  wishlist: WishlistState;
+}

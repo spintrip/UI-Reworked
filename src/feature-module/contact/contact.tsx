@@ -3,7 +3,7 @@ import Breadcrumbs from "../common/Breadcrumbs";
 import AOS from "aos";
 import "aos/dist/aos.css";
 //import { useSelector } from "react-redux";
-import { ContactUs } from "../../core/data/interface/interface";
+import { ContactUs } from "../common/interface";
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 import { Link } from "react-router-dom";
 // import axios from "axios";

@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { all_routes } from "../router/all_routes";
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 import MobileNavbar from "./mobile_menu/mobileNavbar";
+import { useJoyride } from "./JoyrideContext";
 
 const Header = () => {
   const routes = all_routes;
@@ -11,7 +12,7 @@ const Header = () => {
   const [token, setToken] = useState<any>(localStorage.getItem("token"));
   const [host, setHost] = useState(localStorage.getItem("Host"));
   const [activeSubMenu, setActiveSubMenu] = useState(null);
-
+  const { setSteps, startTour, stopTour } = useJoyride();
  
 
   const toggleSubMenu = (index: number | React.SetStateAction<any>) => {
@@ -22,6 +23,23 @@ const Header = () => {
     setToken(localStorage.getItem("authToken"));
     setHost(localStorage.getItem("Host"));
   }, [token, host]);
+
+  useEffect(() => {
+    const steps = [
+      {
+        target: '.navbar-logo-custom',
+        content: 'Welcome to Spintrip',
+      },
+      {
+        target: '.signup-button',
+        content: 'Click on the button to signup',
+      },
+    ];
+    
+    localStorage.setItem('joyride-steps', JSON.stringify(steps));
+    setSteps(steps);
+    startTour();
+  }, [setSteps,startTour]);
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
@@ -444,7 +462,7 @@ const Header = () => {
                         Sign In
                       </Link>
                     </li>
-                    <li className="nav-item">
+                    <li className="nav-item signup-button">
                       <Link className="nav-link header-reg" to={routes.signup}>
                         <span>
                           <i className="fa-solid fa-lock" />
