@@ -388,7 +388,7 @@ const HostBookings = () => {
                       <div className="col-xl-7 col-lg-8 col-sm-12 col-12">
                         <div className="d-flex align-items-center justify-content-end">
                           <button
-                            className="btn bg-black text-white border border-black border-2 w-100 btn-sm d-lg-none mb-2 d-flex align-items-center justify-content-center"
+                            className="filter-button d-lg-none "
                             onClick={() =>
                               setIsSidebarVisible(!isSidebarVisible)
                             }
@@ -401,7 +401,7 @@ const HostBookings = () => {
                                 viewBox="0 0 24 24"
                                 strokeWidth={2}
                                 stroke="currentColor"
-                                className="size-6 mx-2 animate-ease"
+                                className="arrow-button-down"
                               >
                                 <path
                                   strokeLinecap="round"
@@ -416,7 +416,7 @@ const HostBookings = () => {
                                 viewBox="0 0 24 24"
                                 strokeWidth={2}
                                 stroke="currentColor"
-                                className="size-6 mx-2 animate-ease"
+                                className="arrow-button-down"
                               >
                                 <path
                                   strokeLinecap="round"
@@ -1251,7 +1251,7 @@ const HostBookings = () => {
                     className="mr-2"
                     onChange={(e) => setIsChecked(e.target.checked)}
                   />
-                  <label htmlFor="termsCheckbox" className="d-flex flex-wrap align-items-center justify-content-start">
+                  <label htmlFor="termsCheckbox" className="mx-2 d-flex flex-wrap align-items-center justify-content-start">
                     I hereby have read the{' '}
                     <Link className="p-1 bg-light mx-1 text-danger rounded" to={routes.termsconditions}>terms and conditions</Link> for lending my ride
                   </label>

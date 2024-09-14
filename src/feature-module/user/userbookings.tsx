@@ -588,7 +588,7 @@ const UserBookings = () => {
                       <div className="col-xl-8 col-lg-10 col-sm-12 col-12">
                         <div className="d-flex align-items-center justify-content-end">
                           <button
-                            className="btn bg-black text-white border border-black border-2 w-100 btn-sm d-lg-none mb-2 d-flex align-items-center justify-content-center"
+                            className="filter-button d-lg-none"
                             onClick={() =>
                               setIsSidebarVisible(!isSidebarVisible)
                             }
@@ -601,7 +601,7 @@ const UserBookings = () => {
                                 viewBox="0 0 24 24"
                                 strokeWidth={2}
                                 stroke="currentColor"
-                                className="size-6 mx-2 animate-ease"
+                                className="arrow-button-down"
                               >
                                 <path
                                   strokeLinecap="round"
@@ -616,7 +616,7 @@ const UserBookings = () => {
                                 viewBox="0 0 24 24"
                                 strokeWidth={2}
                                 stroke="currentColor"
-                                className="size-6 mx-2 animate-ease"
+                                className="arrow-button-down"
                               >
                                 <path
                                   strokeLinecap="round"
@@ -966,7 +966,7 @@ const UserBookings = () => {
                       {selectedBooking?.transactionId != null  && selectedBooking?.transaction != null 
                   && selectedBooking?.transaction?.status == 2 ? (
                         <>
-                          <div style={{fontSize:'1.5rem', fontWeight: '700'}} className="text-success d-flex align-items-center justify-content-center">
+                          <div style={{fontSize:'1.5rem', fontWeight: '700'}} className="text-success payment-done">
                             <span>Payment processed</span>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -974,7 +974,7 @@ const UserBookings = () => {
                               viewBox="0 0 24 24"
                               strokeWidth={1.5}
                               stroke="currentColor"
-                              className="size-6 ml-2 text-white"
+                              className="processed-icon"
                             >
                               <path
                                 strokeLinecap="round"
@@ -1022,20 +1022,20 @@ const UserBookings = () => {
                   selectedBooking.transactionId != null && selectedBooking?.transaction != null 
                   && selectedBooking?.transaction?.status == 2 ?  (
                     <Button
-                      className="bg-primary border border-primary d-flex align-items-center justify-content-center ml-2"
+                      className="bg-primary start-ride-button"
                       onClick={async () => {
                         await handleStartRide();
                         setShowUpcomingModal(false);
                         setTimeout(() => setShowRideStartedModal(true), 500);
                       }}
                     >
-                      <ImageWithBasePath className="max-w-[30px] mr-2" src="assets/img/thunder.png" alt="thunder"/>
+                      <ImageWithBasePath className="thunder-icon" src="assets/img/thunder.png" alt="thunder"/>
                       <span className="fw-bold">Start Ride</span>
                     </Button>
                   ) : (
                     <Button
                       variant="dark"
-                      className="d-flex align-items-center justify-content-center"
+                      className="paynow-booking-button"
                       onClick={async () => {
                         document.body.style.backgroundColor = "grey";
                         await handlePayment(selectedBooking);
@@ -1049,7 +1049,7 @@ const UserBookings = () => {
                         viewBox="0 0 24 24"
                         strokeWidth={1.5}
                         stroke="currentColor"
-                        className="size-6 ml-2"
+                        className="card-icon"
                       >
                         <path
                           strokeLinecap="round"
@@ -1279,13 +1279,6 @@ const UserBookings = () => {
                   >
                     Chat
                   </Button>
-                  {/* <Button
-                    variant="secondary"
-                    className="bg-dark"
-                    onClick={() => (handleExtendModal(selectedBooking))}
-                  >
-                    Extend Booking ?
-                  </Button> */}
                   <Button
                     variant="primary"
                     onClick={async () => {
@@ -1740,6 +1733,7 @@ const UserBookings = () => {
           <Modal
             show={showStatus5Modal}
             onHide={() => {
+              setSelectedBooking(null);
               setShowStatus5Modal(false);
               fetchUpdatedBookings();
             }}
@@ -1748,16 +1742,6 @@ const UserBookings = () => {
             keyboard={false}
           >
             <Modal.Header className="modal-header" closeButton>
-              <button
-                type="button"
-                className="close-btn"
-                onClick={() => {
-                  setSelectedBooking(null);
-                  setShowStatus5Modal(false);
-                }}
-              >
-                <span>×</span>
-              </button>
               <Modal.Title>Booking Details</Modal.Title>
             </Modal.Header>
             {selectedBooking && (
@@ -1870,7 +1854,7 @@ const UserBookings = () => {
               </Modal.Body>
             )}
             <Modal.Footer>
-              <div className="d-flex flex-wrap align-items-center justify-content-md-between justify-content-center w-full px-4 mb-3">
+              <div className="d-flex flex-wrap align-items-center justify-content-between justify-content-center w-full px-4 mb-3">
                 <div>
                   <Button
                     className="border m-2 d-flex align-items-center justify-content-center"
@@ -1896,7 +1880,7 @@ const UserBookings = () => {
                 </div>
                 <div className="d-flex m-2 align-items-center justify-content-center">
                   <Button
-                    className="mx-2 d-flex align-items-center justify-content-center"
+                    className="Cancel-booking-button"
                     variant="danger"
                     onClick={() => {
                       setShowUpcomingModal(false);
@@ -1911,7 +1895,7 @@ const UserBookings = () => {
                       viewBox="0 0 24 24"
                       strokeWidth="1.5"
                       stroke="currentColor"
-                      className="size-6 ml-2"
+                      className="cross-icon"
                     >
                       <path
                         strokeLinecap="round"

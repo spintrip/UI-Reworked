@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { all_routes } from "../router/all_routes";
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 import MobileNavbar from "./mobile_menu/mobileNavbar";
-import { useJoyride } from "./JoyrideContext";
+// import { useJoyride } from "./JoyrideContext";
 
 const Header = () => {
   const routes = all_routes;
@@ -12,7 +12,7 @@ const Header = () => {
   const [token, setToken] = useState<any>(localStorage.getItem("token"));
   const [host, setHost] = useState(localStorage.getItem("Host"));
   const [activeSubMenu, setActiveSubMenu] = useState(null);
-  const { setSteps, startTour, stopTour } = useJoyride();
+  //const { setSteps, startTour, stopTour } = useJoyride();
  
 
   const toggleSubMenu = (index: number | React.SetStateAction<any>) => {
@@ -24,25 +24,25 @@ const Header = () => {
     setHost(localStorage.getItem("Host"));
   }, [token, host]);
 
-  useEffect(() => {
-    const steps = [
-      {
-        target: '.navbar-logo-custom',
-        content: 'Welcome to Spintrip',
-      },
-      {
-        target: '.signup-button',
-        content: 'Click on the button to signup',
-      },
-    ];
+  // useEffect(() => {
+  //   const steps = [
+  //     {
+  //       target: '.navbar-logo-custom',
+  //       content: 'Welcome to Spintrip',
+  //     },
+  //     {
+  //       target: '.signup-button',
+  //       content: 'Click on the button to signup',
+  //     },
+  //   ];
     
-    if (steps.length === 0) {
-      localStorage.setItem('joyride-steps', JSON.stringify(steps));
-      setSteps(steps); // Trigger state update only if necessary
-      startTour(); // Start the tour once steps are set
-    }
-    startTour();
-  }, [setSteps,startTour]);
+  //   if (steps.length === 0) {
+  //     localStorage.setItem('joyride-steps', JSON.stringify(steps));
+  //     setSteps(steps); // Trigger state update only if necessary
+  //     startTour(); // Start the tour once steps are set
+  //   }
+  //   startTour();
+  // }, [setSteps,startTour]);
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");

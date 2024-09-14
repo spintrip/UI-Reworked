@@ -162,10 +162,7 @@ const SignUp = () => {
                   <Switch
                     checked={enabled}
                     onChange={setEnabled}
-                    className={classNames(
-                      enabled ? "bg-amber-600" : "bg-gray-200",
-                      "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border- transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2",
-                    )}
+                    className="group relative flex h-7 w-14 cursor-pointer rounded-full bg-white/10 p-1 transition-colors duration-200 ease-in-out focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white data-[checked]:bg-white/10"
                   >
                     <span className="sr-only">Use setting</span>
                     <span

@@ -162,59 +162,61 @@ const UserTicket: React.FC = () => {
               show={showModal}
               onHide={() => setShowModal(false)}
               centered
-              dialogClassName="modal-wide" // Apply the custom class for width
+              dialogClassName="modal-wide" 
             >
               <Modal.Header closeButton>
                 <Modal.Title>Create a Ticket</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                {modalError && (
-                  <div className="alert alert-danger">{modalError}</div>
-                )}
-                {modalSuccess && (
-                  <div className="alert alert-success">
-                    Ticket created successfully!
-                  </div>
-                )}
-                <form onSubmit={handleCreateTicket}>
-                  <div className="form-group">
-                    <label htmlFor="subject">Subject:</label>
-                    <input
-                      type="text"
-                      id="subject"
-                      className="form-control"
-                      value={subject}
-                      onChange={(e) => setSubject(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="message">Message:</label>
-                    <textarea
-                      id="message"
-                      className="form-control"
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <Button
-                    type="submit"
-                    className="btn btn-primary"
-                    disabled={loading}
-                  >
-                    {loading ? (
-                      <div
-                        className="mx-3 spinner-border spinner-border-sm"
-                        role="status"
-                      >
-                        <span className="sr-only">Loading...</span>
-                      </div>
-                    ) : (
-                      "Create Ticket"
-                    )}
-                  </Button>
-                </form>
+                <div className="create-ticket-modal">
+                  {modalError && (
+                    <div className="alert alert-danger">{modalError}</div>
+                  )}
+                  {modalSuccess && (
+                    <div className="alert alert-success">
+                      Ticket created successfully!
+                    </div>
+                  )}
+                  <form onSubmit={handleCreateTicket}>
+                    <div className="form-group">
+                      <label htmlFor="subject">Subject:</label>
+                      <input
+                        type="text"
+                        id="subject"
+                        className="form-control"
+                        value={subject}
+                        onChange={(e) => setSubject(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="message">Message:</label>
+                      <textarea
+                        id="message"
+                        className="form-control"
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <Button
+                      type="submit"
+                      className="btn btn-primary"
+                      disabled={loading}
+                    >
+                      {loading ? (
+                        <div
+                          className="mx-3 spinner-border spinner-border-sm"
+                          role="status"
+                        >
+                          <span className="sr-only">Loading...</span>
+                        </div>
+                      ) : (
+                        "Create Ticket"
+                      )}
+                    </Button>
+                  </form>
+                </div>
               </Modal.Body>
             </Modal>
 

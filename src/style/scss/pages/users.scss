@@ -723,6 +723,26 @@
     font-size: x-large;
     font-family:  sans-serif;
 }
+.filter-button{
+    //btn bg-black text-white border border-black border-2 w-100 btn-sm d-lg-none mb-2 d-flex align-items-center justify-content-center
+    background-color: black;
+    border: 1px solid black;
+    color: white;
+    max-width: 100%;
+    max-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40vh;
+    height: 5vh;
+    margin-bottom: 10px;
+    
+}
+.arrow-button-down{
+    max-width: 100%;
+    width: 20px;
+    margin: 0 10px;
+}
 
 .filter-group {
 
@@ -742,6 +762,7 @@
         margin-bottom: 5px;
     }
 }
+
 .sort {
     @include respond-below(custom767) {
         width: $__full__width;
@@ -4817,4 +4838,80 @@ textarea.form-control {
     object-fit: contain;
     border: 1px solid black;
   }
-    
+.add-car-button{
+    //text-white fs-large rounded d-flex align-items-center
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    max-width: 100%;
+    width: 15vh;
+    height: 5vh;
+    .plus-svg{
+        width: 30px;
+    }
+}
+.car-brand-logo{
+    max-width: 100%;
+    max-height: 30px;
+    width: 50px;
+    margin: 10px;
+  }
+.sort-payment{
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: #ffffff;
+    cursor: pointer;
+    width: 20vh;
+    height: 5vh;
+    margin: 10px;
+    padding: 12px 13px;
+}
+.create-ticket-modal{
+    margin: 10px;
+}
+.Cancel-booking-button{
+    display: flex;
+    flex-direction: row;
+    width: 20vh;
+    font-size: small;
+    height: 5vh;
+    .cross-icon{
+        width: 25px;
+        padding-left: 5px;
+    }
+}
+.paynow-booking-button{
+    display: flex;
+    flex-direction: row;
+    width: 15vh;
+    font-size: small;
+    margin: 0 10px;
+    height: 5vh;
+    .card-icon{
+        width: 25px;
+        padding-left: 5px;
+    }
+}
+.payment-done{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .processed-icon{
+        width: 30px;
+        margin: 0 10px;
+    }
+}
+.start-ride-button{
+    display: flex;
+    flex-direction: row;
+    width: 15vh;
+    font-size: small;
+    padding-top: 13px;
+    margin: 0 10px;
+    height: 5vh;
+    .thunder-icon{
+        width: 25px;
+        padding-left: 5px;
+    }
+}

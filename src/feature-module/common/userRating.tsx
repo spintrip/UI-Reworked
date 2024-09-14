@@ -69,6 +69,7 @@ const UserRating: React.FC<UserRatingProps> = ({ show, onHide, bookingId }) => {
         <Modal.Title>Give Feedback</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+      <div className="create-ticket-modal">
         {successMessage && <Alert variant="success">{successMessage}</Alert>}
         {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
         <form onSubmit={handleSubmit}>
@@ -116,6 +117,7 @@ const UserRating: React.FC<UserRatingProps> = ({ show, onHide, bookingId }) => {
             </Button>
           </div>
         </form>
+      </div>
       </Modal.Body>
     </Modal>
   );

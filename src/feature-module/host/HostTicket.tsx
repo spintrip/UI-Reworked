@@ -162,6 +162,7 @@ const HostTicket = () => {
                 <Modal.Title>Create a Ticket</Modal.Title>
               </Modal.Header>
               <Modal.Body>
+              <div className="create-ticket-modal">
                 {modalError && (
                   <div className="alert alert-danger">{modalError}</div>
                 )}
@@ -209,6 +210,7 @@ const HostTicket = () => {
                     )}
                   </Button>
                 </form>
+              </div>
               </Modal.Body>
             </Modal>
 

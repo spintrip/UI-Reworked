@@ -42,7 +42,7 @@ const hostListingPreview = () => {
   }, []);
   const getBrandLogo = (brandName: string): string | undefined => {
     const brand = brands.find(
-      (b) => b.brand_name.toLowerCase() === brandName.toLowerCase(),
+      (b) => b.brand_name.toLowerCase() === brandName?.toLowerCase(),
     );
     return brand ? brand.logo_path : undefined;
   };
@@ -195,7 +195,7 @@ const hostListingPreview = () => {
                   <div className="w-content">
                     {editState ? (
                       <div
-                        className="edit-button details-btn hover:bg-slate-100 cursor-pointer rounded p-2 d-flex align-items-center justify-content-end "
+                        className="edit-button details-btn hover:bg-slate-100  rounded p-2 d-flex align-items-center justify-content-end "
                         onClick={() => setEditState(false)}
                       >
                         <p className="font-semibold">Finish Editing</p>
@@ -511,9 +511,8 @@ const hostListingPreview = () => {
                           <h4>View Location</h4>
                         </div>
                         <iframe
-                          src={`https://www.google.com/maps?q=${lat},${long}&hl=es;z=14&output=embed`}
+                          src={`https://www.google.com/maps?q=${lat},${long}&hl=es;z=14&loading=async&output=embed`}
                           className="iframe-video"
-                          frameBorder="0"
                           style={{
                             width: "100%",
                             height: "300px",

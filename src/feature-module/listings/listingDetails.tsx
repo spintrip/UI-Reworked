@@ -1439,20 +1439,20 @@ const listingDetails = () => {
 
 
       {isNotification && (
-          <div className="container-fluid alert error-login-message mt-2" role="alert" style={{zIndex:'1200'}}>
+          <div className="container-fluid alert error-login-message mt-1" role="alert" style={{zIndex:'1200'}}>
             <div
-              className="p-2 location-alert shadow bg-amber-800 items-center text-amber-100 leading-none rounded-full flex lg:inline-flex"
+              className="p-2 location-alert notification-details shadow items-center leading-none rounded-full flex lg:inline-flex"
               role="alert"
             >
-              <span className="flex rounded-full bg-amber-500 uppercase px-2 py-1 text-xs font-bold mr-3">
+              <span className="info-here">
                 Info
               </span>
               <span className="font-semibold mr-2 text-left flex-auto d-flex align-items-center justify-content-center text-sm flex-wrap">
                 <div>{notificationMessage}</div>
                 <Link to={routes.settings}>
-                <div className="d-flex align-items-center justify-content-center text-sm flex-wrap text-sm text-white text-decoration-underline mx-2">
+                <div className="d-flex align-items-center justify-content-center text-sm flex-wrap text-white text-decoration-underline mx-2">
                   <span>Go to Settings</span> 
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="arrow-icon">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
               </svg>
               </div>
