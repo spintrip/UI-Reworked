@@ -175,7 +175,7 @@ const listingDetails = () => {
       setIsCheckAvailabilityDisabled(true);
       return false;
     }
-
+    const currentDateTime = dayjs();
     const pickupDateTime = dayjs(
       `${checkAvailabilityPickupDate}T${checkAvailabilityPickupTime}`,
     );
@@ -183,6 +183,11 @@ const listingDetails = () => {
       `${checkAvailabilityReturnDate}T${checkAvailabilityReturnTime}`,
     );
 
+    if (pickupDateTime.isBefore(currentDateTime, 'minute')) {
+      setErrorMessage("Start date or time cannot be before the current date/time.");
+      setIsCheckAvailabilityDisabled(true);
+      return false;
+    }
     if (pickupDateTime >= returnDateTime) {
       setErrorMessage("Pickup date/time must be before return date/time.");
       setIsCheckAvailabilityDisabled(true);
@@ -1110,15 +1115,10 @@ const listingDetails = () => {
                                       onChange={
                                         handleCheckAvailabilityPickupTimeChange
                                       }
-                                      minTime={dayjs()}
                                       slotProps={{
                                         textField: (params) => (
                                           <TextField
                                             {...params}
-                                            InputProps={{
-                                              ...params.InputProps,
-                                              readOnly: true,
-                                            }}
                                           />
                                         ),
                                       }}
@@ -1149,15 +1149,6 @@ const listingDetails = () => {
                                         textField: (params) => (
                                           <TextField
                                             {...params}
-                                            InputProps={{
-                                              ...params.InputProps,
-                                              readOnly: true,
-                                              className: "clock-format",
-                                              // eslint-disable-next-line @typescript-eslint/no-empty-function
-                                              onClick:
-                                                params.InputProps?.onClick ||
-                                                (() => { console.log("Nothing") }),
-                                            }}
                                           />
                                         ),
                                       }}
@@ -1176,10 +1167,6 @@ const listingDetails = () => {
                                         textField: (params) => (
                                           <TextField
                                             {...params}
-                                            InputProps={{
-                                              ...params.InputProps,
-                                              readOnly: true,
-                                            }}
                                           />
                                         ),
                                       }}
@@ -1269,7 +1256,7 @@ const listingDetails = () => {
                         />
                       </p>
                       <iframe
-                        src={`https://www.google.com/maps?q=${carLocation.latitude},${carLocation.longitude}&hl=es;z=14&output=embed`}
+                        src={`https://www.google.com/maps?q=${carLocation.latitude},${carLocation.longitude}&loading=async&hl=es;z=14&output=embed`}
                         className="iframe-video border rounded"
                         loading={"eager"}
                         style={{ width: "100%", height: "150px", border: "0" }}

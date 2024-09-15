@@ -47,7 +47,7 @@ const CarouselDisplay: React.FC<CarouselDisplayProps> = ({ images }) => {
           <Modal.Title>Image Preview</Modal.Title>
         </Modal.Header>
         <Modal.Body className="p-0">
-          <div className="flex items-center justify-center h-full">
+          <div className="image-preview">
             <img
               src={selectedImage || ""}
               alt="Selected"

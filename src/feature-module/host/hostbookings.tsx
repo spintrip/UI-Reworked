@@ -933,14 +933,15 @@ const HostBookings = () => {
                 </div>
               </Modal.Body>
             )}
-            <Modal.Footer className="p-2">
+            <Modal.Footer className="p-2 d-flex align-items-center justify-content-between">
               <Button
-                variant="primary"
+                variant="secondary"
+                className="bg-secondary text-white"
                 onClick={() => {
                   setShowFeedbackModal(true);
                   setShowCompletedModal(false);
                 }}
-                className="d-flex align-items-center justify-content-center border"
+                
               >
                 <span>Give feedback</span>
                 <svg
@@ -949,7 +950,7 @@ const HostBookings = () => {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="size-6 ml-2"
+                  className="smile-icon"
                 >
                   <path
                     strokeLinecap="round"

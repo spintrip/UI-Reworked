@@ -970,8 +970,9 @@ const Home: React.FC = () => {
                         {token ? (
                           <div className="listing-location-details">
                             <Suspense fallback={<div>Loading...</div>}>
-                              <div className="listing-price">
+                              <div className="locatiion-display">
                                 <LocationDisplay
+                                  
                                   latitude={car.latitude}
                                   longitude={car.longitude}
                                 />
