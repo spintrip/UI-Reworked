@@ -9,6 +9,7 @@ import Button from "react-bootstrap/Button";
 import { getProfile, putVerify } from "../../api/Profile";
 import PropTypes from "prop-types";
 import ImageWithBasePath1 from "../../../core/data/img/ImageWithBasePath1";
+import { FaFilePdf } from "react-icons/fa"; 
 
 
 interface ProfileData {
@@ -203,6 +204,10 @@ const UserSecurity: React.FC = () => {
     }
   };
 
+  const isPdfFile = (fileName: any) => {
+    return fileName.toLowerCase().endsWith(".pdf");
+  };
+  
   const MyVerticallyCenteredModal: React.FC<{
     show: boolean;
     onHide: () => void;
@@ -271,12 +276,17 @@ const UserSecurity: React.FC = () => {
             selectedFile.length > 0 &&
             selectedFile.map((file: File, index: number) =>
               file ? (
-                <img
-                  key={index}
-                  src={URL.createObjectURL(file)}
-                  alt={`Preview ${index + 1}`}
-                  className="w-20 cursor-pointer hover:opacity-80 h-20 mx-1 object-fit-contain border border-2 rounded-xl"
-                />
+                (isPdfFile(file.name) ? (
+                  <div className="pdf-preview cursor-pointer hover:opacity-80 border border-2 rounded-xl flex justify-center items-center h-full">
+                    <FaFilePdf size={30} color="red" /> {/* Display PDF icon */}
+                  </div>
+                ) : (
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt={`Preview ${index + 1}`}
+                    className="w-20 cursor-pointer hover:opacity-80 h-20 mx-1 object-fit-contain border border-2 rounded-xl"
+                  />
+                ))
               ) : null,
             )}
         </div>
@@ -367,11 +377,18 @@ const UserSecurity: React.FC = () => {
                       <div className="security-content d-flex flex-column align-items-center justify-content-center">
                       {profileData.dlFile ? (
                         <>
+                        {isPdfFile(profileData.dlFile) ? (
+                            <div className="pdf-preview">
+                              <FaFilePdf size={50} color="red" /> {/* PDF icon */}
+                              <span className="file-name">{profileData.dlFile}</span>
+                            </div>
+                          ) : (
                           <ImageWithBasePath1
                             src={profileData.dlFile}
                             alt="DL Preview"
                             className="document-photo"
                           />
+                          )}
                           <div
                             onClick={() => setModalShow((prev) => ({ ...prev, dl: true }))}
                             className="upload-icon mt-4"
@@ -417,11 +434,18 @@ const UserSecurity: React.FC = () => {
                       <div className="security-content d-flex flex-column align-items-center justify-content-center">
                       {profileData.aadharFile ? (
                         <>
-                          <ImageWithBasePath1
-                            src={profileData.aadharFile}
-                            alt="Aadhaar Preview"
-                            className="document-photo"
-                          />
+                          {isPdfFile(profileData.aadharFile) ? (
+                            <div className="pdf-preview">
+                              <FaFilePdf size={50} color="orange" /> 
+                              <span className="file-name">{profileData.aadharFile}</span>
+                            </div>
+                          ) : (
+                            <ImageWithBasePath1
+                              src={profileData.aadharFile}
+                              alt="Aadhaar Preview"
+                              className="document-photo"
+                            />
+                          )}
                           <div
                             onClick={() => setModalShow((prev) => ({ ...prev, aadhaar: true }))}
                             className="upload-icon mt-4"

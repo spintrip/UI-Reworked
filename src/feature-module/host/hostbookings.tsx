@@ -1118,6 +1118,7 @@ const HostBookings = () => {
           <Modal
             show={showStatus5Modal}
             onHide={() => {
+              setSelectedBooking(null);
               setShowStatus5Modal(false);
               setErrorMessage("");
               fetchUpdatedBookings();
@@ -1129,17 +1130,6 @@ const HostBookings = () => {
             keyboard={false}
           >
             <Modal.Header className="modal-header" closeButton>
-              <button
-                type="button"
-                className="close-btn"
-                onClick={() => {
-                  setSelectedBooking(null);
-                  setErrorMessage("");
-                  setShowStatus5Modal(false);
-                }} // Reset selectedBooking when modal is closed
-              >
-                <span>×</span>
-              </button>
               <Modal.Title>Booking Details</Modal.Title>
             </Modal.Header>
             {selectedBooking && (
