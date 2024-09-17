@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-// import Breadcrumbs from "../../common/Breadcrumbs";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import useScrollToTop from "../../../hooks/useScrollToTop";
@@ -9,6 +8,7 @@ const FeePolicy = () => {
   useEffect(() => {
     AOS.init({ duration: 500, once: true });
   }, []);
+  
   return (
     <div className="main-wrapper">
       <div className="privacy-section">
@@ -17,310 +17,79 @@ const FeePolicy = () => {
             <div className="col-lg-12">
               <div className="terms-policy">
                 <h1 className="text-black mb-5" style={{fontSize:'32px', fontWeight:'700'}}>
-                  Fee Policy • Spintrip Car Rentals Pvt Ltd
+                  Spintrip Car Rentals Pvt Ltd Fee Policy
                 </h1>
+
+                <h2 className="mb-4" data-aos="fade-down">
+                  Guest Fee Policy
+                </h2>
+
+                <h3 className="mb-3" data-aos="fade-down">
+                  Driver's License Submission
+                </h3>
                 <p data-aos="fade-down">
-                  <strong>
-                    THIS PRIVACY POLICY IS AN ELECTRONIC RECORD IN THE FORM OF
-                    AN ELECTRONIC CONTRACT FORMED UNDER THE INFORMATION
-                    TECHNOLOGY ACT, 2000 AND THE RULES MADE THEREUNDER AND THE
-                    AMENDED PROVISIONS PERTAINING TO ELECTRONIC
-                    DOCUMENTS/RECORDS IN VARIOUS STATUTES AS AMENDED BY THE
-                    INFORMATION TECHNOLOGY ACT, 2000. THIS PRIVACY POLICY DOES
-                    NOT REQUIRE ANY PHYSICAL, ELECTRONIC, OR DIGITAL SIGNATURE.
-                  </strong>
-                </p>
-                <p data-aos="fade-down">
-                  <strong>
-                    THE TERMS &quot;WE/US/OUR/SPINTRIP&quot; INDIVIDUALLY AND
-                    COLLECTIVELY REFER TO SPINTRIP CAR RENTALS PVT LTD AND THE
-                    TERMS &quot;YOU/YOUR/YOURSELF&quot; REFER TO THE
-                    USERS/MEMBERS UNDER THE MEMBERSHIP AGREEMENT.
-                  </strong>
-                </p>
-                <p data-aos="fade-down">
-                  <strong>
-                    THIS PRIVACY POLICY IS A LEGALLY BINDING DOCUMENT BETWEEN
-                    YOU AND SPINTRIP (BOTH TERMS DEFINED ABOVE).
-                  </strong>
-                </p>
-                <p data-aos="fade-down">
-                  <strong>
-                    THIS DOCUMENT IS PUBLISHED AND SHALL BE CONSTRUED IN
-                    ACCORDANCE WITH THE PROVISIONS OF THE INFORMATION TECHNOLOGY
-                    (REASONABLE SECURITY PRACTICES AND PROCEDURES AND SENSITIVE
-                    PERSONAL DATA OR INFORMATION) RULES, 2011 UNDER INFORMATION
-                    TECHNOLOGY ACT, 2000; THAT REQUIRE PUBLISHING OF THE PRIVACY
-                    POLICY FOR COLLECTION, USE, STORAGE AND TRANSFER OF
-                    SENSITIVE PERSONAL DATA OR INFORMATION.
-                  </strong>
-                </p>
-                <p data-aos="fade-down">
-                  <strong>
-                    PLEASE READ THIS PRIVACY POLICY CAREFULLY. BY USING THE
-                    WEBSITE, YOU INDICATE THAT YOU UNDERSTAND, AGREE AND CONSENT
-                    TO THIS PRIVACY POLICY. IF YOU DO NOT AGREE WITH THE TERMS
-                    OF THIS PRIVACY POLICY, PLEASE DO NOT USE THIS WEBSITE. YOU
-                    HEREBY PROVIDE YOUR UNCONDITIONAL &amp; IRREVOCABLE CONSENT
-                    TO SPINTRIP FOR THE PURPOSES PRESCRIBED UNDER INCLUDING BUT
-                    NOT LIMITED TO PROVISIONS OF SECTIONS 43A, 72 AND SECTION
-                    72A OF INFORMATION TECHNOLOGY ACT, 2000.
-                  </strong>
-                </p>
-                <p data-aos="fade-down">
-                  This Privacy Policy (the &ldquo;Policy&rdquo;) sets out how
-                  Spintrip collects, uses, protects, and shares any information
-                  that you give to us when you use this website i.e.{" "}
-                  <a href="https://spintrip.in">www.spintrip.in</a>{" "}
-                  including its mobile application (the &ldquo;Website&rdquo;).
-                  Spintrip is committed to ensuring that your privacy is
-                  protected to all possible, reasonable, and commercial extents,
-                  as your privacy on the Internet is of the utmost importance to
-                  us. Because we gather certain types of information about You
-                  in order to provide, protect, maintain and improve our
-                  services, We feel You should fully understand the Policy
-                  surrounding the capture and use of that information and
-                  solicit Your full attention towards it.
-                </p>
-                <p data-aos="fade-down">
-                  By providing us your Information or by making use of the
-                  facilities provided by the Website, You hereby consent to the
-                  collection, storage, processing, and transfer of any or all of
-                  Your Personal Information and Non-Personal Information by
-                  Spintrip, as specified under this Policy. You further
-                  represent and warrant that such collection, use, storage, and
-                  transfer of Your Information shall not cause any loss or
-                  wrongful gain to you or any other person.
-                </p>
-                <p data-aos="fade-down">
-                  This Policy is a legally binding contract between You and
-                  Spintrip, whose Website You use or access or You otherwise
-                  deal with. This Policy shall be read together with the other
-                  terms and conditions of the Website viz, Membership Agreement,
-                  and Fees Policy being displayed on the website{" "}
-                  <a href="https://spintrip.in">www.spintrip.in</a>.
+                  For each booking made through the Spintrip Platform, the Guest shall be required to submit their driver’s license hardcopy to the Host before starting the trip. The driver’s license must be collected back by the Guest while returning the car.
                 </p>
 
-                <h2 className="mb-3 my-5" data-aos="fade-down">
-                  Collection, Storage, and Use of Personal Information:
-                </h2>
+                <h3 className="mb-3" data-aos="fade-down">
+                  Lease Rental Fee
+                </h3>
                 <p data-aos="fade-down">
-                  When You apply for or maintain an account with Spintrip, We
-                  collect certain personally identifiable information
-                  (&ldquo;Personal Information&rdquo;), such as:
+                  For each booking made through the Spintrip Platform, the Guest shall have to pay Lease Rental in advance, which includes:
                 </p>
                 <ul data-aos="fade-down">
-                  <li>
-                    Your name, age, gender, photograph, contact preferences,
-                    telephone number, mailing address, including but not limited
-                    to permanent and current residential addresses, e-mail
-                    address, financial information, internet protocol address,
-                    history of Your transactions (booking and payment history),
-                    any other items of sensitive personal data or information,
-                    as such term is defined under the Information Technology
-                    (Reasonable Security Practices And Procedures And Sensitive
-                    Personal Data Of Information) Rules, 2011 enacted under the
-                    Information Technology Act, 2000, identification code of
-                    Your communication device which You use to access the
-                    Website, any other information that You provide during Your
-                    registration, use of availing of services via Website and
-                    other relevant documents viz; driving license and additional
-                    address cum identity proofs, as prescribed under the
-                    Membership Agreement of Spintrip. By providing information
-                    to create a user account or complete Your user profile, You
-                    expressly and voluntarily accept this Policy and You shall
-                    be deemed to have voluntarily consented to authenticate
-                    Yourself with a government-issued photo identity document
-                    which also contains your address, other than driver&rsquo;s
-                    license, (hereafter &ldquo;Government-issued ID&rdquo;) and
-                    hereby give Your voluntary consent for seeding
-                    identification details as provided in Government-issued ID
-                    to all Membership requirements and to provide Your identity
-                    information for authentication for the purpose of availing
-                    of the Services and to enforce any breach committed by you
-                    of the Membership Agreement through police,
-                    government/enforcement authority or court of law.
-                  </li>
-                  <li>
-                    Vehicle Use Data: Vehicles will contain hardware that
-                    gathers and transmits information about vehicle use. This is
-                    done as a security measure against accident or theft and
-                    also to provide You with valuable services and information,
-                    such as other drivers data.
-                  </li>
-                  <li>
-                    Location Tracking: To prevent theft, and to allow us to
-                    locate You in case of emergency, accident, lock-out, etc.,
-                    We track the location of your vehicle. Your location
-                    information will be confined to Spintrip&rsquo;s service,
-                    and we endeavor not to make your location or movements
-                    public unless it is required under personal, medical, and
-                    legal (recovery and insurance) exigencies. As part of our
-                    service, the location of your vehicle may be released to
-                    insurance companies, the police, courts, tribunals, or
-                    similar law enforcement agencies, in the course of an
-                    investigation and/or accident claim, and to provide
-                    assistance in emergencies. Information regarding the
-                    location of each vehicle on Spintrip&rsquo;s Website is also
-                    transmitted to Spintrip.
-                  </li>
-                  <li>
-                    Driver and Vehicle Information: As a member of
-                    Spintrip&rsquo;s Website, you authorize us to access Your
-                    driver&rsquo;s record, vehicle travel history report
-                    pertaining to Your ride/trip from all applicable entities
-                    and authorities&rsquo;. Moreover, You authorize all DMVs,
-                    RMVs, auto mechanics, and all other entities and interested
-                    parties to release information to us regarding Your driving
-                    record and vehicle travel history.
-                  </li>
+                  <li>Lease Rental calculated based on the start and end time of the trip. The Lease Rental fee per hour is dynamically driven and changes based on the demand, lead time to booking start, location of the booking, vehicle chosen, and the duration of the booking.</li>
                 </ul>
-                <p data-aos="fade-down">
-                  You have the right to request Spintrip to discontinue the use
-                  of Your personal information. To withdraw Your consent to our
-                  collection and processing of Your information in the future,
-                  You may do so by closing your account. However, the registered
-                  mobile number and transactional details shall be collected and
-                  stored in an anonymized manner for accounting and security
-                  purposes. Should you choose to sign up for your account using
-                  the existing number in our database, first-time user
-                  (&ldquo;FTU&rdquo;) discount benefits shall not be applicable
-                  to YOU and/or on YOUR account. Please note that in case there
-                  is an outstanding payable at your end or if there is an
-                  ongoing/upcoming booking or listing on the Spintrip Platform
-                  made by you, to withdraw your consent or seek deletion of data
-                  collected or being processed by us you shall have to clear the
-                  payables or complete/cancel the booking/listing (as the case
-                  may be).
-                </p>
-                <p data-aos="fade-down">
-                  As you access and use our services we collect information such
-                  as, but not limited to - phone number, email address, device
-                  make-details, and IP address. We may disclose to third-party
-                  services certain information to ensure fraud prevention and
-                  PayLater checkout experience. The information may also be
-                  disclosed to third-party vendors like call centers and
-                  customer care vendors for the purpose of carrying out services
-                  as provided by Spintrip. Please refer to the third-party
-                  privacy policy for more details.
-                </p>
 
-                <h2 className="mt-5 mb-3" data-aos="fade-down">
-                  Collection and Use of Non-Personal Information
-                </h2>
-                <p data-aos="fade-down">
-                  We also collect non-personal information &ndash; data in a
-                  form that does not permit direct association with any specific
-                  individual, including the browser You use, usage details, and
-                  identifying technologies. We may use, transfer, collect and
-                  disclose non-personal information for any purpose. If We do
-                  combine non-personal information with personal information,
-                  the combined information will be treated as personal
-                  information for as long as it remains combined.
-                </p>
-                <h3 data-aos="fade-down">Aggregate Information:</h3>
-                <p data-aos="fade-down">
-                  We may share non-personally identifiable information (such as
-                  referring/exit pages, anonymous usage data, and URLs, platform
-                  types, number of clicks, etc.) with interested third parties
-                  to help them understand the usage patterns for certain
-                  Spintrip services.
-                </p>
-                <p data-aos="fade-down">
-                  Third-party ad servers or ad networks may serve advertisements
-                  on the Website. These third-party ad servers or ad networks
-                  may automatically receive Your internet protocol address when
-                  they serve ads to Your Internet browser. They may also use
-                  other technologies (such as cookies, JavaScript, or web
-                  beacons) to measure the effectiveness of their advertisements
-                  and to personalize the advertising content. However, please
-                  note that if an advertiser asks Spintrip to show an
-                  advertisement to a certain audience and you respond to that
-                  advertisement, the advertiser or ad-server may conclude that
-                  You fit the description of the audience they are trying to
-                  reach. Spintrip&rsquo;s Policy does not apply to, and we
-                  cannot control the activities of, third-party advertisers.
-                </p>
+                <h3 className="mb-3" data-aos="fade-down">
+                  Refunds, Charges, and Payments
+                </h3>
+                <ul data-aos="fade-down">
+                  <li>All refunds shall be initiated to the original payment account/mode. Refund initiation shall be processed immediately after the cancellation request is received. However, all such refunds may take 5-15 days to reflect in the Guest’s accounts.</li>
+                  <li>Payments owed by Guests under this Fee Policy or other applicable policies must be paid electronically within 24 hours of the booking end time, as per Spintrip’s payment instructions.</li>
+                  <li>Guests may be charged a processing fee for a declined credit or debit card payment.</li>
+                  <li>In the event the Guest defaults on any payments, Spintrip is entitled to charge reminder fees and default interest in accordance with the provisions of the law. In addition, Spintrip may designate third parties to collect amounts owed by a Guest.</li>
+                  <li>Spintrip reserves the right to prohibit a Guest from making a subsequent booking on the Platform until all outstanding fees in the Guest's account have been paid in full.</li>
+                  <li>The Guest should not make any direct payments to the Host or to any Spintrip executive in any mode except for any settlements related to fuel or Fastag.</li>
+                </ul>
 
-                <h2 className="mt-5 mb-3" data-aos="fade-down">
-                  Cookies
-                </h2>
+                <h3 className="mb-3" data-aos="fade-down">
+                  Fees and Penalties
+                </h3>
                 <p data-aos="fade-down">
-                  We use various technologies, including &ldquo;cookies,&rdquo;
-                  to collect non-identifiable information. A cookie is a piece
-                  of data that any website can send to Your browser, which may
-                  then be stored on Your computer as an anonymous tag that
-                  identifies Your computer but not You. To enhance Our Service,
-                  some Spintrip pages use cookies, sent by Spintrip or its
-                  third-party vendors, or other technologies. You may control
-                  the effect of cookies through Your browser settings, however,
-                  some features of Spintrip&rsquo;s Service may not work
-                  properly if Your use of cookies is disabled.
+                  Here is a comprehensive list of fees and penalties for certain scenarios after you have created your booking/reservation:
                 </p>
-                <p data-aos="fade-down">
-                  We may also use Web beacons or other technologies, often in
-                  conjunction with cookies, to enhance Our Service on a number
-                  of pages of Spintrip&rsquo;s Website. A non-identifiable
-                  notice of a visitor&rsquo;s visit to a page on
-                  Spintrip&rsquo;s site is generated and recorded, which may be
-                  processed by us or by Our suppliers. To disable some of these
-                  features, You may disable cookies in Your web browser&rsquo;s
-                  settings. Web beacons and other technologies will still detect
-                  visits to these pages, but the notices they generate are
-                  disregarded and cannot be associated with other
-                  non-identifiable cookie information.
-                </p>
+                <ul data-aos="fade-down">
+                  <li><strong>Cancellation by Guest:</strong> Details of the cancellation fees based on timing before the booking start time.</li>
+                  <li><strong>Reschedule before booking start time:</strong> No modification allowed between 0 - 2 hours before booking start time.</li>
+                  <li><strong>Extension:</strong> Extensions can be made before or after booking ends with normal tariff rates applying.</li>
+                  <li><strong>Late Return:</strong> Late returns are charged up to 1.5-2x the hourly Lease Rental fee per hour.</li>
+                  <li><strong>Minimum Duration:</strong> The minimum booking duration is 8 hours.</li>
+                  <li><strong>Discounts:</strong> Discounts apply to trips of 8 hours or more and do not apply on blackout days.</li>
+                  <li><strong>Fuel Policy:</strong> Guests are responsible for fuel discrepancies based on the actual cost per litre.</li>
+                  <li><strong>Breakdown of Vehicle:</strong> Guest liable for breakdowns due to negligence.</li>
+                  <li><strong>Returning the Vehicle to the Wrong Location:</strong> A flat fee of INR 10,000 applies for incorrect returns.</li>
+                  <li><strong>No Show:</strong> Bookings will be canceled if no show within 4 hours of start time, with no refunds.</li>
+                  <li><strong>Over Speeding:</strong> Fees and potential expulsion for exceeding speed limits.</li>
+                  <li><strong>Smoking:</strong> Charges apply for smoking inside the vehicle.</li>
+                  <li><strong>Wrong Fuelling:</strong> Guest liable for full repair costs.</li>
+                  <li><strong>Loss of Keys and Documents:</strong> Charges apply for lost keys and documents.</li>
+                  <li><strong>Vehicle Damage:</strong> Guest liable for damages as per selected Damage Protection Plan.</li>
+                  <li><strong>Cleaning Required:</strong> Charges apply for returning the vehicle in a dirty condition.</li>
+                  <li><strong>Fastags/Tolls:</strong> Guest responsible for all tolls incurred during booking.</li>
+                </ul>
 
-                <h2 className="mt-5 mb-3" data-aos="fade-down">
-                  Information Sharing
-                </h2>
-                <p data-aos="fade-down">
-                  Spintrip only shares Personal Information with third parties
-                  in the following limited circumstances:
-                </p>
-                <ol data-aos="fade-down">
-                  <li>
-                    <strong>
-                      To provide other businesses or persons for the purpose of
-                      processing personal information on our behalf.
-                    </strong>{" "}
-                    We require that these parties agree to process such
-                    information based on Our instructions and in compliance with
-                    this Policy and any other appropriate confidentiality and
-                    security measures.
-                  </li>
-                  <li>
-                    <strong>
-                      We have a good faith belief that access, use,
-                      preservation, or disclosure of such information is
-                      reasonably necessary to:
-                    </strong>{" "}
-                    (a) satisfy any applicable law, regulation, legal process,
-                    or enforceable governmental request, (b) enforce applicable
-                    Terms of Service, including investigation of potential
-                    violations thereof, (c) detect, prevent, or otherwise
-                    address fraud, security, or technical issues, or (d) protect
-                    against imminent harm to the rights, property, or safety of
-                    Spintrip, its users, or the public as required or permitted
-                    by law.
-                  </li>
-                </ol>
+                <h3 className="mb-3" data-aos="fade-down">
+                  Additional Conditions
+                </h3>
+                <ul data-aos="fade-down">
+                  <li>All rates include GST where applicable.</li>
+                  <li>Spintrip is not responsible for any property left in the vehicle after the booking ends.</li>
+                  <li>KYC - Guest’s profile should be verified before the booking start.</li>
+                </ul>
 
                 <p data-aos="fade-down">
-                  This privacy policy will help you understand how Spintrip uses
-                  and protects the data you provide to us when you visit and use
-                  the website.
-                </p>
-                <p data-aos="fade-down">
-                  We reserve the right to update this privacy policy at any
-                  time, so please check back periodically. By continuing to use
-                  the website after any changes to this privacy policy, you
-                  agree to accept those changes.
-                </p>
-                <p className="mb-0" data-aos="fade-down">
-                  If you have any questions or concerns about our privacy policy
-                  or data processing, please contact us at{" "}
-                  <a href="mailto:support@spintrip.in">support@spintrip.in</a>.
+                  This policy will help you understand Spintrip's fee structure and conditions. For any questions, please contact us at <a href="mailto:support@spintrip.in">support@spintrip.in</a>.
                 </p>
               </div>
             </div>
