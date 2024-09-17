@@ -157,7 +157,7 @@ const listingDetails = () => {
   // retuern the logo specific to the car brand
   const getBrandLogo = (brandName: string): string | undefined => {
     const brand = brands.find(
-      (b) => b.brand_name.toLowerCase() === brandName.toLowerCase(),
+      (b) => b.brand_name?.toLowerCase() === brandName?.toLowerCase(),
     );
     return brand ? brand.logo_path : undefined;
   };
@@ -175,7 +175,7 @@ const listingDetails = () => {
       setIsCheckAvailabilityDisabled(true);
       return false;
     }
-
+    const currentDateTime = dayjs();
     const pickupDateTime = dayjs(
       `${checkAvailabilityPickupDate}T${checkAvailabilityPickupTime}`,
     );
@@ -183,6 +183,11 @@ const listingDetails = () => {
       `${checkAvailabilityReturnDate}T${checkAvailabilityReturnTime}`,
     );
 
+    if (pickupDateTime.isBefore(currentDateTime, 'minute')) {
+      setErrorMessage("Start date or time cannot be before the current date/time.");
+      setIsCheckAvailabilityDisabled(true);
+      return false;
+    }
     if (pickupDateTime >= returnDateTime) {
       setErrorMessage("Pickup date/time must be before return date/time.");
       setIsCheckAvailabilityDisabled(true);
@@ -1110,15 +1115,10 @@ const listingDetails = () => {
                                       onChange={
                                         handleCheckAvailabilityPickupTimeChange
                                       }
-                                      minTime={dayjs()}
                                       slotProps={{
                                         textField: (params) => (
                                           <TextField
                                             {...params}
-                                            InputProps={{
-                                              ...params.InputProps,
-                                              readOnly: true,
-                                            }}
                                           />
                                         ),
                                       }}
@@ -1149,15 +1149,6 @@ const listingDetails = () => {
                                         textField: (params) => (
                                           <TextField
                                             {...params}
-                                            InputProps={{
-                                              ...params.InputProps,
-                                              readOnly: true,
-                                              className: "clock-format",
-                                              // eslint-disable-next-line @typescript-eslint/no-empty-function
-                                              onClick:
-                                                params.InputProps?.onClick ||
-                                                (() => { console.log("Nothing") }),
-                                            }}
                                           />
                                         ),
                                       }}
@@ -1176,10 +1167,6 @@ const listingDetails = () => {
                                         textField: (params) => (
                                           <TextField
                                             {...params}
-                                            InputProps={{
-                                              ...params.InputProps,
-                                              readOnly: true,
-                                            }}
                                           />
                                         ),
                                       }}
@@ -1269,7 +1256,7 @@ const listingDetails = () => {
                         />
                       </p>
                       <iframe
-                        src={`https://www.google.com/maps?q=${carLocation.latitude},${carLocation.longitude}&hl=es;z=14&output=embed`}
+                        src={`https://www.google.com/maps?q=${carLocation.latitude},${carLocation.longitude}&loading=async&hl=es;z=14&output=embed`}
                         className="iframe-video border rounded"
                         loading={"eager"}
                         style={{ width: "100%", height: "150px", border: "0" }}
@@ -1439,20 +1426,20 @@ const listingDetails = () => {
 
 
       {isNotification && (
-          <div className="container-fluid alert error-login-message mt-2" role="alert" style={{zIndex:'1200'}}>
+          <div className="container-fluid alert error-login-message mt-1" role="alert" style={{zIndex:'1200'}}>
             <div
-              className="p-2 location-alert shadow bg-amber-800 items-center text-amber-100 leading-none rounded-full flex lg:inline-flex"
+              className="p-2 location-alert notification-details shadow items-center leading-none rounded-full flex lg:inline-flex"
               role="alert"
             >
-              <span className="flex rounded-full bg-amber-500 uppercase px-2 py-1 text-xs font-bold mr-3">
+              <span className="info-here">
                 Info
               </span>
               <span className="font-semibold mr-2 text-left flex-auto d-flex align-items-center justify-content-center text-sm flex-wrap">
                 <div>{notificationMessage}</div>
                 <Link to={routes.settings}>
-                <div className="d-flex align-items-center justify-content-center text-sm flex-wrap text-sm text-white text-decoration-underline mx-2">
+                <div className="d-flex align-items-center justify-content-center text-sm flex-wrap text-white text-decoration-underline mx-2">
                   <span>Go to Settings</span> 
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="arrow-icon">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
               </svg>
               </div>

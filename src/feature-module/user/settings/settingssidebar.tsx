@@ -1,14 +1,20 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { all_routes } from "../../router/all_routes";
 
 const SettingsSidebar = () => {
   const route = all_routes;
   const location = useLocation();
+  const navigate = useNavigate();
   const isLinkActive = (route: string) => {
-    // Check if the current location matches the given route
+   
     return location.pathname === route;
   };
+  const token = localStorage.getItem("authToken");
+  if (!token) {
+    navigate(all_routes.signup);
+    return null;
+  }
 
   return (
     <div className="col-lg-3 theiaStickySidebar">
@@ -24,7 +30,7 @@ const SettingsSidebar = () => {
                   <i className="feather-user" /> Profile
                 </Link>
               </li>
-              <li>
+              <li className="doc-button">
                   <Link to={route.security} className={isLinkActive(route.security) ? "active" : "border"}>
                   <i className="fas fa-file-alt" />
                   Documents

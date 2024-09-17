@@ -139,7 +139,7 @@ const UserMessages: React.FC = () => {
                     </form>
                     <div className="chat-users-list">
                       <div className="chat-scroll">
-                        <div className="notify-block d-flex">
+                        <div className="notify-block d-flex align-items-center justify-content-between">
                           <div className="media-img-wrap flex-shrink-0">
                             <div className="avatar">
                               <ImageWithBasePath

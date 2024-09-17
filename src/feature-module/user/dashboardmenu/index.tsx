@@ -24,10 +24,12 @@ const DashboardMenu = () => {
                     to={routes.dashboard}
                     className={isLinkActive(routes.dashboard) ? "active" : ""}
                   >
-                    <ImageWithBasePath
-                      src="assets/img/icons/dashboard-icon.svg"
-                      alt="Icon"
-                    />
+                    <div className=" d-flex flex-column align-items-start justify-content-start ">
+                      <ImageWithBasePath
+                        src="assets/img/icons/dashboard-icon.svg"
+                        alt="Icon"
+                      />
+                    </div>
                     <span>Dashboard</span>
                   </Link>
                 </li>
@@ -44,62 +46,43 @@ const DashboardMenu = () => {
                         : ""
                     }
                   >
-                    <ImageWithBasePath
-                      src="assets/img/icons/booking-icon.svg"
-                      alt="Icon"
-                    />
+                    <div className=" d-flex flex-column align-items-start justify-content-start ">
+                      <ImageWithBasePath
+                        src="assets/img/icons/booking-icon.svg"
+                        alt="Icon"
+                      />
+                    </div>
                     <span>My Bookings</span>
                   </Link>
                 </li>
-                {/* <li>
-                  <Link to={routes.reviews} className={isLinkActive(routes.reviews) ? "active" : ""}>
-                    <ImageWithBasePath
-                      src="assets/img/icons/review-icon.svg"
-                      alt="Icon"
-                    />
-                    <span>Reviews</span>
-                  </Link>
-                </li> */}
                 <li>
                   <Link
                     to={routes.wishlist}
                     className={isLinkActive(routes.wishlist) ? "active" : ""}
                   >
-                    <ImageWithBasePath
-                      src="assets/img/icons/wishlist-icon.svg"
-                      alt="Icon"
-                    />
+                    <div className=" d-flex flex-column align-items-start justify-content-start ">
+                      <ImageWithBasePath
+                        src="assets/img/icons/wishlist-icon.svg"
+                        alt="Icon"
+                      />
+                     </div>
                     <span>Wishlist</span>
+                   
                   </Link>
                 </li>
-                {/* <li>
-                  <Link to={routes.messages} className={isLinkActive(routes.messages) ? "active" : ""}>
-                    <ImageWithBasePath
-                      src="assets/img/icons/message-icon.svg"
-                      alt="Icon"
-                    />
-                    <span>Messages</span>
-                  </Link>
-                </li> */}
-                {/* <li>
-                  <Link to={routes.wallet} className={isLinkActive(routes.wallet) ? "active" : ""}>
-                    <ImageWithBasePath
-                      src="assets/img/icons/wallet-icon.svg"
-                      alt="Icon"
-                    />
-                    <span>My Wallet</span>
-                  </Link>
-                </li> */}
                 <li>
                   <Link
                     to={routes.payment}
                     className={isLinkActive(routes.payment) ? "active" : ""}
                   >
-                    <ImageWithBasePath
-                      src="assets/img/icons/payment-icon.svg"
-                      alt="Icon"
-                    />
+                    <div className=" d-flex flex-column align-items-start justify-content-start ">
+                      <ImageWithBasePath
+                        src="assets/img/icons/payment-icon.svg"
+                        alt="Icon"
+                      />
+                    </div>
                     <span>Payments</span>
+                    
                   </Link>
                 </li>
                 <li>
@@ -115,11 +98,13 @@ const DashboardMenu = () => {
                         : ""
                     }
                   >
-                    <ImageWithBasePath
-                      src="assets/img/icons/profile_User.svg"
-                      alt="Icon"
-                      className="small-width"
-                    />
+                    <div className=" d-flex flex-column align-items-start justify-content-start ">
+                      <ImageWithBasePath
+                        src="assets/img/icons/profile_User.svg"
+                        alt="Icon"
+                        className="small-width"
+                      />
+                    </div>
                     <span>Profile</span>
                   </Link>
                 </li>
@@ -128,11 +113,13 @@ const DashboardMenu = () => {
                     to={routes.userticket}
                     className={isLinkActive(routes.userticket) ? "active" : ""}
                   >
+                    <div className=" d-flex flex-column align-items-start justify-content-start ">
                     <ImageWithBasePath
                       className="custom-car-dashboard-logo"
                       src="assets/img/icons/support-icon.png"
                       alt="Icon"
                     />
+                    </div>
                     <span>Ticket</span>
                   </Link>
                 </li>

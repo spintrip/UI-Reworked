@@ -27,7 +27,6 @@ import {
 } from "../redux/action";
 import faqData from "../../core/data/json/faq";
 import { findCars, getCars } from "../api/Cars";
-//import { fetchUserBookings } from "../user/userbookings_data";
 const LocationInput = React.lazy(() => import('../common/locationInput'));
 const LocationDisplay = React.lazy(() => import('../common/LocationDisplay'));
 import { postWishlist, postCancelWishlist } from "../api/Cars";
@@ -35,10 +34,10 @@ import { Car, Location } from '../redux/types';
 import {getAllCarBrands } from "../api/Cars";
 import {getTopReviews} from "../api/Listing"
 import { debounce } from "lodash";
-import { Helmet } from "react-helmet";
+//import { Helmet } from "react-helmet";
 import TestimonySlider from "../common/TestimonySlider";
 import GoogleAnalyticsScript from "../common/GoogleAnalyticsScript";
-//import Joyride, { CallBackProps, STATUS } from 'react-joyride';
+//import { useJoyride } from "../common/JoyrideContext";
 
 interface Brand {
   brand_name: string;
@@ -75,7 +74,6 @@ const Home: React.FC = () => {
   const initialPickupLocation = useSelector(
     (state: RootState) => state.dateTime.location,
   );
-  //const [run, setRun] = useState<boolean>(false);
   const wishlist = useSelector((state: RootState) => state.wishlist.wishlist);
   const routes = all_routes;
   const [isPending, startTransition] = useTransition();
@@ -120,6 +118,29 @@ const Home: React.FC = () => {
   const toggleFAQ = (index: number | null) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
+  // const { setSteps, startTour } = useJoyride();
+
+
+  // useEffect(() => {
+  //   const steps = [
+  //     {
+  //       target: '.pickup-location',
+  //       content: 'Tap Here to pick a location',
+  //     },
+  //     {
+  //       target: '.Pickup-Date',
+  //       content: 'Choose You pickup Location',
+  //     },
+  //   ];
+    
+  //   localStorage.setItem('joyride-steps', JSON.stringify(steps));
+  //   setSteps(steps);
+  // }, [setSteps]);
+
+  // useEffect(() => {
+  //   startTour();
+  // }, [startTour]);
+
   useEffect(() => {
     if (dayjs().isValid()) {
       setDate1(dayjs(new Date()));
@@ -521,24 +542,23 @@ const Home: React.FC = () => {
   // };
 
 
-  // const handleJoyrideCallback = (data: CallBackProps) => {
+  // const handleJoyrideCallback = (data: any) => {
   //   const { status } = data;
-  //   // Ensure that status is one of the expected values
-  //   if (status === STATUS.FINISHED || status === STATUS.SKIPPED) {
-  //     setRun(false);
-  //   }
+  //   console.log('Joyride status:', status);
   // };
+
 
   // const steps = [
   //   {
-  //     target: '.search-box-banner',
-  //     content: 'This is the first step!',
+  //     target: '.view-all-cars',
+  //     content: 'Welcome!',
   //   },
   //   {
-  //     target: '.section-heading',
-  //     content: 'This is the second step!',
+  //     target: '.search-box-banner',
+  //     content: 'This another awesome feature!',
   //   },
   // ];
+  
 
 
   useEffect(() => {
@@ -547,19 +567,8 @@ const Home: React.FC = () => {
 
   return (
     <div>
-      <Helmet>
+      
         <GoogleAnalyticsScript/>
-        {/* <button onClick={() => setRun(true)}>Start Tour</button>
-      <Joyride
-        run={run}
-        steps={steps}
-        callback={handleJoyrideCallback}
-        styles={{
-          options: {
-            zIndex: 10000,
-          },
-        }}
-      /> */}
         <title>Home - Spintrip Car Rentals </title>
         <meta
           name="description"
@@ -569,7 +578,7 @@ const Home: React.FC = () => {
           name="keywords"
           content="Spintrip Car Rentals, affordable car rentals Bangalore, self-drive car rentals Bangalore, rent cars Bangalore, top-notch cars Bangalore, local car hosts Bangalore, competitive car rental pricing, car rental commissions, list your car Bangalore, Bangalore car hire, best car rentals Bangalore, car rental deals Bangalore, self-drive cars Bangalore, car rental service Bangalore, rent a car Bangalore, car rental company Bangalore, self-drive rental services, weekend car rentals Bangalore, hourly car rentals Bangalore, economic car rentals Bangalore"
         ></meta>
-      </Helmet>
+     
   
       {/* Banner */}
       <section className="banner-section banner-slider">
@@ -602,7 +611,7 @@ const Home: React.FC = () => {
                 <div className="view-all mt-5 ">
                   <div
                     onClick={() => handleViewAllCars()}
-                    className="btn btn-view d-inline-flex align-items-center"
+                    className=" view-all-cars btn btn-view d-inline-flex align-items-center"
                   >
                     View all Cars{" "}
                     <span>
@@ -635,7 +644,7 @@ const Home: React.FC = () => {
             <form>
               <ul className="row p-2">
                 <li className="col-12 col-md-4 ">
-                  <div className="h-100 input-block d-flex flex-column align-items-start justify-content-between">
+                  <div className="pickup-location h-100 input-block d-flex flex-column align-items-start justify-content-between">
                     <label>Pickup Location</label>
                     <Suspense fallback={<div>Loading location input...</div>}>
                       <LocationInput 
@@ -649,7 +658,7 @@ const Home: React.FC = () => {
                 </li>
   
                 <li className="col-12 col-md-4 mt-2">
-                  <div className="input-block ">
+                  <div className="input-block Pickup-Date">
                     <label>Pickup Date</label>
                   </div>
                   <div className="input-block-wrapp">
@@ -889,6 +898,7 @@ const Home: React.FC = () => {
                               />
                             )}
                           </span>
+                          {token && (
                           <Link
                             to="#"
                             className={`fav-icon ${
@@ -903,6 +913,7 @@ const Home: React.FC = () => {
                           >
                             <i className="feather icon-heart" />
                           </Link>
+                          )}
                         </div>
                       </div>
                       <div className="listing-content">
@@ -959,8 +970,9 @@ const Home: React.FC = () => {
                         {token ? (
                           <div className="listing-location-details">
                             <Suspense fallback={<div>Loading...</div>}>
-                              <div className="listing-price">
+                              <div className="locatiion-display">
                                 <LocationDisplay
+                                  
                                   latitude={car.latitude}
                                   longitude={car.longitude}
                                 />
@@ -1190,9 +1202,9 @@ const Home: React.FC = () => {
           </div>
         </div>
         {locationAlert && (
-          <div className="alert error-login-message mt-2" role="alert">
+          <div className="alert mt-2" role="alert">
             <div
-              className="p-2 location-alert shadow bg-red-800 items-center text-red-100 leading-none rounded-full flex lg:inline-flex"
+              className="p-2 location-alert homepage-error"
               role="alert"
             >
               <span className="flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3">
@@ -1207,7 +1219,7 @@ const Home: React.FC = () => {
         {dateTimeError && (
           <div className="alert error-login-message mt-2" role="alert">
             <div
-              className="p-2 location-alert shadow bg-red-800 items-center text-red-100 leading-none rounded-full flex lg:inline-flex"
+              className="p-2 location-alert homepage-error"
               role="alert"
             >
               <span className="font-semibold mr-2 text-left flex-auto">
@@ -1230,7 +1242,7 @@ const Home: React.FC = () => {
           <div className="row justify-content-center">
             <div className="col-lg-12" data-aos="fade-down">
               <div className="listing-tabs-group">
-                {brandNames.map((brand, index) => (
+                {brandNames?.map((brand, index) => (
                   <ul
                     className="nav listing-buttons gap-3"
                     key={index}
@@ -1265,5 +1277,4 @@ const Home: React.FC = () => {
   );
   
 };
-
 export default Home;

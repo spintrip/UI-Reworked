@@ -150,8 +150,8 @@ const UserPayment: React.FC = () => {
               <div className="content-header">
                 <h4>Payments</h4>
               </div>
-              <div className="content-header ">
-                <select value={filterOption} onChange={handleFilterChange}>
+              <div className="content-header">
+                <select value={filterOption} className="sort-payment" onChange={handleFilterChange}>
                   <option value="latest">Latest</option>
                   <option value="price-low-to-high">Price: Low to High</option>
                   <option value="price-high-to-low">Price: High to Low</option>

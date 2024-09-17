@@ -1562,3 +1562,23 @@
     width: 25px;
 
   }
+  .homepage-error{
+    background-color: rgb(171, 11, 11);
+    color: #ffffff;
+    border-radius: 30px;
+    padding: 5px;
+    margin: 5px;
+  }
+  .listing-error{
+    background-color: rgb(211, 104, 9);
+    color: #ffffff;
+    border-radius: 30px;
+    padding: 10px;
+    margin: 5px;
+    .info-text{
+        margin: 0 5px;
+        border-radius: 10px;
+        padding: 0 8px;
+        background-color: rgb(255, 111, 0);;
+    }
+  }

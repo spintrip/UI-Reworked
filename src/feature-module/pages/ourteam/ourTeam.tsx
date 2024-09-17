@@ -5,7 +5,7 @@ import "aos/dist/aos.css";
 import ImageWithBasePath from "../../../core/data/img/ImageWithBasePath";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { TeamMember } from "../../../core/data/interface/interface";
+import { TeamMember } from "../../common/interface";
 
 const OurTeam = () => {
   const data = useSelector((state: TeamMember) => state.ourteamdata);

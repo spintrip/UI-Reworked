@@ -404,7 +404,7 @@ const AddNewCarAdditional: React.FC<AddNewCarAdditionalProps> = ({
         <div className="col-xl-8">
           <h4 className="modal-title mb-4">
             Edit Car Additional Details{" "}
-            <span className="bg-stone-200 rounded border-amber-600 p-2 mx-2 text-sm">
+            <span className="listing-preview-carid">
               CarId : {carId}
             </span>
           </h4>
@@ -416,7 +416,7 @@ const AddNewCarAdditional: React.FC<AddNewCarAdditionalProps> = ({
                   <p className="mb-1 mt-3 font-semibold">Photos</p>
                   <div className="row">
                     <div className="my-2">
-                      <div className="d-flex align-items-center justify-content-start flex-wrap">
+                      <div className=" d-flex align-items-center justify-content-start flex-wrap">
                         <input
                           type="file"
                           accept="image/png, image/jpeg"
@@ -427,17 +427,18 @@ const AddNewCarAdditional: React.FC<AddNewCarAdditionalProps> = ({
                         />
                         <button
                           type="button"
+                          className="car-image-upload"
                           onClick={() =>
                             document.getElementById("fileInput")?.click()
                           }
                         >
                           <ImageWithBasePath
-                            className="w-20 h-20 shadow rounded-2xl border"
+                            className="carlisting-upload"
                             src="assets/img/icons/image-upload-icon.png"
                             alt="Icon"
                           />
                         </button>
-                        <div className="image-preview d-flex flex-row flex-wrap align-items-center justify-content-start mt-4">
+                        <div className="image-preview-listing">
                           {images.map((image, index) => (
                             <img
                               key={index}
@@ -447,7 +448,7 @@ const AddNewCarAdditional: React.FC<AddNewCarAdditionalProps> = ({
                                   : URL.createObjectURL(image)
                               }
                               alt={`Preview ${index + 1}`}
-                              className="w-20 cursor-pointer hover:opacity-80 h-20 mx-1 object-fit-cover mx-2 border border-2 rounded-xl"
+                              className="image-preview-listing"
                               onClick={() => removeImage(index)}
                             />
                           ))}

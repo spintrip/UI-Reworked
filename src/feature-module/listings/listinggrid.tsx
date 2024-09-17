@@ -255,8 +255,8 @@ const ListingGrid: React.FC = () => {
     if (searchQuery) {
       filteredCars = filteredCars.filter(
         (car: { carModel: string; brand: string }) =>
-          car.carModel.toLowerCase().includes(searchQuery) ||
-          car.brand.toLowerCase().includes(searchQuery),
+          car.carModel?.toLowerCase().includes(searchQuery) ||
+          car.brand?.toLowerCase().includes(searchQuery),
       );
     }
 
@@ -706,7 +706,7 @@ const ListingGrid: React.FC = () => {
 
           <div className="d-flex align-items-center justify-content-end">
             <button
-              className="btn bg-black text-white border borde-black border-2 w-100 btn-sm d-lg-none mb-2 d-flex align-items-center justify-content-center "
+              className="filter-button d-lg-none "
               onClick={() => setIsSidebarVisible(!isSidebarVisible)}
             >
               Filters
@@ -719,7 +719,7 @@ const ListingGrid: React.FC = () => {
                     viewBox="0 0 24 24"
                     strokeWidth={2}
                     stroke="currentColor"
-                    className="size-6 mx-2 animate-ease"
+                    className="arrow-button-down"
                   >
                     <path
                       strokeLinecap="round"
@@ -736,7 +736,7 @@ const ListingGrid: React.FC = () => {
                     viewBox="0 0 24 24"
                     strokeWidth={2}
                     stroke="currentColor"
-                    className="size-6 mx-2 animate-ease"
+                    className="arrow-button-down"
                   >
                     <path
                       strokeLinecap="round"
@@ -819,10 +819,10 @@ const ListingGrid: React.FC = () => {
                   {filteredCars.length === 0 ? (
                     <div className="w-full">
                       <div
-                        className="p-2 location-alert shadow bg-amber-700 items-center text-amber-100 leading-none rounded-full flex lg:inline-flex"
+                        className="p-2 location-alert listing-error shadow bg-amber-700 items-center text-amber-100 leading-none rounded-full flex lg:inline-flex"
                         role="alert"
                       >
-                        <span className="flex rounded-full bg-amber-500 uppercase px-2 py-1 text-xs font-bold mr-3">
+                        <span className="info-text">
                           Info
                         </span>
                         <span className="font-semibold mr-2 text-left flex-auto text-white">
@@ -949,7 +949,7 @@ const ListingGrid: React.FC = () => {
                                       alt="Persons"
                                     />
                                   </span>
-                                  <p className="mb-0">{item?.capacity || "5 seater"}</p>
+                                  <p className="mb-0">{item?.sevenSeater === true ? "7 seater" : "5 seater"}</p>
                                 </div>
                               </div>
                             </div>
@@ -1053,9 +1053,9 @@ const ListingGrid: React.FC = () => {
           </div>
         </div>
         {locationAlert && (
-          <div className="alert error-login-message mt-2" role="alert">
+          <div className="alert  mt-2" role="alert">
             <div
-              className="p-2 location-alert shadow bg-red-800 items-center text-red-100 leading-none rounded-full flex lg:inline-flex"
+              className="p-2 location-alert homepage-error"
               role="alert"
             >
               <span className="flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3">
@@ -1068,9 +1068,9 @@ const ListingGrid: React.FC = () => {
           </div>
         )}
         {dateTimeError && (
-          <div className="alert error-login-message mt-2" role="alert">
+          <div className="alert mt-2" role="alert">
             <div
-              className="p-2 location-alert shadow bg-red-800 items-center text-red-100 leading-none rounded-full flex lg:inline-flex"
+              className="p-2 location-alert homepage-error"
               role="alert"
             >
               <span className="flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3">

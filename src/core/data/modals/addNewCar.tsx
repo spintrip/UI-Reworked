@@ -392,7 +392,7 @@ const AddNewCar: React.FC<AddNewCarProps> = ({ onActionComplete }) => {
                 </div>
                 You can edit these details anytime
               </form>
-              <div className="modal-btn modal-btn-sm">
+              <div className="modal-btn d-flex align-items-center justify-content-between">
                 <button
                   id="addCarModalCloseBtn"
                   className="btn btn-secondary"
@@ -402,7 +402,7 @@ const AddNewCar: React.FC<AddNewCarProps> = ({ onActionComplete }) => {
                 >
                   Cancel
                 </button>
-                <Link to="#" className="btn btn-primary">
+                <Link to="#" className="btn">
                   {btnLoading ? (
                     <div
                       className="mx-3 spinner-border spinner-border-sm"
@@ -412,6 +412,7 @@ const AddNewCar: React.FC<AddNewCarProps> = ({ onActionComplete }) => {
                     </div>
                   ) : (
                     <button
+                      className="btn btn-primary"
                       onClick={handleSubmit}
                       disabled={
                         !pickupLocation ||

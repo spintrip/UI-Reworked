@@ -20,17 +20,18 @@ const SignUp = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const [enabled, setEnabled] = useState<boolean>(false);
+  const [selectedRole, setSelectedRole] = useState<"user" | "host">("user");
   const [phoneValidatorError, setPhoneValidatorError] = useState(false);
 
   const validateSignup = async (
     phone: string,
     password: string,
-    enabled: boolean,
+    selectedRole: "user" | "host",
     callback: (response: { status: number; json: any }) => void,
   ) => {
     try {
       let role: string, apiUrl: string;
-      if (enabled) {
+      if (selectedRole === "host" ) {
         apiUrl = "host/signup";
         role = "host";
       } else {
@@ -46,7 +47,7 @@ const SignUp = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ phone: phoneWithCountryCode, password, role }),
+        body: JSON.stringify({ phone: phoneWithCountryCode, password, role:selectedRole }),
       });
 
       const data = await response.json();
@@ -67,7 +68,7 @@ const SignUp = () => {
     if (response.status === 200 || response.status === 201) {
       navigate(route.login);
     } else if (response.status === 500) {
-      setError(enabled ? "Host already present." : "User already present.");
+      setError(selectedRole === "host" ? "Host already present." : "User already present.");
     } else {
       setError("Signup failed. Please try again.");
       setLoading(false);
@@ -87,7 +88,16 @@ const SignUp = () => {
     }
     setIsLoading(true);
     setError(null);
-    validateSignup(phone, "1234", enabled, signUpCallBack);
+    validateSignup(phone, "1234", selectedRole , signUpCallBack);
+  };
+  const handleUserSelect = () => {
+    setSelectedRole("user");
+    setEnabled(false); // User mode
+  };
+  
+  const handleHostSelect = () => {
+    setSelectedRole("host");
+    setEnabled(true); // Host mode
   };
 
   return (
@@ -156,69 +166,24 @@ const SignUp = () => {
                   </Link>
                 </p>
                 <div className="authorization-check">
-                  <span className="font-semibold text-amber-600 mx-2">
-                    User
-                  </span>
-                  <Switch
-                    checked={enabled}
-                    onChange={setEnabled}
-                    className={classNames(
-                      enabled ? "bg-amber-600" : "bg-gray-200",
-                      "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border- transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2",
-                    )}
-                  >
-                    <span className="sr-only">Use setting</span>
-                    <span
-                      className={classNames(
-                        enabled ? "translate-x-5" : "translate-x-0",
-                        "pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-website-primary shadow ring-0 transition duration-200 ease-in-out",
-                      )}
-                    >
-                      <span
-                        className={classNames(
-                          enabled
-                            ? "opacity-0 ease-out duration-100"
-                            : "opacity-100 ease-in duration-200",
-                          "absolute inset-0 flex h-full w-full items-center justify-center transition-opacity",
-                        )}
-                        aria-hidden="true"
-                      >
-                        <svg
-                          className="h-3 w-3 text-gray-400"
-                          fill="none"
-                          viewBox="0 0 12 12"
-                        >
-                          <path
-                            d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2"
-                            stroke="bg-secondary"
-                            strokeWidth={2}
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </span>
-                      <span
-                        className={classNames(
-                          enabled
-                            ? "opacity-100 ease-in duration-200"
-                            : "opacity-0 ease-out duration-100",
-                          "absolute inset-0 flex h-full w-full items-center justify-center transition-opacity",
-                        )}
-                        aria-hidden="true"
-                      >
-                        <svg
-                          className="h-3 w-3 text-amber-100"
-                          fill="currentColor"
-                          viewBox="0 0 12 12"
-                        >
-                          <path d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z" />
-                        </svg>
-                      </span>
-                    </span>
-                  </Switch>
-                  <span className="font-semibold text-amber-600 mx-2">
-                    Host
-                  </span>
+                <button
+                  onClick={handleUserSelect}
+                  className={classNames(
+                    selectedRole === "user" ? "button-on" : "button-off",
+                    "font-semibold mx-2"
+                  )}
+                >
+                  User
+                </button>
+                <button
+                  onClick={handleHostSelect}
+                  className={classNames(
+                    selectedRole === "host" ? "button-on" : "button-off",
+                    "font-semibold mx-2"
+                  )}
+                >
+                  Host
+                </button>
                 </div>
                 <form>
                   <div className="input-block">
@@ -309,7 +274,7 @@ const SignUp = () => {
         {phoneValidatorError && (
           <>
             <div
-              className="p-2 location-alert shadow bg-red-800 items-center text-red-100 leading-none rounded-full flex lg:inline-flex"
+              className="p-2 location-alert homepage-error"
               role="alert"
             >
               <span className="flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3">
@@ -324,7 +289,7 @@ const SignUp = () => {
         {error && (
           <div className="alert error-login-message mt-2" role="alert">
             <div
-              className="p-2 location-alert shadow bg-red-800 items-center text-red-100 leading-none rounded-full flex lg:inline-flex"
+              className="p-2 location-alert homepage-error"
               role="alert"
             >
               <span className="flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3">

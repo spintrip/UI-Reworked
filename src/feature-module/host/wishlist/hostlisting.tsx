@@ -175,14 +175,14 @@ const HostListing = () => {
                         data-bs-toggle="modal"
                         data-bs-target="#add_new_car"
                       >
-                        <button className="text-white fs-large rounded d-flex align-items-center">
+                        <button className="add-car-button btn btn-dark">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
                             strokeWidth={1.5}
                             stroke="currentColor"
-                            className="size-6"
+                            className="plus-svg"
                           >
                             <path
                               strokeLinecap="round"
@@ -202,7 +202,7 @@ const HostListing = () => {
                       <div className="wishlist-wrap">
                         {/* Map host cars on `listview-car` */}
                         {profile?.cars?.length === 0 ? (
-                          <>No cars</>
+                          <h2>No cars</h2>
                         ) : (
                           profile?.cars?.map((car, index) => (
                             <div
@@ -234,9 +234,9 @@ const HostListing = () => {
                                                 
                                               </div>
                                             <h5 className="mx-3 text-gray" style={{fontWeight: '700'}}>{car.carmodel || "NA"}</h5> 
-                                            <span className="mx-3 font-mono font-bold bg-website-primary p-1 text-white rounded">
-                                                  {extractYear(car.Registrationyear)}
-                                                </span>
+                                              <span className="mx-3 font-mono font-bold bg-website-primary p-1 text-white rounded">
+                                                {extractYear(car.Registrationyear)}
+                                              </span>
                                           </h3>
                                           <h6>
                                             

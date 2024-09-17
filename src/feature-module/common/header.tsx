@@ -3,6 +3,9 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { all_routes } from "../router/all_routes";
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 import MobileNavbar from "./mobile_menu/mobileNavbar";
+import { useJoyride } from "./JoyrideContext";
+import { useDropdown } from './DropdownContext';
+
 
 const Header = () => {
   const routes = all_routes;
@@ -10,18 +13,41 @@ const Header = () => {
   const navigate = useNavigate();
   const [token, setToken] = useState<any>(localStorage.getItem("token"));
   const [host, setHost] = useState(localStorage.getItem("Host"));
-  const [activeSubMenu, setActiveSubMenu] = useState(null);
+  const { activeSubMenu, setActiveSubMenu } = useDropdown();
+  const { startTour , run , setRun } = useJoyride(); 
 
-  // const toggleMenu = () => {
-  //   setIsMenuOpen(!isMenuOpen);
-  // };
+  // useEffect(() => {
+  //   if (!run) {
+  //     startTour();
+  //   }
+  // }, [run, startTour]);
+  
+    useEffect(() => {
+    const status = localStorage.getItem("tourCompleted");
+    if (!run && status !== "true") {
+      startTour();
+    }
+  }, [run, startTour]);
 
-  const toggleSubMenu = (index: number | React.SetStateAction<any>) => {
-    setActiveSubMenu(activeSubMenu === index ? null : index);
+  const handleButtonClick = () => {
+    setRun(false); // This will stop Joyride
+  };
+
+  const handleNavigation = () => {
+    setRun(false); // Stop Joyride on navigation
   };
 
   useEffect(() => {
-    // This effect will run whenever the token changes, ensuring the header updates
+    // Handle location change
+    handleNavigation();
+  }, [location.pathname]);
+
+
+  const toggleSubMenu = (menu: string) => {
+    setActiveSubMenu(activeSubMenu === menu ? "" : menu);
+  };
+  
+  useEffect(() => {
     setToken(localStorage.getItem("authToken"));
     setHost(localStorage.getItem("Host"));
   }, [token, host]);
@@ -31,7 +57,7 @@ const Header = () => {
     localStorage.removeItem("Host");
     setToken(null);
     setHost(null);
-    navigate(routes.home); // Redirect to the homepage or login page
+    navigate(routes.home); 
     window.location.reload();
   };
   //host header
@@ -70,21 +96,7 @@ const Header = () => {
           showSubRoute: false,
           subMenus: [],
         },
-        // {
-        //   menuValue: "Messages",
-        //   routes: routes.hostmessages,
-        //   hasSubRoute: false,
-        //   showSubRoute: false,
-        //   subMenus: []
-        // },
-        // {
-        //   menuValue: "My Wallet",
-        //   routes: routes.hostwallet,
-        //   hasSubRoute: false,
-        //   showSubRoute: false,
-        //   subMenus: []
-        // },
-        {
+       {
           menuValue: "Payment",
           routes: routes.hostpayment,
           hasSubRoute: false,
@@ -100,34 +112,6 @@ const Header = () => {
         },
       ],
     },
-    // {
-    //   tittle: "Blog",
-    //   showAsTab: false,
-    //   separateRoute: false,
-    //   menu: [
-    //     {
-    //       menuValue: "Blog List",
-    //       routes: routes.bloglist,
-    //       hasSubRoute: false,
-    //       showSubRoute: false,
-    //       subMenus: []
-    //     },
-    //     {
-    //       menuValue: "Blog Grid",
-    //       routes: routes.bloggrid,
-    //       hasSubRoute: false,
-    //       showSubRoute: false,
-    //       subMenus: []
-    //     },
-    //     {
-    //       menuValue: "Blog Details",
-    //       routes: routes.blogdetails,
-    //       hasSubRoute: false,
-    //       showSubRoute: false,
-    //       subMenus: []
-    //     },
-    //   ],
-    // },
     {
       tittle: "Blog",
       showAsTab: false,
@@ -152,6 +136,14 @@ const Header = () => {
       hasSubRoute: false,
       showSubRoute: false,
     },
+    {
+      tittle: "About Company",
+      showAsTab: false,
+      separateRoute: true,
+      routes: routes.aboutcompany,
+      hasSubRoute: false,
+      showSubRoute: false,
+    },
   ];
 
   // user header
@@ -166,6 +158,7 @@ const Header = () => {
     },
     {
       tittle: "User",
+      className: "user-button",
       showAsTab: false,
       separateRoute: false,
       menu: [
@@ -200,13 +193,6 @@ const Header = () => {
             },
           ],
         },
-        // {
-        //   menuValue: "Reviews",
-        //   routes: routes.reviews,
-        //   hasSubRoute: false,
-        //   showSubRoute: false,
-        //   subMenus: []
-        // },
         {
           menuValue: "Wishlist",
           routes: routes.wishlist,
@@ -214,20 +200,6 @@ const Header = () => {
           showSubRoute: false,
           subMenus: [],
         },
-        // {
-        //   menuValue: "Messages",
-        //   routes: routes.messages,
-        //   hasSubRoute: false,
-        //   showSubRoute: false,
-        //   subMenus: []
-        // },
-        // {
-        //   menuValue: "My Wallet",
-        //   routes: routes.wallet,
-        //   hasSubRoute: false,
-        //   showSubRoute: false,
-        //   subMenus: []
-        // },
         {
           menuValue: "Payment",
           routes: routes.payment,
@@ -237,6 +209,7 @@ const Header = () => {
         },
         {
           menuValue: "Profile",
+          clasName: "Profile-upload",
           routes: routes.settings,
           hasSubRoute: false,
           showSubRoute: false,
@@ -244,34 +217,6 @@ const Header = () => {
         },
       ],
     },
-    // {
-    //   tittle: "Blog",
-    //   showAsTab: false,
-    //   separateRoute: false,
-    //   menu: [
-    //     {
-    //       menuValue: "Blog List",
-    //       routes: routes.bloglist,
-    //       hasSubRoute: false,
-    //       showSubRoute: false,
-    //       subMenus: []
-    //     },
-    //     {
-    //       menuValue: "Blog Grid",
-    //       routes: routes.bloggrid,
-    //       hasSubRoute: false,
-    //       showSubRoute: false,
-    //       subMenus: []
-    //     },
-    //     {
-    //       menuValue: "Blog Details",
-    //       routes: routes.blogdetails,
-    //       hasSubRoute: false,
-    //       showSubRoute: false,
-    //       subMenus: []
-    //     },
-    //   ],
-    // },
     {
       tittle: "Blog",
       showAsTab: false,
@@ -293,6 +238,14 @@ const Header = () => {
       showAsTab: false,
       separateRoute: true,
       routes: routes.aboutus,
+      hasSubRoute: false,
+      showSubRoute: false,
+    },
+    {
+      tittle: "About Company",
+      showAsTab: false,
+      separateRoute: true,
+      routes: routes.aboutcompany,
       hasSubRoute: false,
       showSubRoute: false,
     },
@@ -331,13 +284,6 @@ const Header = () => {
         <div className="container-fluid">
           <nav className="navbar navbar-expand-lg header-nav bg-transparent">
             <div className="navbar-header">
-              {/* <Link id="mobile_btn" to="#" onClick={toggleMenu}>
-                  <span className="bar-icon">
-                      <span />
-                      <span />
-                      <span />
-                  </span>
-              </Link> */}
               <Link
                 to={host === "1" ? routes.hostdashboard : routes.home}
                 className=""
@@ -360,133 +306,108 @@ const Header = () => {
                   token={token}
                 />
               </div>
-              {/* <Link to={routes.home} className="navbar-brand logo-small">
-                <ImageWithBasePath
-                  src="assets/img/logo-small.png"
-                  className="img-fluid"
-                  alt="Logo"
-                  
-
-                />
-                
-              </Link> */}
             </div>
             <div className="main-menu-wrapper">
               <div className="menu-header">
-                <Link
-                  to={host === "1" ? routes.hostdashboard : routes.home}
-                  className="menu-logo"
-                >
+                <Link to={host === "1" ? routes.hostdashboard : routes.home} className="menu-logo">
                   <ImageWithBasePath
-                    src={
-                      host === "1"
-                        ? "assets/img/Spintrip_logo-host.png"
-                        : "assets/img/Spintrip_logo.png"
-                    }
+                    src={host === "1" ? "assets/img/Spintrip_logo-host.png" : "assets/img/Spintrip_logo.png"}
                     className="navbar-logo-custom"
                     alt="Logo"
                   />
                 </Link>
                 <Link id="menu_close" className="menu-close" to="#">
-                  {" "}
                   <i className="fas fa-times" />
                 </Link>
               </div>
-              <ul className="main-nav ">
-                {header.map((mainMenus: any, mainIndex) => {
-                  // const link_array:any = [];
-                  // mainMenus?.menu?.map((link) => {
-                  //   link_array?.push(link?.routes);
-                  //   if (link?.subMenus) {
-                  //     link?.subMenus?.map((item) => {
-                  //       link_array?.push(item?.routes);
-                  //     });
-                  //   }
-                  //   return link_array;
-                  // });
-                  // mainMenus.links = link_array;
-                  return (
-                    <React.Fragment key={mainIndex}>
-                      {mainMenus.separateRoute ? (
-                        <li
-                          key={mainIndex}
-                          className={
-                            location.pathname.includes(
-                              mainMenus.routes || "",
-                            ) ||
-                            mainMenus?.links?.includes(location.pathname) ||
-                            (mainMenus.tittle == "Pages" &&
-                              pagesActiveClassArray?.map((name) =>
-                                name.includes(location.pathname),
-                              ))
-                              ? "active"
-                              : ""
-                          }
-                        >
-                          {/* {checkActiceClass(mainMenus)} */}
-                          <Link to={mainMenus.routes}>{mainMenus.tittle}</Link>
+
+              <ul className="main-nav">
+                {host === "1" ? (
+                  // Host Navigation
+                  <>
+                    <li className={location.pathname.includes(routes.hostdashboard) ? "active" : ""}>
+                      <Link to={routes.hostdashboard}>Dashboard</Link>
+                    </li>
+                    <li className={`has-submenu ${activeSubMenu === "host" ? "active" : ""}`}>
+                      <Link to="#" onClick={() => toggleSubMenu("host")}>
+                        Host <i className="fas fa-chevron-down"></i>
+                      </Link>
+                      <ul className={`submenu ${activeSubMenu === "host" ? "d-block" : ""}`}>
+                        <li className={location.pathname.includes(routes.hostbookings) ? "active" : ""}>
+                          <Link to={routes.hostbookings}>My Bookings</Link>
                         </li>
-                      ) : (
-                        // <li className={`has-submenu ${mainMenus?.menu?.map((item)=> item?.routes).includes(location.pathname)  ? "active":""}`}>
-                        <li
-                          className={` has-submenu ${mainMenus?.menu?.map((item: any) => item?.routes).includes(location.pathname) ? "active" : ""}`}
-                        >
-                          <Link to="#" onClick={() => toggleSubMenu(mainIndex)}>
-                            {mainMenus.tittle}{" "}
-                            <i className="fas fa-chevron-down"></i>
-                          </Link>
-                          <ul
-                            className={`submenu ${mainMenus.showAsTab ? "d-block" : ""}`}
-                          >
-                            {mainMenus.menu?.map(
-                              (menu: any, menuIndex: any) => (
-                                <li
-                                  key={menuIndex}
-                                  className={`${menu.hasSubRoute ? "has-submenu" : ""} ${menu?.subMenus?.map((item: any) => item?.routes).includes(location.pathname) ? "active" : ""}`}
-                                >
-                                  {menu.hasSubRoute ? (
-                                    <React.Fragment>
-                                      <Link to="#">{menu.menuValue}</Link>
-                                      <ul
-                                        className={`submenu ${menu.showSubRoute ? "d-block" : ""}`}
-                                      >
-                                        {menu.subMenus?.map(
-                                          (subMenu: any, subMenuIndex: any) => (
-                                            <li key={subMenuIndex}>
-                                              <Link to={subMenu.routes}>
-                                                {subMenu.menuValue}
-                                              </Link>
-                                            </li>
-                                          ),
-                                        )}
-                                      </ul>
-                                    </React.Fragment>
-                                  ) : (
-                                    <div
-                                      className={
-                                        location.pathname.includes(
-                                          menu.routes || "",
-                                        )
-                                          ? "active"
-                                          : ""
-                                      }
-                                    >
-                                      <Link to={menu.routes}>
-                                        {menu.menuValue}
-                                      </Link>
-                                    </div>
-                                  )}
-                                </li>
-                              ),
-                            )}
-                          </ul>
+                        <li className={location.pathname.includes(routes.hostListing) ? "active" : ""}>
+                          <Link to={routes.hostListing}>All Cars</Link>
                         </li>
-                      )}
-                    </React.Fragment>
-                  );
-                })}
+                        <li className={location.pathname.includes(routes.hostreviews) ? "active" : ""}>
+                          <Link to={routes.hostreviews}>Reviews</Link>
+                        </li>
+                        <li className={location.pathname.includes(routes.hostpayment) ? "active" : ""}>
+                          <Link to={routes.hostpayment}>Payment</Link>
+                        </li>
+                        <li className={location.pathname.includes(routes.hostsettings) ? "active" : ""}>
+                          <Link to={routes.hostsettings}>Profile</Link>
+                        </li>
+                      </ul>
+                    </li>
+                    <li className={location.pathname.includes(routes.bloglist) ? "active" : ""}>
+                      <Link to={routes.bloglist}>Blog</Link>
+                    </li>
+                    <li className={location.pathname.includes(routes.contact) ? "active" : ""}>
+                      <Link to={routes.contact}>Contact</Link>
+                    </li>
+                    <li className={location.pathname.includes(routes.aboutus) ? "active" : ""}>
+                      <Link to={routes.aboutus}>About Us</Link>
+                    </li>
+                    <li className={location.pathname.includes(routes.aboutcompany) ? "active" : ""}>
+                      <Link to={routes.aboutcompany}>About Company</Link>
+                    </li>
+                  </>
+                ) : (
+                  // User Navigation
+                  <>
+                    <li className={location.pathname.includes(routes.home) ? "active" : ""}>
+                      <Link to={routes.home}>Home</Link>
+                    </li>
+                    <li className={`has-submenu ${activeSubMenu === "user" ? "active" : ""} user-joyride-step`}>
+                      <Link to="#" onClick={() => toggleSubMenu("user")}>
+                        User <i className="fas fa-chevron-down"></i>
+                      </Link>
+                      <ul className={`submenu ${activeSubMenu === "user" ? "d-block" : ""}`}>
+                        <li className={location.pathname.includes(routes.dashboard) ? "active" : ""}>
+                          <Link to={routes.dashboard}>Dashboard</Link>
+                        </li>
+                        <li className={location.pathname.includes(routes.userbookings) ? "active" : ""}>
+                          <Link to={routes.userbookings}>My Bookings</Link>
+                        </li>
+                        <li className={location.pathname.includes(routes.wishlist) ? "active" : ""}>
+                          <Link to={routes.wishlist}>Wishlist</Link>
+                        </li>
+                        <li className={location.pathname.includes(routes.payment) ? "active" : ""}>
+                          <Link to={routes.payment}>Payment</Link>
+                        </li>
+                        <li className={`${location.pathname.includes(routes.settings) ? "active" : ""} profile-upload-joy`}>
+                          <Link to={routes.settings}>Profile</Link>
+                        </li>
+                      </ul>
+                    </li>
+                    <li className={location.pathname.includes(routes.bloglist) ? "active" : ""}>
+                      <Link to={routes.bloglist}>Blog</Link>
+                    </li>
+                    <li className={location.pathname.includes(routes.contact) ? "active" : ""}>
+                      <Link to={routes.contact}>Contact</Link>
+                    </li>
+                    <li className={location.pathname.includes(routes.aboutus) ? "active" : ""}>
+                      <Link to={routes.aboutus}>About Us</Link>
+                    </li>
+                    <li className={location.pathname.includes(routes.aboutcompany) ? "active" : ""}>
+                      <Link to={routes.aboutcompany}>About Company</Link>
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
+
             <div className="navbar-btn-right">
               <ul className="nav header-navbar-rht">
                 {token ? (
@@ -514,7 +435,7 @@ const Header = () => {
                   </>
                 ) : (
                   <>
-                    <li className="nav-item">
+                    <li className="nav-item" onClick={handleButtonClick}>
                       <Link className="nav-link header-login" to={routes.login}>
                         <span>
                           <i className="fa-regular fa-user" />
@@ -522,7 +443,7 @@ const Header = () => {
                         Sign In
                       </Link>
                     </li>
-                    <li className="nav-item">
+                    <li className="nav-item signup-button" onClick={handleButtonClick}>
                       <Link className="nav-link header-reg" to={routes.signup}>
                         <span>
                           <i className="fa-solid fa-lock" />

@@ -9,8 +9,7 @@ export const getBlogs = async () => {
         const response = await fetch(serverApiUrl + apiUrl, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
-                
+              'Content-Type': 'application/json',
             }
         });
         return response.json();

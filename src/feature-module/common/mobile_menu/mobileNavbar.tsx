@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { all_routes } from "../../router/all_routes";
 import "./mobileNavbar.css";
+import { useJoyride } from "../JoyrideContext";
+
 
 const MobileNavbar = ({
   header,
@@ -12,14 +14,31 @@ const MobileNavbar = ({
 }) => {
   const [burgerStatus, setBurgerStatus] = useState(false);
   const [activeSubMenu, setActiveSubMenu] = useState(null);
+  const { startTour, setStepIndex, setRun, stopTour } = useJoyride();
   const routes = all_routes;
 
   const toggleMenu = () => {
-    setBurgerStatus(!burgerStatus);
+    const isMenuOpening = !burgerStatus; 
+    setBurgerStatus(isMenuOpening);
+   
+    const event = new Event(isMenuOpening ? 'menuOpen' : 'menuClose');
+    document.dispatchEvent(event);
+  
+    // Logic to handle starting/stopping Joyride based on menu status
+    const status = localStorage.getItem("tourCompleted");
+    if (isMenuOpening && status !== "true") {
+      startTour();
+      setStepIndex(1); // Go to the second step (index 1)
+    } else {
+      stopTour();
+    }
   };
+  
+
 
   const closeMenu = () => {
     setBurgerStatus(false);
+    setRun(false);
   };
 
   const toggleSubMenu = (index) => {
@@ -40,9 +59,9 @@ const MobileNavbar = ({
         ></div>
       </div>
 
-      <div className={`menu ${burgerStatus ? "visible" : "hidden"}`}>
-        <ul className="menu-items text-black">
-          {header.map((mainMenus, mainIndex) => (
+      <div className={`menu ${burgerStatus ? "visible" : "hidden"} `}>
+        <ul className="menu-items mobile-user-joyride-step text-black">
+          {header.map((mainMenus: any, mainIndex: any) => (
             <React.Fragment key={mainIndex}>
               {mainMenus.separateRoute ? (
                 <li
@@ -51,7 +70,7 @@ const MobileNavbar = ({
                     location.pathname.includes(mainMenus.routes || "") ||
                     mainMenus?.links?.includes(location.pathname) ||
                     (mainMenus.tittle === "Pages" &&
-                      pagesActiveClassArray?.some((name) =>
+                      pagesActiveClassArray?.some((name: string | string[]) =>
                         name.includes(location.pathname),
                       ))
                       ? "active"
@@ -79,7 +98,7 @@ const MobileNavbar = ({
                       activeSubMenu === mainIndex ? "visible" : ""
                     }`}
                   >
-                    {mainMenus.menu?.map((menu, menuIndex) => (
+                    {mainMenus.menu?.map((menu: any, menuIndex: any) => (
                       <li
                         key={menuIndex}
                         className={`${
@@ -103,7 +122,7 @@ const MobileNavbar = ({
                               } `}
                             >
                               {menu.subMenus?.map(
-                                (subMenu, subMenuIndex) => (
+                                (subMenu: any, subMenuIndex: any) => (
                                   <li key={subMenuIndex}>
                                     <Link
                                       to={subMenu.routes}
@@ -156,7 +175,7 @@ const MobileNavbar = ({
             <>
               <li className="nav-item">
                 <Link
-                  className="bg-light border d-flex align-items-end justify-content-center mx-3"
+                  className="bg-light border d-flex align-items-end justify-content-center mx-3 mobile-login"
                   to={routes.login}
                   onClick={closeMenu}
                 >
@@ -168,7 +187,7 @@ const MobileNavbar = ({
               </li>
               <li className="nav-item">
                 <Link
-                  className="bg-website-primary border d-flex align-items-end justify-content-center mx-3"
+                  className="bg-website-primary border d-flex align-items-end justify-content-center mx-3 mobile-signup"
                   to={routes.signup}
                   onClick={closeMenu}
                 >

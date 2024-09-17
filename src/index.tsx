@@ -10,6 +10,8 @@ import "./style/icons/fontawesome/css/all.min.css";
 import "./style/icons/fontawesome/css/fontawesome.min.css";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+import { JoyrideProvider } from './feature-module/common/JoyrideContext'
+import JoyrideWrapper from "./feature-module/common/JoyrideWrapper";
 import { store, persistor } from "./feature-module/redux/store";
 import "./style/icons/feather/css/iconfont.css";
 import "./style/scss/main.scss";
@@ -24,9 +26,12 @@ if (rootElement) {
     <React.StrictMode>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <BrowserRouter basename={base_path}>
-            <Feature />
-          </BrowserRouter>
+          <JoyrideProvider>
+            <BrowserRouter basename={base_path}>
+              <JoyrideWrapper />
+              <Feature />
+            </BrowserRouter>
+          </JoyrideProvider>
         </PersistGate>
       </Provider>
     </React.StrictMode>,

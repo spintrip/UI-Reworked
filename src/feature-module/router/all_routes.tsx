@@ -25,6 +25,7 @@ export const all_routes = {
   forgotpassword: "/authentication/forgot-password",
   resetpassword: "/authentication/reset-password",
   aboutus: "/pages/aboutus",
+  aboutcompany: "/pages/about-company",
   listinggrid: "/listings/listing-grid",
   listinglist: "/listings/listing-list",
   listingdetails: "/listings/listing-details",

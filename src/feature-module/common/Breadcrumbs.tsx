@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { breadcrumbs } from "../../core/data/interface/interface";
+import { breadcrumbs } from "./interface";
 import { all_routes } from "../router/all_routes";
 
 const Breadcrumbs = (props: breadcrumbs) => {

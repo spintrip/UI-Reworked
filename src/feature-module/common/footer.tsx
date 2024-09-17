@@ -74,7 +74,7 @@ const Footer = () => {
                       <ul>
                         <li>
                             <Link
-                              to={token ? route.bloglist : route.signup}
+                              to= {route.bloglist}
                             >
                              Our Blogs
                             </Link>

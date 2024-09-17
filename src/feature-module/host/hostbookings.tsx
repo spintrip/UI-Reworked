@@ -388,7 +388,7 @@ const HostBookings = () => {
                       <div className="col-xl-7 col-lg-8 col-sm-12 col-12">
                         <div className="d-flex align-items-center justify-content-end">
                           <button
-                            className="btn bg-black text-white border border-black border-2 w-100 btn-sm d-lg-none mb-2 d-flex align-items-center justify-content-center"
+                            className="filter-button d-lg-none "
                             onClick={() =>
                               setIsSidebarVisible(!isSidebarVisible)
                             }
@@ -401,7 +401,7 @@ const HostBookings = () => {
                                 viewBox="0 0 24 24"
                                 strokeWidth={2}
                                 stroke="currentColor"
-                                className="size-6 mx-2 animate-ease"
+                                className="arrow-button-down"
                               >
                                 <path
                                   strokeLinecap="round"
@@ -416,7 +416,7 @@ const HostBookings = () => {
                                 viewBox="0 0 24 24"
                                 strokeWidth={2}
                                 stroke="currentColor"
-                                className="size-6 mx-2 animate-ease"
+                                className="arrow-button-down"
                               >
                                 <path
                                   strokeLinecap="round"
@@ -933,14 +933,15 @@ const HostBookings = () => {
                 </div>
               </Modal.Body>
             )}
-            <Modal.Footer className="p-2">
+            <Modal.Footer className="p-2 d-flex align-items-center justify-content-between">
               <Button
-                variant="primary"
+                variant="secondary"
+                className="bg-secondary text-white"
                 onClick={() => {
                   setShowFeedbackModal(true);
                   setShowCompletedModal(false);
                 }}
-                className="d-flex align-items-center justify-content-center border"
+                
               >
                 <span>Give feedback</span>
                 <svg
@@ -949,7 +950,7 @@ const HostBookings = () => {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="size-6 ml-2"
+                  className="smile-icon"
                 >
                   <path
                     strokeLinecap="round"
@@ -1117,6 +1118,7 @@ const HostBookings = () => {
           <Modal
             show={showStatus5Modal}
             onHide={() => {
+              setSelectedBooking(null);
               setShowStatus5Modal(false);
               setErrorMessage("");
               fetchUpdatedBookings();
@@ -1128,17 +1130,6 @@ const HostBookings = () => {
             keyboard={false}
           >
             <Modal.Header className="modal-header" closeButton>
-              <button
-                type="button"
-                className="close-btn"
-                onClick={() => {
-                  setSelectedBooking(null);
-                  setErrorMessage("");
-                  setShowStatus5Modal(false);
-                }} // Reset selectedBooking when modal is closed
-              >
-                <span>×</span>
-              </button>
               <Modal.Title>Booking Details</Modal.Title>
             </Modal.Header>
             {selectedBooking && (
@@ -1251,7 +1242,7 @@ const HostBookings = () => {
                     className="mr-2"
                     onChange={(e) => setIsChecked(e.target.checked)}
                   />
-                  <label htmlFor="termsCheckbox" className="d-flex flex-wrap align-items-center justify-content-start">
+                  <label htmlFor="termsCheckbox" className="mx-2 d-flex flex-wrap align-items-center justify-content-start">
                     I hereby have read the{' '}
                     <Link className="p-1 bg-light mx-1 text-danger rounded" to={routes.termsconditions}>terms and conditions</Link> for lending my ride
                   </label>
