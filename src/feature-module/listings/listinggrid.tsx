@@ -475,7 +475,7 @@ const ListingGrid: React.FC = () => {
       if (pickupLocationRef.current) {
         pickupLocationRef.current.scrollIntoView({ behavior: "smooth" });
       }
-      return; // Prevent navigation to listing details
+      return; 
     }
     const today = dayjs();
       if (date1.isBefore(today, 'day')) {
@@ -495,7 +495,7 @@ const ListingGrid: React.FC = () => {
         return;
       }
     
-      if (date1.isSame(date2, 'day') && endTime.isBefore(startTime) || date1.isSame(date2, 'day') &&  endTime.isSame(startTime) || date1.isSame(date2, 'day') && 
+      if (date1.isSame(date2, 'day') && endTime.isBefore(startTime) || date1.isSame(date2, 'day') && endTime.isSame(startTime) || date1.isSame(date2, 'day') && 
           endTime.isAfter(startTime) && 
           endTime.diff(startTime, 'hours') < 1) 
         {
@@ -867,7 +867,7 @@ const ListingGrid: React.FC = () => {
                               <div>
                                 <h3 className="listing-title">
                                   <div
-                                    className="car-model "
+                                    className="car-model"
                                     onClick={() => handleRentNowClick(item)}
                                   >
                                     {item?.carModel || 'N/A'}

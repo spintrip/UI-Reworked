@@ -51,7 +51,7 @@ const CarouselDisplay: React.FC<CarouselDisplayProps> = ({ images }) => {
             <img
               src={selectedImage || ""}
               alt="Selected"
-              className="image-preview"
+              className="image-car"
             />
           </div>
         </Modal.Body>

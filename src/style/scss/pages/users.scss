@@ -717,12 +717,16 @@
     }
 }
 .car-model{
-    overflow-y: hidden;
     //font-mono fw-bold text-black text-xl
     font-weight: bold;
-    font-size: x-large;
+    font-size: large;
     font-family:  sans-serif;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
+
 .filter-button{
     //btn bg-black text-white border border-black border-2 w-100 btn-sm d-lg-none mb-2 d-flex align-items-center justify-content-center
     background-color: black;
