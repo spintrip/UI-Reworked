@@ -1,5 +1,5 @@
-//export const serverUrl = "https://spintripbackend.site/"
-export const serverUrl = "http://localhost:2000/"
+export const serverUrl = "https://spintripbackend.site/"
+//export const serverUrl = "http://localhost:2000/"
 //export const serverUrl = "http://171.76.84.58:2000/"
 export const base_path = "/";
 export const img_path = "/";
