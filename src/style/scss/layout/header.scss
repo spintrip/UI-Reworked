@@ -314,7 +314,6 @@
                         transform: translateY(20px);
                         top: 100%;
                         visibility: hidden;
-                        z-index: 11000;
                     }
                 }
             }            
@@ -339,6 +338,7 @@
                     ul {
                         display: none;
                         background: $__primarylight;
+                        z-index: 21000;
                     }
                 }
             }

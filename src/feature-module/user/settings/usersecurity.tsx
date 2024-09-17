@@ -370,7 +370,7 @@ const UserSecurity: React.FC = () => {
                 </div>
                 <div className="row">
                   <div className="col-lg-4 col-md-6 d-flex">
-                    <div className="security-grid flex-fill">
+                    <div className="security-grid dl-verif flex-fill">
                       <div className="security-heading">
                         <h5>DL Verification</h5>
                       </div>
@@ -427,7 +427,7 @@ const UserSecurity: React.FC = () => {
                   </div>
 
                   <div className="col-lg-4 col-md-6 d-flex">
-                    <div className="security-grid flex-fill">
+                    <div className="security-grid aadhaar-verif flex-fill">
                       <div className="security-heading">
                         <h5>Aadhaar Verification</h5>
                       </div>
@@ -485,7 +485,7 @@ const UserSecurity: React.FC = () => {
                   </div>
 
                   <div className="col-lg-4 col-md-6 d-flex">
-                    <div className="security-grid flex-fill">
+                    <div className="security-grid profile-verif flex-fill">
                       <div className="security-heading">
                         <h5>Profile Picture</h5>
                       </div>

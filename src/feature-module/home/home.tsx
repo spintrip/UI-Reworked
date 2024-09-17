@@ -37,7 +37,7 @@ import { debounce } from "lodash";
 //import { Helmet } from "react-helmet";
 import TestimonySlider from "../common/TestimonySlider";
 import GoogleAnalyticsScript from "../common/GoogleAnalyticsScript";
-import { useJoyride } from "../common/JoyrideContext";
+//import { useJoyride } from "../common/JoyrideContext";
 
 interface Brand {
   brand_name: string;
@@ -118,28 +118,28 @@ const Home: React.FC = () => {
   const toggleFAQ = (index: number | null) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
-  const { setSteps, startTour } = useJoyride();
+  // const { setSteps, startTour } = useJoyride();
 
 
-  useEffect(() => {
-    const steps = [
-      {
-        target: '.pickup-location',
-        content: 'Tap Here to pick a location',
-      },
-      {
-        target: '.Pickup-Date',
-        content: 'Choose You pickup Location',
-      },
-    ];
+  // useEffect(() => {
+  //   const steps = [
+  //     {
+  //       target: '.pickup-location',
+  //       content: 'Tap Here to pick a location',
+  //     },
+  //     {
+  //       target: '.Pickup-Date',
+  //       content: 'Choose You pickup Location',
+  //     },
+  //   ];
     
-    localStorage.setItem('joyride-steps', JSON.stringify(steps));
-    setSteps(steps);
-  }, [setSteps]);
+  //   localStorage.setItem('joyride-steps', JSON.stringify(steps));
+  //   setSteps(steps);
+  // }, [setSteps]);
 
-  useEffect(() => {
-    startTour();
-  }, [startTour]);
+  // useEffect(() => {
+  //   startTour();
+  // }, [startTour]);
 
   useEffect(() => {
     if (dayjs().isValid()) {
@@ -542,22 +542,22 @@ const Home: React.FC = () => {
   // };
 
 
-  const handleJoyrideCallback = (data: any) => {
-    const { status } = data;
-    console.log('Joyride status:', status);
-  };
+  // const handleJoyrideCallback = (data: any) => {
+  //   const { status } = data;
+  //   console.log('Joyride status:', status);
+  // };
 
 
-  const steps = [
-    {
-      target: '.view-all-cars',
-      content: 'Welcome!',
-    },
-    {
-      target: '.search-box-banner',
-      content: 'This another awesome feature!',
-    },
-  ];
+  // const steps = [
+  //   {
+  //     target: '.view-all-cars',
+  //     content: 'Welcome!',
+  //   },
+  //   {
+  //     target: '.search-box-banner',
+  //     content: 'This another awesome feature!',
+  //   },
+  // ];
   
 
 
@@ -1242,7 +1242,7 @@ const Home: React.FC = () => {
           <div className="row justify-content-center">
             <div className="col-lg-12" data-aos="fade-down">
               <div className="listing-tabs-group">
-                {brandNames.map((brand, index) => (
+                {brandNames?.map((brand, index) => (
                   <ul
                     className="nav listing-buttons gap-3"
                     key={index}
@@ -1277,5 +1277,4 @@ const Home: React.FC = () => {
   );
   
 };
-
 export default Home;

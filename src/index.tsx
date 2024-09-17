@@ -11,6 +11,7 @@ import "./style/icons/fontawesome/css/fontawesome.min.css";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { JoyrideProvider } from './feature-module/common/JoyrideContext'
+import JoyrideWrapper from "./feature-module/common/JoyrideWrapper";
 import { store, persistor } from "./feature-module/redux/store";
 import "./style/icons/feather/css/iconfont.css";
 import "./style/scss/main.scss";
@@ -27,6 +28,7 @@ if (rootElement) {
         <PersistGate loading={null} persistor={persistor}>
           <JoyrideProvider>
             <BrowserRouter basename={base_path}>
+              <JoyrideWrapper />
               <Feature />
             </BrowserRouter>
           </JoyrideProvider>
