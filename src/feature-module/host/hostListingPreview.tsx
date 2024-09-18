@@ -195,7 +195,7 @@ const hostListingPreview = () => {
                   <div className="w-content">
                     {editState ? (
                       <div
-                        className="edit-button details-btn hover:bg-slate-100  rounded p-2 d-flex align-items-center justify-content-end "
+                        className="edit-button hover:bg-slate-100  rounded  d-flex align-items-center justify-content-end "
                         onClick={() => setEditState(false)}
                       >
                         <p className="font-semibold">Finish Editing</p>
@@ -205,7 +205,7 @@ const hostListingPreview = () => {
                           viewBox="0 0 24 24"
                           strokeWidth={1.5}
                           stroke="black"
-                          className="size-4"
+                          className="edit-icon"
                         >
                           <path
                             strokeLinecap="round"
@@ -216,7 +216,7 @@ const hostListingPreview = () => {
                       </div>
                     ) : (
                       <div
-                        className="edit-button details-btn hover:bg-slate-100 cursor-pointer rounded p-2 d-flex align-items-center justify-content-end"
+                        className="edit-button  cursor-pointer rounded d-flex align-items-center justify-content-end"
                         onClick={handleEditClick}
                       >
                         <p className="font-semibold">Edit Car Details</p>
@@ -226,7 +226,7 @@ const hostListingPreview = () => {
                           viewBox="0 0 24 24"
                           strokeWidth={1.5}
                           stroke="black"
-                          className="size-4"
+                          className="edit-icon"
                         >
                           <path
                             strokeLinecap="round"
@@ -542,20 +542,6 @@ const hostListingPreview = () => {
                 </div>
               </div>
             )}
-          </section>
-          <section className="pause-listing">
-            <div className="container">
-              <div className="card ">
-                <div className="card-header bg-warning">
-                  <h5>Pause Listing</h5>
-                </div>
-                <div className="card-body border shadow">
-                  <div className="p-3">
-
-                  </div>
-                </div>
-              </div>
-            </div>
           </section>
           {/* move to a component along with */}
         </div>

@@ -430,7 +430,7 @@ const HostBookings = () => {
                         {(isSidebarVisible || window.innerWidth >= 992) && (
                           <div className="booking-lists">
                             <ul className="nav">
-                              <li>
+                              <li className="mt-2">
                                 <Link
                                   className={
                                     activeTab === "all" ? "active" : ""
@@ -441,7 +441,7 @@ const HostBookings = () => {
                                   All Bookings
                                 </Link>
                               </li>
-                              <li>
+                              <li className="mt-2">
                                 <Link
                                   className={
                                     activeTab === "requested" ? "active" : ""
@@ -452,7 +452,7 @@ const HostBookings = () => {
                                   Requested
                                 </Link>
                               </li>
-                              <li>
+                              <li className="mt-2">
                                 <Link
                                   className={
                                     activeTab === "upcoming" ? "active" : ""
@@ -463,7 +463,7 @@ const HostBookings = () => {
                                   Upcoming
                                 </Link>
                               </li>
-                              <li>
+                              <li className="mt-2">
                                 <Link
                                   className={
                                     activeTab === "inprogress" ? "active" : ""
@@ -474,7 +474,7 @@ const HostBookings = () => {
                                   Inprogress
                                 </Link>
                               </li>
-                              <li>
+                              <li className="mt-2">
                                 <Link
                                   className={
                                     activeTab === "completed" ? "active" : ""
@@ -485,7 +485,7 @@ const HostBookings = () => {
                                   Completed
                                 </Link>
                               </li>
-                              <li>
+                              <li className="mt-2">
                                 <Link
                                   className={
                                     activeTab === "cancelled" ? "active" : ""
@@ -1079,7 +1079,7 @@ const HostBookings = () => {
                         <div className="booking-view">
                           <h6>Status</h6>
                           {status(selectedBooking)}
-                          <h6>{cancelDate}</h6>
+                          
                         </div>
                       </div>
                       <div className="col-lg-4 col-md-6">
@@ -1104,6 +1104,13 @@ const HostBookings = () => {
                             {selectedBooking["endTripDate"]},{" "}
                             {selectedBooking["endTripTime"]}
                           </p>
+                        </div>
+                      </div>
+                      <div className="col-lg-4 col-md-6">
+                        <div className="booking-view">
+                          <h6>Cancel Date</h6>
+                          
+                          <h6>{cancelDate}</h6>
                         </div>
                       </div>
                     </div>

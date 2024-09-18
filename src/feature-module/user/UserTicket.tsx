@@ -328,7 +328,7 @@ const UserTicket: React.FC = () => {
                             }`}
                           >
                             <p>
-                              <strong>From:</strong> {chat["senderId"]}
+                             {chat["senderId"] === chat['adminId'] ? 'Admin' : 'You'}
                             </p>
                             <p>{chat["message"]}</p>
                             <p>

@@ -307,48 +307,7 @@ const HostSettings: React.FC = () => {
                 </form>
               </div>
               {/* Profile Updated At Section */}
-              {profileUpdatedAt && (
-                <div className="col-md-12 mb-4 mt-5">
-                  {" "}
-                  {/* Added mt-5 for margin top */}
-                  <div className="rounded border">
-                    <div
-                      className="card-header rounded-top p-3"
-                      style={{ backgroundColor: "#FE8D3D", color: "white" }}
-                    >
-                      {" "}
-                      {/* Inline style */}
-                      <h3 className="card-title">
-                        Host Profile Updated Information
-                      </h3>
-                    </div>
-                    <div className="card-body p-3">
-                      <p className="mb-2 font-mono">
-                        <strong>ID:</strong> {profileUpdatedAt["id"]}
-                      </p>
-                      <p className="mb-2 font-mono">
-                        <strong>Created At:</strong>{" "}
-                        {dayjs(profileUpdatedAt["createdAt"]).format(
-                          "DD/MM/YYYY",
-                        )}
-                      </p>
-                      <p className="mb-2 font-mono">
-                        <strong>Updated At:</strong>{" "}
-                        {dayjs(profileUpdatedAt["updatedAt"]).format(
-                          "DD/MM/YYYY",
-                        )}
-                      </p>
-                      {/* <p className="mb-2"><strong>Name:</strong> {profileUpdatedAt['fullName'] || 'N/A'}</p>
-                              <p className="mb-2"><strong>Email:</strong> {profileUpdatedAt['email'] || 'N/A'}</p> */}
-                      <p className="mb-2">
-                        <strong>Verification Status:</strong>{" "}
-                        {profileUpdatedAt["verificationStatus"] ||
-                          "Not Verified"}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
+              
             </div>
             {/* /Settings Details */}
           </div>

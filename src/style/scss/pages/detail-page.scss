@@ -149,11 +149,21 @@
     .edit-button{
         cursor: pointer;
         max-width: 100%;
-        width: 11vh;
+        width: 100%;
         @include respond-below(custom991) {            
             @include margin-padding(0, null);
             width: 10vh;
             color: #000;
+            .edit-icon{
+                max-width: 100%;
+                width: 50px;
+                margin-left: 5px;
+            }
+        }
+        .edit-icon{
+            max-width: 100%;
+            width: 30px;
+            margin-left: 5px;
         }
     }
     .details-btn {
@@ -915,10 +925,16 @@
                 background: $__goose-gray;
                 color: $__white;
                 border: 1px solid $__goose-gray;
+                width: 150px;
+                height: 60px;
                 &:hover {
                     background: $__white;
                     color: $__goose-gray;
                     border: 1px solid $__goose-gray;
+                }
+                .card-icon{
+                    width: 25px;
+                    margin: 0 5px;
                 }
             }
         }
@@ -1696,3 +1712,13 @@
         padding-left: 5px;
     }
   }
+  .modal-add-car{
+    margin-top: 6vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .modal-body-add-car{
+    margin: 10px;
+  }
+ 

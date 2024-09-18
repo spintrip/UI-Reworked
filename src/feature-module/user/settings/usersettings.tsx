@@ -369,10 +369,17 @@ const UserSettings = () => {
                   </div>
                   {/* /Address Info */}
                   {/* Profile Submit */}
+                  
                   <div className="profile-submit-btn">
+                  {isSuccess && (
+                      <p className="mt-2 mb-2 text-success">
+                        Profile updated successfully!
+                      </p>
+                    )}
                     <button type="button" className="btn btn-secondary">
                       Cancel
                     </button>
+                    
                     <button
                       type="submit"
                       className="btn btn-primary border border-amber-600"
@@ -380,11 +387,6 @@ const UserSettings = () => {
                     >
                       {isLoading ? "Saving..." : "Save Changes"}
                     </button>
-                    {isSuccess && (
-                      <p className="mt-2 text-success">
-                        Profile updated successfully!
-                      </p>
-                    )}
                   </div>
                   {/* /Profile Submit */}
                 </form>

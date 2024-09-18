@@ -1582,3 +1582,14 @@
         background-color: rgb(255, 111, 0);;
     }
   }
+
+  .host-listing-list{
+    @include respond-below(custom991) {
+        font-size: 10px;
+        overflow: hidden;
+        display: flex ;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+  }
