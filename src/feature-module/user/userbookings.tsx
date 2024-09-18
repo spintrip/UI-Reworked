@@ -831,12 +831,13 @@ const UserBookings = () => {
           {/* Modals */}
           {/* Upcoming Modal */}
           <Modal
-            className="mt-[10vh] pb-[10vh]"
+            className="mt-2 pb-[10vh]"
             show={showUpcomingModal}
             onHide={() => setShowUpcomingModal(false)}
             centered
             size="lg"
             keyboard={false}
+            scrollable
           >
             <Modal.Header className="modal-header" closeButton>
               <Helmet>
@@ -1022,7 +1023,7 @@ const UserBookings = () => {
                   selectedBooking.transactionId != null && selectedBooking?.transaction != null 
                   && selectedBooking?.transaction?.status == 2 ?  (
                     <Button
-                      className="bg-primary start-ride-button"
+                      className="bg-primary border m-2 d-flex align-items-center justify-content-center start-ride-button"
                       onClick={async () => {
                         await handleStartRide();
                         setShowUpcomingModal(false);
@@ -1035,7 +1036,7 @@ const UserBookings = () => {
                   ) : (
                     <Button
                       variant="dark"
-                      className="paynow-booking-button"
+                      className="border m-2 d-flex align-items-center justify-content-center paynow-booking-button"
                       onClick={async () => {
                         document.body.style.backgroundColor = "grey";
                         await handlePayment(selectedBooking);
@@ -1740,6 +1741,7 @@ const UserBookings = () => {
             centered
             size="lg"
             keyboard={false}
+            scrollable
           >
             <Modal.Header className="modal-header" closeButton>
               <Modal.Title>Booking Details</Modal.Title>
@@ -1784,7 +1786,7 @@ const UserBookings = () => {
                           viewBox="0 0 24 24"
                           strokeWidth={1.5}
                           stroke="currentColor"
-                          className="size-6 ml-2"
+                          className="close-icon"
                         >
                           <path
                             strokeLinecap="round"
@@ -1880,7 +1882,7 @@ const UserBookings = () => {
                 </div>
                 <div className="d-flex m-2 align-items-center justify-content-center">
                   <Button
-                    className="Cancel-booking-button"
+                    className="border m-2 d-flex align-items-center justify-content-center Cancel-booking-button"
                     variant="danger"
                     onClick={() => {
                       setShowUpcomingModal(false);

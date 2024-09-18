@@ -347,7 +347,7 @@ const BookingCheckout = () => {
                     <div className="col">
                       <button className="mx-2">
                         <Link
-                          className="active rounded  border p-2 border-warning d-flex flex-column align-items-center justify-content-between"
+                          className="active  p-2 border-warning d-flex flex-column align-items-center justify-content-between"
                           id=""
                           data-bs-toggle="pill"
                           to="#"
@@ -461,7 +461,7 @@ const BookingCheckout = () => {
                                 viewBox="0 0 24 24"
                                 strokeWidth={1.5}
                                 stroke="currentColor"
-                                className="size-6 ml-2"
+                                className="card-icon"
                               >
                                 <path
                                   strokeLinecap="round"

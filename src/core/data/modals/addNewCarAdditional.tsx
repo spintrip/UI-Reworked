@@ -81,11 +81,7 @@ interface CarAdditional {
   ventelatedFrontSeat?: boolean;
 }
 
-const AddNewCarAdditional: React.FC<AddNewCarAdditionalProps> = ({
-  carId,
-  onActionComplete,
-  setEditState,
-}) => {
+const AddNewCarAdditional: React.FC<AddNewCarAdditionalProps> = ({ carId,  onActionComplete,  setEditState}) => {
   const [addons, setAddons] = useState<Addon[]>([]);
   const [btnLoading, setBtnLoading] = useState(false);
   const [images, setImages] = useState<Array<File | string>>([]);

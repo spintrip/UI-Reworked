@@ -19,11 +19,12 @@ interface Car {
   brand: string;
   transmission: string;
   mileage: number | null;
-  fuelType: string;
-  bodyType: string;
+  chassisno: string;
+  Rcnumber: string;
   Registrationyear: string;
   seats: number;
   updatedAt: string;
+  color : string;
 }
 
 interface Profile {
@@ -49,6 +50,7 @@ const HostListing = () => {
   const status = useSelector((state: RootState) => state.profile.status);
   const error = useSelector((state: RootState) => state.profile.error);
   const [brands, setBrands] = useState<Brand[]>([]);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchBrands = async () => {
@@ -171,11 +173,9 @@ const HostListing = () => {
                     <div className="col d-flex flex-row-reverse mb-3">
                       <Link
                         to="#"
-                        className="btn btn-dark"
-                        data-bs-toggle="modal"
-                        data-bs-target="#add_new_car"
+                        className="btn btn-dark add-car-button"
+                        onClick={() => setShowModal(true)}
                       >
-                        <button className="add-car-button btn btn-dark">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -191,7 +191,6 @@ const HostListing = () => {
                             />
                           </svg>
                           <span className="mx-2">Add Car</span>
-                        </button>
                       </Link>
                     </div>
                   </div>
@@ -258,7 +257,7 @@ const HostListing = () => {
                                       </div>
                                       
                                       <div className="listing-details-group">
-                                        <ul>
+                                        <ul className="host-listing-list">
                                           <li>
                                             <span>
                                               <ImageWithBasePath
@@ -267,9 +266,7 @@ const HostListing = () => {
                                               />
                                             </span>
                                             <p>
-                                              {car.transmission === "1"
-                                                ? "Auto"
-                                                : "Manual"}
+                                              {car?.color || 'N/A'}
                                             </p>
                                           </li>
                                           <li>
@@ -280,33 +277,23 @@ const HostListing = () => {
                                               />
                                             </span>
                                             <p>
-                                              {car.mileage === null
-                                                ? "NA"
-                                                : car.mileage}{" "}
+                                              {car.mileage || 'N/A'}{" "}
                                               Km
                                             </p>
                                           </li>
                                           <li>
                                             <span>
-                                              <ImageWithBasePath
-                                                src="assets/img/icons/car-parts-03.svg"
-                                                alt="Fuel Type"
-                                              />
+                                              <p>Chassis No.: </p>
                                             </span>
                                             <p>
-                                              {car.fuelType === "1"
-                                                ? "Petrol"
-                                                : "Diesel"}
+                                              {car?.chassisno || 'N/A'}
                                             </p>
                                           </li>
                                           <li>
                                             <span>
-                                              <ImageWithBasePath
-                                                src="assets/img/icons/car-parts-04.svg"
-                                                alt="Engine Power"
-                                              />
+                                              Rc No.- 
                                             </span>
-                                            <p>{car.bodyType || "NA"}</p>
+                                            <p>{car.Rcnumber || "NA"}</p>
                                           </li>
                                           <li>
                                             <span>
@@ -319,7 +306,7 @@ const HostListing = () => {
                                               {car.Registrationyear || "NA"}
                                             </p>
                                           </li>
-                                          <li>
+                                          {/* <li>
                                             <span>
                                               <ImageWithBasePath
                                                 src="assets/img/icons/car-parts-06.svg"
@@ -327,7 +314,7 @@ const HostListing = () => {
                                               />
                                             </span>
                                             <p>{car.seats || "5"} Persons</p>
-                                          </li>
+                                          </li> */}
                                         </ul>
                                       </div>
                                       <div className="blog-list-head list-head-bottom d-flex">
@@ -360,7 +347,9 @@ const HostListing = () => {
                 </div>
               </div>
               {/* /Page Content */}
-              <AddNewCar onActionComplete={refreshPage} />
+              {showModal && (
+                <AddNewCar onActionComplete={refreshPage} setShowModal={setShowModal} showModal={showModal} />
+              )}
               {/* <AddNewCarAdditional carId={selectedCarId} onActionComplete={refreshPage} /> */}
             </div>
           )}

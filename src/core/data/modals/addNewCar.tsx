@@ -4,6 +4,7 @@ import { addNewCar } from "../../../feature-module/api/host";
 import PropTypes from "prop-types";
 import LocationInput from "../../../feature-module/common/locationInput";
 import { getAllCarBrands } from "../../../feature-module/api/Cars";
+import { Modal, Button } from "react-bootstrap";
 interface PickupLocation {
   lat: number;
   lng: number;
@@ -13,13 +14,15 @@ interface PickupLocation {
 
 interface AddNewCarProps {
   onActionComplete: () => void;
+  setShowModal: (state: boolean) => void;
+  showModal: boolean;
 }
 interface CarBrand {
   brand_name: string;
   logo_path: string;
 }
 
-const AddNewCar: React.FC<AddNewCarProps> = ({ onActionComplete }) => {
+const AddNewCar: React.FC<AddNewCarProps> = ({ onActionComplete, setShowModal, showModal }) => {
   const [btnLoading, setBtnLoading] = useState(false);
   const [carModel, setCarModel] = useState<string>("");
   const [color, setColor] = useState<string>("");
@@ -82,6 +85,10 @@ const AddNewCar: React.FC<AddNewCarProps> = ({ onActionComplete }) => {
     setSuccess(true);
     setTimeout(() => {
       setSuccess(false);
+      if (onActionComplete) {
+        onActionComplete();
+      }
+      setShowModal(false);
     }, 3000);
     const closeModalBtn = document.getElementById("addCarModalCloseBtn");
     closeModalBtn?.click();
@@ -107,28 +114,43 @@ const AddNewCar: React.FC<AddNewCarProps> = ({ onActionComplete }) => {
     if (onActionComplete) {
       onActionComplete();
     }
+    setShowModal(false);
+  };
+
+  const isFormValid = () => {
+    return (
+      carModel &&
+      color &&
+      type &&
+      brand &&
+      chassisNo &&
+      rcNumber &&
+      engineNumber &&
+      registrationYear &&
+      bodyType &&
+      mileage &&
+      pickupLocation &&
+      pickupLocation.isValidLocation
+    );
   };
 
   return (
-    <div>
-      <div
-        className="modal new-modal fade my-[50px] pb-[100x]"
-        id="add_new_car"
-        data-keyboard="false"
-        data-backdrop="static"
+    <div className="main-wrapper">
+      <Modal
+        show={showModal}
+        onHide={() => {
+          setShowModal(false);
+        }}
+        centered
+        size="lg"
+        scrollable
+        className="modal-add-car"
       >
-        <div className="modal-dialog modal-dialog-centered modal-lg mb-5">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h4 className="modal-title">Add Your Car Details</h4>
-              <button
-                type="button"
-                className="close-btn"
-                data-bs-dismiss="modal"
-              >
-                <span>×</span>
-              </button>
-            </div>
+            <Modal.Header className="modal-header" closeButton>
+              <Modal.Title><h4 className="modal-title">Add Your Car Details</h4></Modal.Title>
+            </Modal.Header>
+            
+            <Modal.Body className="modal-body-add-car">
             <div className="modal-body">
               <form>
                 <div className="row">
@@ -167,7 +189,7 @@ const AddNewCar: React.FC<AddNewCarProps> = ({ onActionComplete }) => {
                     </div>
                   </div>
                   <div className="col-md-12">
-                    <div className="modal-form-group">
+                    <div className="modal-form-group mt-2">
                       <label>Car Model with Variant</label>
                       <div className="w-100">
                         <input
@@ -181,7 +203,7 @@ const AddNewCar: React.FC<AddNewCarProps> = ({ onActionComplete }) => {
                     </div>
                   </div>
                   <div className="col-md-12">
-                    <div className="modal-form-group">
+                    <div className="modal-form-group mt-2">
                       <label className="font-bold">Car Colour</label>
                       <div className="w-100">
                         <input
@@ -195,7 +217,7 @@ const AddNewCar: React.FC<AddNewCarProps> = ({ onActionComplete }) => {
                     </div>
                   </div>
                   <div className="col-md-12">
-                    <div className="modal-form-group">
+                    <div className="modal-form-group mt-2">
                       <label>Car Chasis Number</label>
                       <div className="w-100">
                         <input
@@ -208,7 +230,7 @@ const AddNewCar: React.FC<AddNewCarProps> = ({ onActionComplete }) => {
                     </div>
                   </div>
                   <div className="col-md-12">
-                    <div className="modal-form-group">
+                    <div className="modal-form-group mt-2">
                       <label>Car Type</label>
                       <select
                         onChange={(e) => setType(e.target.value)}
@@ -226,7 +248,7 @@ const AddNewCar: React.FC<AddNewCarProps> = ({ onActionComplete }) => {
                     </div>
                   </div>
                   <div className="col-md-12">
-                    <div className="modal-form-group">
+                    <div className="modal-form-group mt-2">
                       <label>RC Number</label>
                       <div className="w-100">
                         <input
@@ -241,7 +263,7 @@ const AddNewCar: React.FC<AddNewCarProps> = ({ onActionComplete }) => {
                     </div>
                   </div>
                   <div className="col-md-12">
-                    <div className="modal-form-group">
+                    <div className="modal-form-group mt-2">
                       <label>Engine Number</label>
                       <div className="w-100">
                         <input
@@ -249,12 +271,13 @@ const AddNewCar: React.FC<AddNewCarProps> = ({ onActionComplete }) => {
                           className="font-mono  border text-black text-lg rounded-md w-100 px-1 py-2"
                           placeholder="Enter Car Engine Number"
                           type="text"
+                          required
                         />
                       </div>
                     </div>
                   </div>
                   <div className="col-md-12">
-                    <div className="modal-form-group">
+                    <div className="modal-form-group mt-2">
                       <label>Registration Year</label>
                       <select
                         onChange={(e) => setRegistrationYear(e.target.value)}
@@ -289,7 +312,7 @@ const AddNewCar: React.FC<AddNewCarProps> = ({ onActionComplete }) => {
                     </div>
                   </div>
                   <div className="col-md-12">
-                    <div className="modal-form-group">
+                    <div className="modal-form-group mt-2">
                       <label>Car Chasis Build</label>
                       <div className="w-100">
                         <input
@@ -304,7 +327,7 @@ const AddNewCar: React.FC<AddNewCarProps> = ({ onActionComplete }) => {
                     </div>
                   </div>
                   <div className="col-md-12">
-                    <div className="modal-form-group">
+                    <div className="modal-form-group mt-2">
                       <label>Current Mileage</label>
                       <div className="w-100">
                         <input
@@ -320,7 +343,7 @@ const AddNewCar: React.FC<AddNewCarProps> = ({ onActionComplete }) => {
                   </div>
                   <div className="row py-2 border mx-1 rounded">
                     <div className="col-12 col-md-12">
-                      <div className="modal-form-group">
+                      <div className="modal-form-group mt-2">
                         <label>Address</label>
                         <div className="w-100">
                           {/* Location Input */}
@@ -333,7 +356,7 @@ const AddNewCar: React.FC<AddNewCarProps> = ({ onActionComplete }) => {
                       </div>
                     </div>
                     <div className="col-12 col-md-6">
-                      <div className="modal-form-group">
+                      <div className="modal-form-group mt-2" >
                         <label>Latitute</label>
                         <div className="w-100">
                           <input
@@ -349,7 +372,7 @@ const AddNewCar: React.FC<AddNewCarProps> = ({ onActionComplete }) => {
                       </div>
                     </div>
                     <div className="col-12 col-md-6">
-                      <div className="modal-form-group">
+                      <div className="modal-form-group mt-2">
                         <label>Longitute</label>
                         <div className="w-100">
                           <input
@@ -381,7 +404,7 @@ const AddNewCar: React.FC<AddNewCarProps> = ({ onActionComplete }) => {
                       ) : (
                         <>
                           <iframe
-                            src={`https://www.google.com/maps?q=${latitude},${longitude}&hl=es;z=14&output=embed`}
+                            src={`https://www.google.com/maps?q=${latitude},${longitude}&loading=async&hl=es;z=14&output=embed`}
                             className="iframe-video"
                             loading={"lazy"}
                           />
@@ -392,10 +415,14 @@ const AddNewCar: React.FC<AddNewCarProps> = ({ onActionComplete }) => {
                 </div>
                 You can edit these details anytime
               </form>
-              <div className="modal-btn d-flex align-items-center justify-content-between">
+              
+            </div>
+            </Modal.Body>
+            <Modal.Footer className="modal-btn d-flex align-items-center justify-content-between mb-5">
+            
                 <button
                   id="addCarModalCloseBtn"
-                  className="btn btn-secondary"
+                  className="btn btn-secondary m-2"
                   type="button"
                   data-bs-dismiss="modal"
                   onClick={handleCancel}
@@ -417,14 +444,15 @@ const AddNewCar: React.FC<AddNewCarProps> = ({ onActionComplete }) => {
                       disabled={
                         !pickupLocation ||
                         !pickupLocation.isValidLocation ||
-                        !hasSuggestions
+                        !hasSuggestions ||
+                        !isFormValid()
                       }
                     >
                       Add Car
                     </button>
                   )}
                 </Link>
-              </div>
+              
               {success ? (
                 <div
                   className="alert alert-success fixed-bottom w-60 mx-5 d-flex align-items-center justify-content-between"
@@ -456,16 +484,17 @@ const AddNewCar: React.FC<AddNewCarProps> = ({ onActionComplete }) => {
                 // </div> */}
                 </>
               )}
-            </div>
-          </div>
-        </div>
-      </div>
+            </Modal.Footer>
+        
+      </Modal>
     </div>
   );
 };
 
 AddNewCar.propTypes = {
   onActionComplete: PropTypes.func.isRequired,
+  setShowModal: PropTypes.func.isRequired,
+  showModal: PropTypes.bool.isRequired
 };
 
 export default AddNewCar;
