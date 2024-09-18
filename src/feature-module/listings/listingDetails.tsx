@@ -703,7 +703,7 @@ const listingDetails = () => {
                                     <span>Fuel Type </span>
                                     <h6>
                                       {" "}
-                                      {additionalInfo.fuelType === 1
+                                      {additionalInfo.fuelType
                                         ? "Diesel"
                                         : "Petrol"}
                                     </h6>
@@ -840,6 +840,7 @@ const listingDetails = () => {
                               { key: "abs", label: "ABS" },
                               { key: "airBags", label: "AirBags" },
                               { key: "airFreshner", label: "Air Freshner" },
+                              { key: "reverseCamera", label: "Reverse Camera" },
                               { key: "airPurifier", label: "Air Purifier" },
                               { key: "usbCharger", label: "Usb Charger" },
                               { key: "cruiseControl", label: "Cruise Control" },
@@ -855,6 +856,7 @@ const listingDetails = () => {
                               },
                               { key: "keylessEntry", label: "Keyless Entry" },
                               { key: "petFriendly", label: "Pet Friendly" },
+                              { key: "touchScreen", label: "Touch Screen" },
                               { key: "powerSteering", label: "Power Steering" },
                               {
                                 key: "tractionControl",
