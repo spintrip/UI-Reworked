@@ -430,6 +430,20 @@ const hostListingPreview = () => {
                                   </div>
                                 </div>
                               )}
+                              {additionalInfo["transmission"] && (
+                                <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
+                                  <div className="feature-img">
+                                    <ImageWithBasePath
+                                      src="assets/img/specification/specification-icon-9.svg"
+                                      alt="Power Window"
+                                    />
+                                  </div>
+                                  <div className="featues-info">
+                                    <span>Power Window </span>
+                                    <h6>{additionalInfo["transmission"]}</h6>
+                                  </div>
+                                </div>
+                              )}
                               <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
                                 <div className="feature-img">
                                   <ImageWithBasePath
@@ -482,7 +496,10 @@ const hostListingPreview = () => {
                                 key: "tractionControl",
                                 label: "Traction Control",
                               },
+
                               { key: "voiceControl", label: "Voice Control" },
+                              { key: "touchScreen", label: "Touch Screen" },
+                              { key: "reverseCamera", label: "Reverse Camera" },
                             ].map(
                               (feature) =>
                                 additionalInfo[feature.key] && (
