@@ -82,6 +82,7 @@ export const JoyrideProvider = ({ children }: { children: React.ReactNode }) => 
         target: '.user-joyride-step',
         content: 'Click on the user then go to Profile to upload your documents.',
         disableBeacon: true,
+        placement : 'right',
       },
       {
         target: '.doc-button',
@@ -131,10 +132,10 @@ export const JoyrideProvider = ({ children }: { children: React.ReactNode }) => 
     // Adjust the steps dynamically and start the tour
     if (authToken !== null) {
       initializeSteps(true);  
-      setStepIndex(0);  // Start at the first relevant step for logged-in users (step 2)
+      setStepIndex(0); 
     } else {
-      initializeSteps(false); // User is not logged in
-      setStepIndex(0);  // Start at step 0
+      initializeSteps(false); 
+      setStepIndex(0);  
     }
 
     setRun(true);

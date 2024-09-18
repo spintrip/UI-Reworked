@@ -75,7 +75,7 @@ function JoyrideWrapper() {
 
   const handleJoyrideCallback = (data: any) => {
     const { status, index, action, type } = data;
-  
+    console.log("Callback here: ", data)
     if (type === 'step:after' && status === 'running') {
 
       if (steps[index]?.target === '.burger-menu' && !isMenuOpen) {
@@ -100,7 +100,11 @@ function JoyrideWrapper() {
         }
       }
   
-    
+      if (action ===  'close') {
+        localStorage.setItem("tourCompleted", "true");
+        stopTour();
+
+      }
       if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
         localStorage.setItem("tourCompleted", "true");
         stopTour();

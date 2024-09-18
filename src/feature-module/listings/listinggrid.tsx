@@ -477,7 +477,8 @@ const ListingGrid: React.FC = () => {
       }
       return; 
     }
-    const today = dayjs();
+    const today = dayjs().startOf('day');
+    const currentTime = dayjs();
       if (date1.isBefore(today, 'day')) {
         
         setDateTimeError(true)
@@ -495,16 +496,30 @@ const ListingGrid: React.FC = () => {
         return;
       }
     
-      if (date1.isSame(date2, 'day') && endTime.isBefore(startTime) || date1.isSame(date2, 'day') && endTime.isSame(startTime) || date1.isSame(date2, 'day') && 
-          endTime.isAfter(startTime) && 
-          endTime.diff(startTime, 'hours') < 1) 
-        {
-        setDateTimeError(true)
+      if (
+        date1.isSame(today, 'day') && startTime.isBefore(currentTime, 'minute') ||
+        date2.isSame(today, 'day') && endTime.isBefore(currentTime, 'minute')
+      ) {
+        setDateTimeError(true);
         setTimeout(() => {
           setDateTimeError(false);
         }, 5000);
         return;
-      }   
+      }
+
+      if (
+        date1.isSame(date2, 'day') && (
+          endTime.isBefore(startTime) ||
+          endTime.isSame(startTime) ||
+          endTime.diff(startTime, 'hours') < 1
+        )
+      ) {
+        setDateTimeError(true);
+        setTimeout(() => {
+          setDateTimeError(false);
+        }, 5000);
+        return;
+      }
 
     if (selectedCar) {
       
