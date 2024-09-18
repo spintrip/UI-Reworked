@@ -543,20 +543,6 @@ const hostListingPreview = () => {
               </div>
             )}
           </section>
-          <section className="pause-listing">
-            <div className="container">
-              <div className="card ">
-                <div className="card-header bg-warning">
-                  <h5>Pause Listing</h5>
-                </div>
-                <div className="card-body border shadow">
-                  <div className="p-3">
-
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
           {/* move to a component along with */}
         </div>
       )}

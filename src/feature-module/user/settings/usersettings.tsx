@@ -369,15 +369,17 @@ const UserSettings = () => {
                   </div>
                   {/* /Address Info */}
                   {/* Profile Submit */}
+                  
                   <div className="profile-submit-btn">
-                    <button type="button" className="btn btn-secondary">
-                      Cancel
-                    </button>
-                    {isSuccess && (
-                      <p className="mt-2 text-success">
+                  {isSuccess && (
+                      <p className="mt-2 mb-2 text-success">
                         Profile updated successfully!
                       </p>
                     )}
+                    <button type="button" className="btn btn-secondary">
+                      Cancel
+                    </button>
+                    
                     <button
                       type="submit"
                       className="btn btn-primary border border-amber-600"
