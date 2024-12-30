@@ -1,7 +1,7 @@
 import serverApiUrl from "./server";
 
 export const createBooking = async (bookingPayload) => {
-  var carId = bookingPayload.carId;
+  var vehicleid = bookingPayload.vehicleid;
   var startDate = bookingPayload.startDate;
   var endDate = bookingPayload.endDate;
   var startTime = bookingPayload.startTime;
@@ -22,12 +22,11 @@ export const createBooking = async (bookingPayload) => {
         'token': token
       },
       body: JSON.stringify({
-        carId: carId,
+        vehicleid: vehicleid,
         startDate: startDate,
         endDate: endDate,
         startTime: startTime,
         endTime: endTime,
-        features: features
       }),
     });
     if (!response.ok) {

@@ -39,7 +39,7 @@ const LocationDisplay: React.FC<LocationDisplayProps> = ({
   return (
     <span className="location-display">
       <i className="feather icon-map-pin" />
-      <span> {address.substring(0, 60)}.... </span>
+      <span className="address-style"> {address} </span>
     </span>
   );
 };

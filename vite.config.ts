@@ -5,7 +5,7 @@ import path from 'path';
 export default defineConfig({
   base: './',
   build: {
-    outDir: 'build',
+    outDir: 'dist',
     rollupOptions: {
       input: path.resolve(__dirname, 'index.html'), // Set the entry point for your app
     },

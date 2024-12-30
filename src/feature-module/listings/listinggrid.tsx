@@ -9,13 +9,13 @@ import ImageWithBasePath1 from "../../core/data/img/ImageWithBasePath1";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setFindCarsData,
-  setSelectedCarId,
+  setSelectedVehicleId,
   setDateTime,
-  setCarImages,
-  setCarLocation,
+  setVehicleImages,
+  setVehicleLocation,
   setWishlistData,
 } from "../redux/action";
-import { findCars, postCancelWishlist, postWishlist } from "../api/Cars";
+import { findVehicles, postCancelWishlist, postWishlist } from "../api/Cars";
 //import Aos from "aos";
 import NotificationBar from "../common/notificationBar";
 import {
@@ -31,15 +31,17 @@ import LocationInput from "../common/locationInput";
 import LocationDisplay from "../common/LocationDisplay"; // Adjust the import path as necessary
 
 interface DateTimeState {
+  vehicleType:string,
   startDate: string;
   endDate: string;
   startTime: string;
   endTime: string;
   location: Location;
+  distance: number;
 }
 
 interface WishlistState {
-  wishlist: { carId: number }[];
+  wishlist: { vehicleid: number }[];
 }
 
 interface RootState {
@@ -63,6 +65,8 @@ const ListingGrid: React.FC = () => {
   useScrollToTop();
   const dateTime = useSelector((state: RootState) => state.dateTime);
   const wishlist = useSelector((state: RootState) => state.wishlist.wishlist);
+  const vehicletype = useSelector((state: RootState) => state.dateTime.vehicleType);
+  const distance = useSelector((state: RootState) => state.dateTime.distance);
   const initialPickupLocation = dateTime.location;
   const [locationAlert, setLocationAlert] = useState(false);
   const [dateTimeError, setDateTimeError] = useState(false);
@@ -151,19 +155,21 @@ const ListingGrid: React.FC = () => {
       const endDate = date2.format("YYYY-MM-DD");
       const startTimeStr = startTime.format("HH:mm");
       const endTimeStr = endTime.format("HH:mm");
-      const cars = await findCars(
+      const vehicles = await findVehicles(
+        vehicletype,
         startDate,
         endDate,
         startTimeStr,
         endTimeStr,
         latitude,
         longitude,
+        distance,
       );
-      setResponse(Array.isArray(cars) ? cars : [cars]);
-      dispatch(setFindCarsData(Array.isArray(cars) ? cars : [cars]));
+      setResponse(Array.isArray(vehicles) ? vehicles : [vehicles]);
+      dispatch(setFindCarsData(Array.isArray(vehicles) ? vehicles : [vehicles]));
     } catch (err) {
-      console.error("Failed to fetch car data:", err);
-      setError("Failed to load car data");
+      console.error("Failed to fetch vehicle data:", err);
+      setError("Failed to load vehicle data");
     } finally {
       setLoading(false);
     }
@@ -171,6 +177,7 @@ const ListingGrid: React.FC = () => {
 
   useEffect(() => {
     if (
+      vehicletype &&
       dateTime.startDate &&
       dateTime.endDate &&
       dateTime.startTime &&
@@ -180,7 +187,7 @@ const ListingGrid: React.FC = () => {
     ) {
       fetchData();
     }
-  }, [location, token, navigate, dateTime, latitude, longitude]);
+  }, [location, token, navigate, dateTime, latitude, longitude , vehicletype]);
 
   const handleDateChange = (newValue: Dayjs, type: "start" | "end") => {
     if (type === "start") {
@@ -254,8 +261,8 @@ const ListingGrid: React.FC = () => {
     const searchQuery = searchValue.toLowerCase();
     if (searchQuery) {
       filteredCars = filteredCars.filter(
-        (car: { carModel: string; brand: string }) =>
-          car.carModel?.toLowerCase().includes(searchQuery) ||
+        (car: { vehicleModel: string; brand: string }) =>
+          car.vehicleModel?.toLowerCase().includes(searchQuery) ||
           car.brand?.toLowerCase().includes(searchQuery),
       );
     }
@@ -264,22 +271,20 @@ const ListingGrid: React.FC = () => {
       if (values && values.length > 0) {
         filteredCars = filteredCars.filter(
           (car: {
-            type: string;
-            fuelType: any;
-            sevenSeater: any;
+            Additional: {type: string , fuelType: any, sevenSeater: any};
             pricing: { costPerHr: number };
             rating: any;
           }) => {
             switch (key) {
               case "Car Category":
-                return values.includes(car.type);
+                return values.includes(car.Additional.type);
               case "Car Type": {
-                const carFuelType = car.fuelType ? "Diesel" : "Petrol";
+                const carFuelType = car.Additional.fuelType ? "Diesel" : "Petrol";
                 return values.includes(carFuelType);
               }
               case "Capacity":
                 return values.includes(
-                  car.sevenSeater ? "7 Seater" : "5 Seater",
+                  car.Additional.sevenSeater ? "7 Seater" : "5 Seater",
                 );
               case "Price (INR)":
                 if (values.includes("< 200/Day") && car.pricing.costPerHr < 200)
@@ -293,8 +298,19 @@ const ListingGrid: React.FC = () => {
                 if (values.includes("> 400/Day") && car.pricing.costPerHr > 400)
                   return true;
                 return false;
-              case "Ratings":
-                return values.includes(`${car.rating} ⭐`);
+                case "Ratings":
+                    return values.some((ratingRange: any) => {
+                      const [lowerBound, upperBound] = ratingRange
+                        .split("⭐")[0]
+                        .trim()
+                        .split("-")
+                        .map(Number);
+
+                      if (!upperBound) {
+                        return car.rating === lowerBound;
+                      }
+                      return car.rating >= lowerBound && car.rating <= upperBound;
+                    });
               default:
                 return true;
             }
@@ -372,6 +388,7 @@ const ListingGrid: React.FC = () => {
       }
     // Check the conditions previously used for disabling the button
     if (
+      !vehicletype ||
       !pickupLocation ||
       !pickupLocation.isValidLocation ||
       !inputValue ||
@@ -400,19 +417,23 @@ const ListingGrid: React.FC = () => {
       const endTimeStr = endTime.format("HH:mm");
 
       setLoading(true);
-      const response = await findCars(
+      const response = await findVehicles(
+        vehicletype,
         startDate,
         endDate,
         startTimeStr,
         endTimeStr,
+        distance
       );
       dispatch(
         setDateTime(
+          vehicletype,
           startDate,
           startTimeStr,
           endDate,
           endTimeStr,
           pickupLocation,
+          distance,
         ),
       );
       setResponse(response);
@@ -429,21 +450,21 @@ const ListingGrid: React.FC = () => {
     }
   }, [pickupLocation]);
 
-  const handleWishlistUpdate = async (carId: any) => {
+  const handleWishlistUpdate = async (vehicleid: any) => {
     try {
-      await postWishlist(carId);
-      const updatedWishlist = [...wishlist, { carId }];
+      await postWishlist(vehicleid);
+      const updatedWishlist = [...wishlist, { vehicleid }];
       dispatch(setWishlistData(updatedWishlist));
     } catch (error) {
       console.error("Error updating wishlist:", error);
     }
   };
 
-  const handleCancelWishlistUpdate = async (carId: any) => {
+  const handleCancelWishlistUpdate = async (vehicleid: any) => {
     try {
-      await postCancelWishlist(carId);
+      await postCancelWishlist(vehicleid);
       const updatedWishlist = wishlist.filter(
-        (item: { carId: any }) => item.carId !== carId,
+        (item: { vehicleid: any }) => item.vehicleid !== vehicleid,
       );
       dispatch(setWishlistData(updatedWishlist));
     } catch (error) {
@@ -451,14 +472,14 @@ const ListingGrid: React.FC = () => {
     }
   };
 
-  const handleWishlistClick = (car: { carId: any }) => {
+  const handleWishlistClick = (vehicle: { vehicleid: any }) => {
     const isWishlisted = wishlist.some(
-      (wishlistCar: { carId: any }) => wishlistCar.carId === car.carId,
+      (wishlistCar: { vehicleid: any }) => wishlistCar.vehicleid === vehicle.vehicleid,
     );
     if (isWishlisted) {
-      handleCancelWishlistUpdate(car.carId);
+      handleCancelWishlistUpdate(vehicle.vehicleid);
     } else {
-      handleWishlistUpdate(car.carId);
+      handleWishlistUpdate(vehicle.vehicleid);
     }
   };
       const startDate = date1.format("YYYY-MM-DD");
@@ -466,7 +487,7 @@ const ListingGrid: React.FC = () => {
       const startTimeStr = startTime.format("HH:mm");
       const endTimeStr = endTime.format("HH:mm");
 
-  const handleRentNowClick = (selectedCar: any) => {
+  const handleRentNowClick = (selectedVehicle: any) => {
     if (!pickupLocation || !pickupLocation.isValidLocation) {
       setLocationAlert(true); // Show the location alert
       setTimeout(() => {
@@ -521,36 +542,38 @@ const ListingGrid: React.FC = () => {
         return;
       }
 
-    if (selectedCar) {
+    if (selectedVehicle) {
       
-      dispatch(setSelectedCarId(selectedCar.carId));
+      dispatch(setSelectedVehicleId(selectedVehicle.vehicleid));
       dispatch(
         setDateTime(
+          vehicletype,
           startDate,
           startTimeStr,
           endDate,
           endTimeStr,
           pickupLocation,
+          distance,
         ),
       );
       dispatch(
-        setCarLocation({
-          carLatitude: selectedCar.latitude,
-          carLongitude: selectedCar.longitude,
+        setVehicleLocation({
+          vehicleLatitude: selectedVehicle.latitude,
+          vehicleLongitude: selectedVehicle.longitude,
         }),
       );
       dispatch(
-        setCarImages({
-          carImage1:
-            selectedCar.carImage1 || "/assets/img/cars/no_img_found.jpg",
-          carImage2:
-            selectedCar.carImage2 || "/assets/img/cars/no_img_found.jpg",
-          carImage3:
-            selectedCar.carImage3 || "/assets/img/cars/no_img_found.jpg",
-          carImage4:
-            selectedCar.carImage4 || "/assets/img/cars/no_img_found.jpg",
-          carImage5:
-            selectedCar.carImage5 || "/assets/img/cars/no_img_found.jpg",
+        setVehicleImages({
+          vehicleImage1:
+            selectedVehicle.vehicleImage1 || "/assets/img/cars/no_img_found.jpg",
+          vehicleImage2:
+            selectedVehicle.vehicleImage2 || "/assets/img/cars/no_img_found.jpg",
+          vehicleImage3:
+            selectedVehicle.vehicleImage3 || "/assets/img/cars/no_img_found.jpg",
+          vehicleImage4:
+            selectedVehicle.vehicleImage4 || "/assets/img/cars/no_img_found.jpg",
+          vehicleImage5:
+            selectedVehicle.vehicleImage5 || "/assets/img/cars/no_img_found.jpg",
         }),
       );
       navigate(all_routes.listingdetails);
@@ -562,7 +585,7 @@ const ListingGrid: React.FC = () => {
   return (
     <div className="main-wrapper" ref={pickupLocationRef}>
       <Breadcrumbs
-        title="Car Listings"
+        title="Vehicle Listings"
         subtitle="Listings"
         maintitle={undefined}
       />
@@ -601,10 +624,6 @@ const ListingGrid: React.FC = () => {
                             textField: (params) => (
                               <TextField
                                 {...params}
-                                InputProps={{
-                                  ...params.InputProps,
-                                  readOnly: true,
-                                }}
                               />
                             ),
                           }}
@@ -856,21 +875,19 @@ const ListingGrid: React.FC = () => {
                             <div onClick={() => handleRentNowClick(item)}>
                               <ImageWithBasePath1
                                 src={
-                                  item?.carImage1
-                                    ? item.carImage1
+                                  item?.vehicleImage1
+                                    ? item.vehicleImage1
                                     : "/assets/img/cars/no_img_found.jpg"
                                 }
                                 className="img-fluid"
-                                alt={item?.carModel}
+                                alt={item?.vehicleModel}
                               />
                             </div>
                             <div className="fav-item">
-                              <span className="featured-text text-black font-mono">
-                                {item?.brand}
-                              </span>
+                              
                               <Link
                                 to="#"
-                                className={`fav-icon ${wishlist.some((wishlistCar: { carId: any }) => wishlistCar?.carId === item?.carId) ? "selected" : ""}`}
+                                className={`fav-icon ${wishlist.some((wishlistCar: { vehicleid: any }) => wishlistCar?.vehicleid === item?.vehicleid) ? "selected" : ""}`}
                                 onClick={() => handleWishlistClick(item)}
                               >
                                 <i className="feather icon-heart"></i>
@@ -885,7 +902,7 @@ const ListingGrid: React.FC = () => {
                                     className="car-model"
                                     onClick={() => handleRentNowClick(item)}
                                   >
-                                    {item?.carModel || 'N/A'}
+                                    {item?.vehicleModel || 'N/A'}
                                   </div>
                                 </h3>
                                 <div className="list-rating">
@@ -902,7 +919,7 @@ const ListingGrid: React.FC = () => {
                                   <span>
                                     (
                                     {item?.rating
-                                      ? item?.rating.toFixed(1)
+                                      ? item?.rating
                                       : "Not rated Yet"}
                                     )
                                   </span>
@@ -943,16 +960,16 @@ const ListingGrid: React.FC = () => {
                                   <span className="me-2">
                                     <ImageWithBasePath
                                       src="assets/img/icons/car-parts-02.svg"
-                                      alt={item?.mileage}
+                                      alt={item?.Additional.HorsePower || "N/A"}
                                     />
                                   </span>
-                                  <p className="mb-0">{item?.mileage || "NA"} kmpl</p>
+                                  <p className="mb-0">{item?.Additional.HorsePower || "NA"} bHp</p>
                                 </div>
                                 <div className="col-md-4 col-sm-6 d-flex align-items-center mb-3">
                                   <span className="me-2">
                                     <ImageWithBasePath
                                       src="assets/img/icons/calendar-icon.svg"
-                                      alt={item?.year}
+                                      alt={item?.registrationYear}
                                     />
                                   </span>
                                   <p className="mb-0">{item?.registrationYear.split("-")[0]}</p>
@@ -964,7 +981,7 @@ const ListingGrid: React.FC = () => {
                                       alt="Persons"
                                     />
                                   </span>
-                                  <p className="mb-0">{item?.sevenSeater === true ? "7 seater" : "5 seater"}</p>
+                                  <p className="mb-0">{item?.Additional.sevenSeater === true ? "7 seater" : "5 seater"}</p>
                                 </div>
                               </div>
                             </div>

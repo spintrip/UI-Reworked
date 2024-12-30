@@ -13,14 +13,14 @@ import { Helmet } from "react-helmet";
 
 interface Booking {
   bookingId: string;
-  carModel: string;
+  vehicleModel: string;
   startTripDate: string;
   startTripTime: string;
   endTripDate: string;
   endTripTime: string;
-  totalUserAmount: number;
+  amount: number;
   status: number;
-  carImage1: string | null;
+  vehicleImage1: string | null;
   pickupDeliveryLocation1: string;
   dropoffLocation1: string;
   createdAt: string | number | Date;
@@ -143,8 +143,8 @@ const UserDashboard = () => {
             booking.transactionId !== null,
         ) 
         .reduce(
-          (sum: number, booking: { totalUserAmount: number }) =>
-            sum + booking.totalUserAmount,
+          (sum: number, booking: { amount: number }) =>
+            sum + booking.amount,
           0,
         ); 
 
@@ -215,7 +215,7 @@ const UserDashboard = () => {
                     <div className="widget-content">
                       <h6>Total Transactions</h6>
                       <h3 className="font-mono font-semibold">
-                        ₹ {totalTransactions.toFixed(2)}
+                        ₹ {totalTransactions?.toFixed(2)}
                       </h3>
                     </div>
                     <div className="widget-icon">
@@ -311,7 +311,7 @@ const UserDashboard = () => {
                                     <ImageWithBasePath
                                       className="avatar-img "
                                       src="assets/img/icons/icon.png"
-                                      alt={String(booking.carModel)}
+                                      alt={String(booking.vehicleModel)}
                                     />
                                   </Link>
                                   <div className="table-head-name flex-grow-1">
@@ -319,7 +319,7 @@ const UserDashboard = () => {
                                       to={route.userbookings}
                                       className="text-base font-semibold text-primary "
                                     >
-                                      {booking.carModel}
+                                      {booking.vehicleModel}
                                     </Link>
                                     <p>Rent Type : Pickup</p>
                                   </div>
@@ -341,7 +341,7 @@ const UserDashboard = () => {
                               <td>
                                 <h6>Price</h6>
                                 <h5 className="text-black font-mono">
-                                  ₹ {booking.totalUserAmount.toFixed(2)}
+                                  ₹ {booking.amount?.toFixed(2)}
                                 </h5>
                               </td>
                               <td>

@@ -36,30 +36,30 @@ const initialSelectedCarId = {
   },
 };
 
-const selectedCarIdReducer = (
+const selectedVehicleIdReducer = (
   state = initialSelectedCarId,
   action: { type: any; payload: any },
 ) => {
   switch (action.type) {
-    case "SET_SELECTED_CAR_ID":
-      return { ...state, carId: action.payload };
-    case "SET_CAR_IMAGES":
+    case "SET_SELECTED_VEHICLE_ID":
+      return { ...state, vehicleid: action.payload };
+    case "SET_VEHICLE_IMAGES":
       return {
         ...state,
-        carImages: {
-          carImage1: action.payload.carImage1,
-          carImage2: action.payload.carImage2,
-          carImage3: action.payload.carImage3,
-          carImage4: action.payload.carImage4,
-          carImage5: action.payload.carImage5,
+        vehicleImages: {
+          vehicleImage1: action.payload.vehicleImage1,
+          vehicleImage2: action.payload.vehicleImage2,
+          vehicleImage3: action.payload.vehicleImage3,
+          vehicleImage4: action.payload.vehicleImage4,
+          vehicleImage5: action.payload.vehicleImage5,
         },
       };
-    case "SET_CAR_LOCATION":
+    case "SET_VEHICLE_LOCATION":
       return {
         ...state,
-        carLocation: {
-          latitude: action.payload.carLatitude,
-          longitude: action.payload.carLongitude,
+        vehicleLocation: {
+          latitude: action.payload.vehicleLatitude,
+          longitude: action.payload.vehicleLongitude,
         },
       };
     default:
@@ -84,11 +84,13 @@ const dateTimeReducer = (
   action: {
     type: any;
     payload: {
+      vehicleType: any,
       startDate: any;
       startTime: any;
       endDate: any;
       endTime: any;
       pickupLocation: any;
+      distance: any;
     };
   },
 ) => {
@@ -96,11 +98,13 @@ const dateTimeReducer = (
     case "SET_DATE_TIME":
       return {
         ...state,
+        vehicleType: action.payload.vehicleType,
         startDate: action.payload.startDate,
         startTime: action.payload.startTime,
         endDate: action.payload.endDate,
         endTime: action.payload.endTime,
         location: action.payload.pickupLocation,
+        distance: action.payload.distance,
       };
     default:
       return state;
@@ -406,7 +410,7 @@ export {
   dateTimeReducer,
   hostCarIdReducer,
   authReducer,
-  selectedCarIdReducer,
+  selectedVehicleIdReducer,
   HostCarsReducer,
   setUpdatedBookingDatesReducer,
   setBookingIdReducer,

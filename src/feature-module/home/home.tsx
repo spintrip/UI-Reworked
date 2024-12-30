@@ -14,19 +14,20 @@ import TextField from "@mui/material/TextField";
 import useScrollToTop from "../../hooks/useScrollToTop";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-// import Slider from "react-slick";
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import TwoWheelerIcon from '@mui/icons-material/TwoWheeler';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { all_routes } from "../router/all_routes";
 import {
   setDateTime,
-  setSelectedCarId,
-  setCarImages,
+  setSelectedVehicleId,
+  setVehicleImages,
   setWishlistData,
-  setCarLocation,
+  setVehicleLocation,
 } from "../redux/action";
 import faqData from "../../core/data/json/faq";
-import { findCars, getCars } from "../api/Cars";
+import { findVehicles } from "../api/Cars";
 const LocationInput = React.lazy(() => import('../common/locationInput'));
 const LocationDisplay = React.lazy(() => import('../common/LocationDisplay'));
 import { postWishlist, postCancelWishlist } from "../api/Cars";
@@ -34,9 +35,9 @@ import { Car, Location } from '../redux/types';
 import {getAllCarBrands } from "../api/Cars";
 import {getTopReviews} from "../api/Listing"
 import { debounce } from "lodash";
-//import { Helmet } from "react-helmet";
 import TestimonySlider from "../common/TestimonySlider";
 import GoogleAnalyticsScript from "../common/GoogleAnalyticsScript";
+import { Helmet } from "react-helmet-async";
 //import { useJoyride } from "../common/JoyrideContext";
 
 interface Brand {
@@ -58,7 +59,7 @@ interface DateTimeState {
   location: Location;
 }
 interface WishlistState {
-  wishlist: { carId: number }[];
+  wishlist: { vehicleid: number }[];
 }
 
 interface RootState {
@@ -86,7 +87,7 @@ const Home: React.FC = () => {
     dayjs(new Date()),
   );
   const [date2, setDate2] = useState<any>(() =>
-    dayjs(new Date()),
+    (dayjs().add(1,'day')),
   );
   const [startTime, setStartTime] = useState<any>(() =>
     dayjs(dateTime.startTime, "HH:mm").isValid()
@@ -102,6 +103,7 @@ const Home: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = localStorage.getItem("authToken");
+  const distance = 2000;
   const [inputValue, setInputValue] = useState<string>(
     initialPickupLocation?.address || "",
   );
@@ -118,29 +120,8 @@ const Home: React.FC = () => {
   const toggleFAQ = (index: number | null) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
-  // const { setSteps, startTour } = useJoyride();
-
-
-  // useEffect(() => {
-  //   const steps = [
-  //     {
-  //       target: '.pickup-location',
-  //       content: 'Tap Here to pick a location',
-  //     },
-  //     {
-  //       target: '.Pickup-Date',
-  //       content: 'Choose You pickup Location',
-  //     },
-  //   ];
-    
-  //   localStorage.setItem('joyride-steps', JSON.stringify(steps));
-  //   setSteps(steps);
-  // }, [setSteps]);
-
-  // useEffect(() => {
-  //   startTour();
-  // }, [startTour]);
-
+  const [vehicleType, setVehicleType] = useState("2");
+ 
   useEffect(() => {
     if (dayjs().isValid()) {
       setDate1(dayjs(new Date()));
@@ -170,33 +151,22 @@ const Home: React.FC = () => {
     const fetchData = async () => {
       try {
         if (!token) {
-          // Fetch car listings without token
-          const response = await getCars();
-          const responseData = await response?.json();
-          if (!response || !response.ok) {
-            throw new Error(
-              `Error fetching data: ${response?.statusText || "Unknown error"}`,
-            );
-          }
-          if (responseData && responseData.cars) {
-            setCarListings(responseData.cars);
-            //countCarsByType(responseData.cars);
-          } else {
-            console.error("Invalid data structure in API response");
-          }
+          return "No Cars";
         } else {
           // Fetch car listings with token and default date/time
           const startDate = date1.format("YYYY-MM-DD");
           const endDate = date2.format("YYYY-MM-DD");
           const startTimeStr = startTime.format("HH:mm");
           const endTimeStr = endTime.format("HH:mm");
-          const response = await findCars(
+          const response = await findVehicles(
+            vehicleType,
             startDate,
             endDate,
             startTimeStr,
             endTimeStr,
             latitude,
             longitude,
+            distance,
           );
           if (response) {
             setCarListings(response);
@@ -211,16 +181,16 @@ const Home: React.FC = () => {
     };
 
     fetchData();
-  }, [token, date1, date2, startTime, endTime]);
+  }, [token, date1, date2, startTime, endTime, latitude, longitude, vehicleType]);
 
   // fetch brands
-  useEffect(() => {
-    const fetchBrands = async () => {
-      const fetchedBrands = await getAllCarBrands();
-      setBrandNames(fetchedBrands);
-    };
-    fetchBrands();
-  }, []);
+  // useEffect(() => {
+  //   const fetchBrands = async () => {
+  //     const fetchedBrands = await getAllCarBrands();
+  //     setBrandNames(fetchedBrands);
+  //   };
+  //   fetchBrands();
+  // }, []);
 
   //fetch top reviews
   useEffect(() => {
@@ -251,9 +221,6 @@ const Home: React.FC = () => {
     );
     return brand ? brand.logo_path : undefined;
   };
-  // useEffect(() => {
-  //   dispatch<any>(fetchUserBookings());
-  // }, [dispatch]);
 
   const handleDateChange = (newValue: Dayjs, type: "start" | "end") => {
     if (type === "start") {
@@ -286,12 +253,12 @@ const Home: React.FC = () => {
   }
   
 
-    const startDate = date1.format('YYYY-MM-DD');
-    const endDate = date2.format('YYYY-MM-DD');
-    const startTimeStr = startTime.format('HH:mm');
-    const endTimeStr = endTime.format('HH:mm');
+  const startDate = date1.format('YYYY-MM-DD');
+  const endDate = date2.format('YYYY-MM-DD');
+  const startTimeStr = startTime.format('HH:mm');
+  const endTimeStr = endTime.format('HH:mm');
 
-    const validateDateTime = () => {
+  const validateDateTime = () => {
       if (
         !startDate ||
         !endDate ||
@@ -353,7 +320,7 @@ const Home: React.FC = () => {
 
     const handleFindCarsSubmit = (event: { preventDefault: () => void; }) => {
       event.preventDefault();
-      if (!pickupLocation || !pickupLocation.isValidLocation || !inputValue || inputValue.length <= 2 || !hasSuggestions) {
+      if (!vehicleType || !pickupLocation || !pickupLocation.isValidLocation || !inputValue || inputValue.length <= 2 || !hasSuggestions) {
         setLocationAlert(true);
         setTimeout(() => {
           setLocationAlert(false);
@@ -366,7 +333,7 @@ const Home: React.FC = () => {
 
     
       startTransition(() => {
-        dispatch(setDateTime(startDate, startTimeStr, endDate, endTimeStr, pickupLocation));
+        dispatch(setDateTime(vehicleType, startDate, startTimeStr, endDate, endTimeStr, pickupLocation, distance));
         fetchCarData()
           .then(() => navigate(routes.listinggrid))
           .catch((error) => console.error("Error found", error));
@@ -374,7 +341,7 @@ const Home: React.FC = () => {
     };
     
 
-  const handleRentNowClick = (selectedCar: any) => {
+  const handleRentNowClick = (selectedVehicle: any) => {
 
     if(!token){
       navigate(routes.login);
@@ -431,30 +398,32 @@ const Home: React.FC = () => {
 
 
     // If the pickup location is valid and a car is selected
-    if (selectedCar) {
-      dispatch(setSelectedCarId(selectedCar.carId));
+    if (selectedVehicle) {
+      dispatch(setSelectedVehicleId(selectedVehicle.vehicleid));
       dispatch(
         setDateTime(
+          vehicleType,
           startDate,
           startTimeStr,
           endDate,
           endTimeStr,
           pickupLocation,
+          distance
         ),
       );
       dispatch(
-        setCarImages({
-          carImage1: selectedCar.carImage1,
-          carImage2: selectedCar.carImage2,
-          carImage3: selectedCar.carImage3,
-          carImage4: selectedCar.carImage4,
-          carImage5: selectedCar.carImage5,
+        setVehicleImages({
+          vehicleImage1: selectedVehicle.vehicleImage1,
+          vehicleImage2: selectedVehicle.vehicleImage2,
+          vehicleImage3: selectedVehicle.vehicleImage3,
+          vehicleImage4: selectedVehicle.vehicleImage4,
+          vehicleImage5: selectedVehicle.vehicleImage5,
         }),
       );
       dispatch(
-        setCarLocation({
-          carLatitude: selectedCar.latitude,
-          carLongitude: selectedCar.longitude,
+        setVehicleLocation({
+          vehicleLatitude: selectedVehicle.latitude,
+          vehicleLongitude: selectedVehicle.longitude,
         }),
       );
       navigate(routes.listingdetails);
@@ -492,21 +461,21 @@ const Home: React.FC = () => {
     }
   }, [pickupLocation]);
 
-  const handleWishlistUpdate = async (carId: any) => {
+  const handleWishlistUpdate = async (vehicleid: any) => {
     try {
-      await postWishlist(carId);
-      const updatedWishlist = [...wishlist, { carId }];
+      await postWishlist(vehicleid);
+      const updatedWishlist = [...wishlist, { vehicleid }];
       dispatch(setWishlistData(updatedWishlist));
     } catch (error) {
       console.error("Error updating wishlist:", error);
     }
   };
 
-  const handleCancelWishlistUpdate = async (carId: any) => {
+  const handleCancelWishlistUpdate = async (vehicleid: any) => {
     try {
-      await postCancelWishlist(carId);
+      await postCancelWishlist(vehicleid);
       const updatedWishlist = wishlist.filter(
-        (item: { carId: any }) => item.carId !== carId,
+        (item: { vehicleid: any }) => item.vehicleid !== vehicleid,
       );
       dispatch(setWishlistData(updatedWishlist));
     } catch (error) {
@@ -515,11 +484,11 @@ const Home: React.FC = () => {
   };
   
   const handleWishlistClick = useCallback((car: { [x: string]: any; }) => {
-    const isWishlisted = wishlist.some((wishlistCar) => wishlistCar.carId === car['carId']);
+    const isWishlisted = wishlist.some((wishlistCar) => wishlistCar.vehicleid === car['vehicleid']);
     if (isWishlisted) {
-      handleCancelWishlistUpdate(car['carId']);
+      handleCancelWishlistUpdate(car['vehicleid']);
     } else {
-      handleWishlistUpdate(car['carId']);
+      handleWishlistUpdate(car['vehicleid']);
     }
   }, [wishlist]);
   
@@ -532,33 +501,16 @@ const Home: React.FC = () => {
     []
   );
 
-  // const settings = {
-  //   dots: true,
-  //   nav: true,
-  //   infinite: true,
-  //   speed: 500,
-  //   slidesToShow: 2,
-  //   slidesToScroll: 1,
-  // };
+  const handleVehicleChange = (value : any) => {
+    setVehicleType(value); 
+  }
 
-
-  // const handleJoyrideCallback = (data: any) => {
-  //   const { status } = data;
-  //   console.log('Joyride status:', status);
-  // };
-
-
-  // const steps = [
-  //   {
-  //     target: '.view-all-cars',
-  //     content: 'Welcome!',
-  //   },
-  //   {
-  //     target: '.search-box-banner',
-  //     content: 'This another awesome feature!',
-  //   },
-  // ];
-  
+  function classNames(...classes: string[]) {
+    return classes.filter(Boolean).join(" ");
+  }
+  const getFuelType = (value : boolean) => {
+    return value === true ? 'Diesel' : 'Petrol' ;
+  }
 
 
   useEffect(() => {
@@ -567,17 +519,18 @@ const Home: React.FC = () => {
 
   return (
     <div>
-      
         <GoogleAnalyticsScript/>
-        <title>Home - Spintrip Car Rentals </title>
-        <meta
-          name="description"
-          content="Spintrip Car Rentals - Affordable self-drive car rentals in Bangalore. Rent top-notch cars from local hosts and enjoy competitive pricing. Hosts earn exciting commissions by listing their cars with us."
-        />
-        <meta
-          name="keywords"
-          content="Spintrip Car Rentals, affordable car rentals Bangalore, self-drive car rentals Bangalore, rent cars Bangalore, top-notch cars Bangalore, local car hosts Bangalore, competitive car rental pricing, car rental commissions, list your car Bangalore, Bangalore car hire, best car rentals Bangalore, car rental deals Bangalore, self-drive cars Bangalore, car rental service Bangalore, rent a car Bangalore, car rental company Bangalore, self-drive rental services, weekend car rentals Bangalore, hourly car rentals Bangalore, economic car rentals Bangalore"
-        ></meta>
+        <Helmet>
+          <title>Home - Spintrip Car Rentals </title>
+          <meta
+            name="description"
+            content="Spintrip Car Rentals - Affordable self-drive car rentals in Bangalore. Rent top-notch cars from local hosts and enjoy competitive pricing. Hosts earn exciting commissions by listing their cars with us."
+          />
+          <meta
+            name="keywords"
+            content="Spintrip Car Rentals, affordable car rentals Bangalore, self-drive car rentals Bangalore, rent cars Bangalore, top-notch cars Bangalore, local car hosts Bangalore, competitive car rental pricing, car rental commissions, list your car Bangalore, Bangalore car hire, best car rentals Bangalore, car rental deals Bangalore, self-drive cars Bangalore, car rental service Bangalore, rent a car Bangalore, car rental company Bangalore, self-drive rental services, weekend car rentals Bangalore, hourly car rentals Bangalore, economic car rentals Bangalore"
+          ></meta>
+        </Helmet>
      
   
       {/* Banner */}
@@ -768,7 +721,67 @@ const Home: React.FC = () => {
         </div>
       </div>
       {/* /Search */}
-  
+      
+      {/* Vehicle Type */}
+      <section className="section services">
+        
+        <div className="container">
+          {/* Heading title*/}
+          <div className="section-heading" data-aos="fade-down">
+            <h2>Choose Your Vehicle</h2>
+          </div>
+          {/* /Heading title */}
+          <div className="vehicle-pick-container">
+            <div className="row">
+              {/* Car Selection */}
+              <div className="col-lg-5 col-md-5 col-12 " data-aos="fade-down">
+                <div className={classNames(
+                      vehicleType === "2" ? "vehicle-selected" : "vehicle-unselected",
+                    )} 
+                    onClick={() => handleVehicleChange("2")}
+                >
+                  <div className="checkbox-type">
+                    <input
+                      className="checkbox"
+                      type="checkbox"
+                      checked={vehicleType === "2"}
+                      readOnly
+                    />
+                  </div>
+                  <div className="vehicle-items">
+                    <DirectionsCarIcon style={{ fontSize: "50px" }} />
+                    <label>Car</label>
+                  </div>
+                </div>
+              </div>
+
+              {/* Two-Wheeler Selection */}
+              <div className="col-lg-5 col-md-5 col-12" data-aos="fade-down">
+              <div className={classNames(
+                      vehicleType === "1" ? "vehicle-selected" : "vehicle-unselected",
+                    )} 
+                    onClick={() => handleVehicleChange("1")}
+                  >
+                <div className="checkbox-type">
+                    <input
+                      className="checkbox"
+                      type="checkbox"
+                      checked={vehicleType === "1"}
+                      readOnly
+                    />
+                  </div>
+                  <div className="vehicle-items">
+                    <TwoWheelerIcon style={{ fontSize: "50px" }} />
+                    <label>Bike</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      
       {/* Services */}
       <section className="section services">
         <div className="service-right">
@@ -866,7 +879,7 @@ const Home: React.FC = () => {
           <div className="tab-content">
             <div className="tab-pane active" id="Carmazda">
               <div className="row">
-                {displayedCars.map((car: any, index) => (
+                {displayedCars.map((vehicle: any, index) => (
                   <div
                     className="col-lg-4 col-md-6 col-12"
                     key={index}
@@ -874,42 +887,42 @@ const Home: React.FC = () => {
                   >
                     <div className="listing-item border border-2 border-gray">
                       <div className="listing-img">
-                        <div onClick={() => handleRentNowClick(car)}>
+                        <div onClick={() => handleRentNowClick(vehicle)}>
                           <img
                             src={
-                              car.carImage1
-                                ? car.carImage1
+                              vehicle.vehicleImage1
+                                ? vehicle.vehicleImage1
                                 : "/assets/img/cars/no_img_found.jpg"
                             }
                             className="img-fluid"
-                            alt={car.carModel}
+                            alt={vehicle.vehicleModel}
                             loading="lazy"
                           />
                         </div>
                         <div className="fav-item">
-                          <span className="featured-text">
-                            {getBrandLogo(car.brand) && (
+                          <span >
+                            {/* {getBrandLogo(vehicle.Additional.brand) && (
                               <img
                                 className="car-brand-logo"
-                                src={getBrandLogo(car.brand)}
-                                alt={`${car.brand} logo`}
+                                src={getBrandLogo(vehicle.Additional.brand)}
+                                alt={`${vehicle.brand} logo`}
                                 style={{ objectFit: "contain" }}
                                 loading="lazy"
                               />
-                            )}
+                            )} */}
                           </span>
                           {token && (
                           <Link
                             to="#"
                             className={`fav-icon ${
                               wishlist.some(
-                                (wishlistCar: { carId: any }) =>
-                                  wishlistCar.carId === car.carId
+                                (wishlistCar: { vehicleid: any }) =>
+                                  wishlistCar.vehicleid === vehicle.vehicleid
                               )
                                 ? "selected"
                                 : ""
                             }`}
-                            onClick={() => handleWishlistClick(car)}
+                            onClick={() => handleWishlistClick(vehicle)}
                           >
                             <i className="feather icon-heart" />
                           </Link>
@@ -919,17 +932,17 @@ const Home: React.FC = () => {
                       <div className="listing-content">
                         <div className="listing-features">
                           <h3 className="listing-title">
-                            <div onClick={() => handleRentNowClick(car)}>
-                              {car.carModel}
+                            <div onClick={() => handleRentNowClick(vehicle)}>
+                              {vehicle.vehicleModel}
                             </div>
                           </h3>
                           <div className="list-rating">
-                            {renderStars(car["rating"])}
+                            {renderStars(vehicle["rating"])}
   
                             <span>
                               (
-                              {car["rating"]
-                                ? car["rating"].toFixed(1)
+                              {vehicle["rating"]
+                                ? vehicle["rating"]
                                 : "Not rated Yet"}
                               )
                             </span>
@@ -941,28 +954,28 @@ const Home: React.FC = () => {
                                   <span className="me-2">
                                     <ImageWithBasePath
                                       src="assets/img/icons/car-parts-02.svg"
-                                      alt={car.mileage}
+                                      alt={vehicle.Additional.HorsePower}
                                     />
                                   </span>
-                                  <p className="mb-0">{car.mileage || "NA"} kmpl</p>
+                                  <p className="mb-0">{vehicle.Additional.HorsePower || "NA"} bHp</p>
                                 </div>
                                 <div className="col-md-4 col-sm-6 d-flex align-items-center mb-3">
                                   <span className="me-2">
                                     <ImageWithBasePath
                                       src="assets/img/icons/calendar-icon.svg"
-                                      alt={car.year}
+                                      alt={vehicle.year}
                                     />
                                   </span>
-                                  <p className="mb-0">{car.registrationYear.split("-")[0]}</p>
+                                  <p className="mb-0">{vehicle.registrationYear.split("-")[0]}</p>
                                 </div>
                                 <div className="col-md-4 col-sm-6 d-flex align-items-center mb-3">
                                   <span className="me-2">
                                     <ImageWithBasePath
-                                      src="assets/img/icons/car-parts-06.svg"
-                                      alt="Persons"
+                                      src="assets/img/icons/car-parts-03.svg"
+                                      alt={getFuelType(vehicle.Additional.fuelType)}
                                     />
                                   </span>
-                                  <p className="mb-0">{car.capacity || "5 seater"}</p>
+                                  <p className="mb-0">{getFuelType(vehicle.Additional.fuelType)}</p>
                                 </div>
                               </div>
                           
@@ -970,18 +983,17 @@ const Home: React.FC = () => {
                         {token ? (
                           <div className="listing-location-details">
                             <Suspense fallback={<div>Loading...</div>}>
-                              <div className="locatiion-display">
+                              <div className="location-text">
                                 <LocationDisplay
-                                  
-                                  latitude={car.latitude}
-                                  longitude={car.longitude}
+                                  latitude={vehicle.latitude}
+                                  longitude={vehicle.longitude}
                                 />
                               </div>
-                            </Suspense>
+                            </Suspense> 
                             <div className="listing-price">
                               <div>
                                 <h6 className="font-mono text-black">
-                                  ₹{car.pricing?.costPerHr}
+                                  ₹{vehicle.pricing?.costPerHr}
                                   <span>/Hr </span>{" "}
                                 </h6>
                               </div>
@@ -993,7 +1005,7 @@ const Home: React.FC = () => {
                             <div className="listing-price">
                               <div>
                                 <h6>
-                                  ₹{car.costPerHr}
+                                  ₹{vehicle.costPerHr}
                                   <span>/Hr </span>{" "}
                                 </h6>
                               </div>
@@ -1003,7 +1015,7 @@ const Home: React.FC = () => {
                         <div>
                           <button
                             className="py-2 bg-black hover:opacity-80 text-white rounded w-100 w-full"
-                            onClick={() => handleRentNowClick(car)}
+                            onClick={() => handleRentNowClick(vehicle)}
                           >
                             <span>
                               <i className="feather icon-calendar me-2" />
@@ -1230,49 +1242,6 @@ const Home: React.FC = () => {
         )}
       </section>
       {/* /FAQ */}
-
-      <section className="section popular-services popular-explore">
-        <div className="container  pt-5 rounded-xl">
-          {/* Heading title*/}
-          <div className="section-heading" data-aos="fade-down">
-            <h2>Explore From Popular Car Brands</h2>
-           
-          </div>
-          {/* /Heading title */}
-          <div className="row justify-content-center">
-            <div className="col-lg-12" data-aos="fade-down">
-              <div className="listing-tabs-group">
-                {brandNames?.map((brand, index) => (
-                  <ul
-                    className="nav listing-buttons gap-3"
-                    key={index}
-                    data-bs-tabs="tabs"
-                  >
-                    <li>
-                      <Link
-                        className="active"
-                        aria-current="true"
-                        data-bs-toggle="tab"
-                        to={`#${brand.brand_name.toLowerCase()}`}
-                      >
-                        <span>
-                          <img
-                            className="brand-icon"
-                            src={brand.logo_path}
-                            alt={brand.brand_name}
-                            loading="lazy"
-                          />
-                        </span>
-                        {toCamelCase(brand.brand_name)}
-                      </Link>
-                    </li>
-                  </ul>
-                ))}
-              </div>
-            </div>
-          </div>
-          </div>
-        </section>
     </div>
   );
   

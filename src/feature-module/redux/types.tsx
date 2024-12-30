@@ -85,7 +85,7 @@ export interface Car {
 }
 
 export interface WishlistItem {
-  carId: string;
+  vehicleid: string;
 }
 
 export interface RootState {

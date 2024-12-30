@@ -10,7 +10,7 @@ import DashboardMenu from "../dashboardmenu";
 import { all_routes } from "../../router/all_routes";
 import {
   setDateTime,
-  setSelectedCarId,
+  setSelectedVehicleId,
   setWishlistData,
 } from "../../redux/action";
 import {

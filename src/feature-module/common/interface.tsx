@@ -114,9 +114,6 @@ export interface UserPaymentData {
   status: string;
 }
 
-export interface JoyrideProviderProps {
-  children: ReactNode; // Specify children as a prop
-}
 
 export interface Brand {
   brand_name: string;

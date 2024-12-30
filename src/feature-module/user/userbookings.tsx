@@ -31,18 +31,15 @@ import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 
 interface Booking {
   amount: number;
-  insurance: number;
-  gstAmount: number;
   bookingId: string;
-  carModel: string;
+  vehicleModel: string;
   startTripDate: string;
   startTripTime: string;
   endTripDate: string;
   endTripTime: string;
-  totalUserAmount: number;
   status: number;
   transactionId: string | null;
-  carImage1: string | null;
+  vehicleImage1: string | null;
   pickupDeliveryLocation1: string;
   dropoffLocation1: string;
   createdAt: string | number;
@@ -108,12 +105,11 @@ const UserBookings = () => {
       dispatch(
         setPaymentData({
           bookingId: payment.bookingId,
-          carModel: payment.carModel,
+          vehicleModel: payment.vehicleModel,
           startTripDate: payment.startTripDate,
           startTripTime: payment.startTripTime,
           endTripDate: payment.endTripDate,
           endTripTime: payment.endTripTime,
-          totalUserAmount: payment.totalUserAmount,
           status: payment.status,
           pickupDeliveryLocation1: payment.pickupDeliveryLocation1,
           dropoffLocation1: payment.dropoffLocation1,
@@ -202,7 +198,7 @@ const UserBookings = () => {
     // Filter based on search input
     if (searchInput) {
       bookingsCopy = bookingsCopy.filter((booking) =>
-        booking.carModel.toLowerCase().includes(searchInput.toLowerCase()),
+        booking.vehicleModel.toLowerCase().includes(searchInput.toLowerCase()),
       );
     }
     if (sortOrder === "priceLowToHigh") {
@@ -397,11 +393,11 @@ const UserBookings = () => {
 
   
 
-  const carModel = (res: Booking) => {
+  const vehicleModel = (res: Booking) => {
     return (
       <div className="table-avatar">
         <div className="table-head-name flex-grow-1">
-          <Link to="">{res.carModel}</Link>
+          <Link to="">{res.vehicleModel}</Link>
           <p>{res.pickupDeliveryLocation1}</p>
         </div>
       </div>
@@ -479,7 +475,7 @@ const UserBookings = () => {
     return (
       <p>
         <span className="d-block font-mono font-semibold">
-          ₹ {res.totalUserAmount.toFixed(2)}
+          ₹ {res.amount.toFixed(2)}
         </span>
       </p>
     );
@@ -795,7 +791,7 @@ const UserBookings = () => {
                           <Column
                             field="carName"
                             header="Car Name"
-                            body={carModel}
+                            body={vehicleModel}
                           ></Column>
                           <Column
                             field="deliveryStatus"
@@ -858,10 +854,10 @@ const UserBookings = () => {
                     <div className="booking-header">
                       <div className="booking-img-wrap">
                         <div className="book-img">
-                          {selectedBooking.carImage1 ? (
+                          {selectedBooking.vehicleImage1 ? (
                             <ImageWithBasePath1
                               className="border rounded"
-                              src={selectedBooking.carImage1}
+                              src={selectedBooking.vehicleImage1}
                               alt="img"
                             />
                           ) : (
@@ -871,7 +867,7 @@ const UserBookings = () => {
                         </div>
                         <div className="book-info">
                           <h4 className="text-uppercase text-2xl">
-                            {selectedBooking.carModel}
+                            {selectedBooking.vehicleModel}
                           </h4>
                           <p>
                             Location :
@@ -909,7 +905,7 @@ const UserBookings = () => {
                       <div className="book-amount">
                         <p>Total Amount</p>
                         <h6 className="font-mono text-2xl text-black">
-                          ₹{selectedBooking.totalUserAmount.toFixed(2)}{" "}
+                          ₹{selectedBooking.amount.toFixed(2)}{" "}
                           <Link to="">
                             <i className="feather-alert-circle" />
                           </Link>
@@ -1170,10 +1166,10 @@ const UserBookings = () => {
                   <div className="booking-header">
                     <div className="booking-img-wrap">
                       <div className="book-img">
-                        {selectedBooking.carImage1 ? (
+                        {selectedBooking.vehicleImage1 ? (
                           <ImageWithBasePath1
                             className="border rounded"
-                            src={selectedBooking.carImage1}
+                            src={selectedBooking.vehicleImage1}
                             alt="img" />
                         ) : (
                           // <ImageWithBasePath1 src="https://cdn-icons-png.flaticon.com/512/12689/12689302.png" alt="not found" />
@@ -1182,7 +1178,7 @@ const UserBookings = () => {
                       </div>
                       <div className="book-info">
                         <h4 className="text-uppercase text-2xl">
-                          {selectedBooking.carModel}
+                          {selectedBooking.vehicleModel}
                         </h4>
                         <p>
                           Location :
@@ -1219,7 +1215,7 @@ const UserBookings = () => {
                     <div className="book-amount">
                       <p>Total Amount</p>
                       <h6 className="font-mono text-2xl text-black">
-                        ₹{selectedBooking.totalUserAmount.toFixed(2)}{" "}
+                        ₹{selectedBooking.amount.toFixed(2)}{" "}
                         <Link to="">
                           <i className="feather-alert-circle" />
                         </Link>
@@ -1311,10 +1307,10 @@ const UserBookings = () => {
                 <div className="booking-header">
                   <div className="booking-img-wrap">
                     <div className="book-img">
-                      {selectedBooking.carImage1 ? (
+                      {selectedBooking.vehicleImage1 ? (
                         <ImageWithBasePath1
                           className="border rounded"
-                          src={selectedBooking.carImage1}
+                          src={selectedBooking.vehicleImage1}
                           alt="img"
                         />
                       ) : (
@@ -1324,7 +1320,7 @@ const UserBookings = () => {
                     </div>
                     <div className="book-info">
                       <h4 className="text-uppercase text-2xl">
-                        {selectedBooking.carModel}
+                        {selectedBooking.vehicleModel}
                       </h4>
                       <p>
                         Location :
@@ -1530,15 +1526,15 @@ const UserBookings = () => {
                     <div className="book-img">
                       <ImageWithBasePath1
                         src={
-                          selectedBooking.carImage1
-                            ? selectedBooking.carImage1
+                          selectedBooking.vehicleImage1
+                            ? selectedBooking.vehicleImage1
                             : "/assests/img/noimgfound.webp"
                         }
                         alt="img"
                       />
                     </div>
                     <div className="book-info">
-                      <h6>{selectedBooking.carModel}</h6>
+                      <h6>{selectedBooking.vehicleModel}</h6>
                       <p>
                         Location :{" "}
                         <LocationDisplay
@@ -1551,7 +1547,7 @@ const UserBookings = () => {
                   <div className="book-amount">
                     <p>Total Amount</p>
                     <h6>
-                      Rs.{selectedBooking.totalUserAmount.toFixed(2)}{" "}
+                      Rs.{selectedBooking.amount.toFixed(2)}{" "}
                       <Link to="">
                         <i className="feather-alert-circle" />
                       </Link>
@@ -1653,15 +1649,15 @@ const UserBookings = () => {
                     <div className="book-img">
                       <ImageWithBasePath1
                         src={
-                          selectedBooking.carImage1
-                            ? selectedBooking.carImage1
+                          selectedBooking.vehicleImage1
+                            ? selectedBooking.vehicleImage1
                             : "/assests/img/noimgfound.webp"
                         }
                         alt="img"
                       />
                     </div>
                     <div className="book-info">
-                      <h6>{selectedBooking.carModel}</h6>
+                      <h6>{selectedBooking.vehicleModel}</h6>
                       <p>
                         Location :
                         <LocationDisplay
@@ -1674,7 +1670,7 @@ const UserBookings = () => {
                   <div className="book-amount">
                     <p>Total Amount</p>
                     <h6>
-                      Rs. {selectedBooking.totalUserAmount.toFixed(2)}{" "}
+                      Rs. {selectedBooking.amount.toFixed(2)}{" "}
                       <Link to="">
                         <i className="feather-alert-circle" />
                       </Link>
@@ -1751,9 +1747,9 @@ const UserBookings = () => {
                 <div className="booking-header">
                   <div className="booking-img-wrap">
                     <div className="book-img">
-                      {selectedBooking.carImage1 ? (
+                      {selectedBooking.vehicleImage1 ? (
                         <ImageWithBasePath1
-                          src={selectedBooking.carImage1}
+                          src={selectedBooking.vehicleImage1}
                           alt="img"
                         />
                       ) : (
@@ -1763,7 +1759,7 @@ const UserBookings = () => {
                     </div>
                     <div className="book-info">
                       <h4 className="text-uppercase text-2xl">
-                        {selectedBooking.carModel}
+                        {selectedBooking.vehicleModel}
                       </h4>
                       <p>
                         Location :
@@ -1801,7 +1797,7 @@ const UserBookings = () => {
                   <div className="book-amount">
                     <p>Total Amount</p>
                     <h6 className="font-mono text-2xl text-black">
-                      Rs.{selectedBooking.totalUserAmount.toFixed(2)}{" "}
+                      Rs.{selectedBooking.amount.toFixed(2)}{" "}
                       <Link to="">
                         <i className="feather-alert-circle" />
                       </Link>

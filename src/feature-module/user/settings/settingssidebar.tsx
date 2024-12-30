@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { all_routes } from "../../router/all_routes";
 
@@ -11,10 +11,11 @@ const SettingsSidebar = () => {
     return location.pathname === route;
   };
   const token = localStorage.getItem("authToken");
-  if (!token) {
-    navigate(all_routes.signup);
-    return null;
-  }
+  useEffect(() => {
+    if (!token) {
+      navigate(all_routes.signup);
+    }
+  })
 
   return (
     <div className="col-lg-3 theiaStickySidebar">

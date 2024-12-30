@@ -33,6 +33,7 @@ export const setAuthToken = (token: any) => ({
 });
 
 export const setDateTime = (
+  vehicleType : string,
   startDate: string,
   startTime: string,
   endDate: string,
@@ -41,15 +42,16 @@ export const setDateTime = (
     | { lat: number; lng: number; address: string; isValidLocation: boolean }
     | null
     | undefined,
+  distance: number,  
 ) => ({
   type: "SET_DATE_TIME",
-  payload: { startDate, startTime, endDate, endTime, pickupLocation },
+  payload: { vehicleType, startDate, startTime, endDate, endTime, pickupLocation, distance },
 });
 
-export const setSelectedCarId = (carId: any) => {
+export const setSelectedVehicleId = (vehicleid: any) => {
   return {
-    type: "SET_SELECTED_CAR_ID",
-    payload: carId,
+    type: "SET_SELECTED_VEHICLE_ID",
+    payload: vehicleid,
   };
 };
 // Export other action creators as needed
@@ -125,25 +127,25 @@ export const setWishlistData = (wishlist: any) => ({
   payload: wishlist,
 });
 
-export const setCarImages = (carImages: {
-  carImage1: any;
-  carImage2: any;
-  carImage3: any;
-  carImage4: any;
-  carImage5: any;
+export const setVehicleImages = (vehicleImages: {
+  vehicleImage1: any;
+  vehicleImage2: any;
+  vehicleImage3: any;
+  vehicleImage4: any;
+  vehicleImage5: any;
 }) => {
   return {
-    type: "SET_CAR_IMAGES",
-    payload: carImages,
+    type: "SET_VEHICLE_IMAGES",
+    payload: vehicleImages,
   };
 };
-export const setCarLocation = (carLocation: {
-  carLatitude: any;
-  carLongitude: any;
+export const setVehicleLocation = (vehicleLocation: {
+  vehicleLatitude: any;
+  vehicleLongitude: any;
 }) => {
   return {
-    type: "SET_CAR_LOCATION",
-    payload: carLocation,
+    type: "SET_VEHICLE_LOCATION",
+    payload: vehicleLocation,
   };
 };
 

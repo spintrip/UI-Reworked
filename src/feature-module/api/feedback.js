@@ -1,5 +1,5 @@
 import serverApiUrl from "./server.js"
-export const postfeedback = async (carId) => {
+export const postfeedback = async (vehicleid) => {
     try{
         const token = localStorage.getItem('authToken');
         if (!token) {
@@ -14,7 +14,7 @@ export const postfeedback = async (carId) => {
                 'token': token
             },
             body: JSON.stringify({
-                carId: carId,
+                vehicleid: vehicleid,
             }),
         });
          if (!response.ok) {
