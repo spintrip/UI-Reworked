@@ -9,8 +9,8 @@ import "slick-carousel/slick/slick-theme.css";
 import Aos from "aos";
 import { all_routes } from "../router/all_routes";
 import {
-  postOneCar,
-  getCarAdditionalInfo,
+  postOneVehicle,
+  getVehicleAdditionalInfo,
   postWishlist,
   postCancelWishlist,
   getAllCarBrands,
@@ -51,9 +51,9 @@ interface WishlistState {
   wishlist: any[]; // Adjust the type as per your actual data structure
 }
 
-interface SelectedCarState {
-  carId: string;
-  carLocation: any;
+interface SelectedVehicleState {
+  vehicleid: string;
+  vehicleLocation: any;
 }
 
 interface BookingState {
@@ -63,7 +63,7 @@ interface BookingState {
 interface RootState {
   dateTime: DateTimeState;
   wishlist: WishlistState;
-  selectedCarId: SelectedCarState;
+  selectedVehicleId: SelectedVehicleState;
   bookingId: BookingState;
 }
 
@@ -77,10 +77,11 @@ const listingDetails = () => {
   useScrollToTop();
   const dateTime = useSelector((state: RootState) => state.dateTime);
   const wishlist = useSelector((state: RootState) => state.wishlist.wishlist);
-  const carId = useSelector((state: RootState) => state.selectedCarId.carId);
+  const vehicleid = useSelector((state: RootState) => state.selectedVehicleId.vehicleid);
   const carLocation = useSelector(
-    (state: RootState) => state.selectedCarId.carLocation,
+    (state: RootState) => state.selectedVehicleId.vehicleLocation,
   );
+  const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]); // Store selected feature IDs
   const bookingId = useSelector((state: RootState) => state.bookingId);
   const [carResponse, setCarResponse] = useState<any>(null);
   const [breakupValue, setbreakupValue] = useState<any>(null);
@@ -132,13 +133,13 @@ const listingDetails = () => {
   }, [dateTime]);
 
   // get all brands api call
-  useEffect(() => {
-    const fetchBrands = async () => {
-      const fetchedBrands = await getAllCarBrands();
-      setBrands(fetchedBrands);
-    };
-    fetchBrands();
-  }, []);
+  // useEffect(() => {
+  //   const fetchBrands = async () => {
+  //     const fetchedBrands = await getAllCarBrands();
+  //     setBrands(fetchedBrands);
+  //   };
+  //   fetchBrands();
+  // }, []);
 
   const fetchStatus = useCallback(async () => {
     const profile = await getProfile();
@@ -154,13 +155,13 @@ const listingDetails = () => {
 
 
 
-  // retuern the logo specific to the car brand
-  const getBrandLogo = (brandName: string): string | undefined => {
-    const brand = brands.find(
-      (b) => b.brand_name?.toLowerCase() === brandName?.toLowerCase(),
-    );
-    return brand ? brand.logo_path : undefined;
-  };
+  // // retuern the logo specific to the car brand
+  // const getBrandLogo = (brandName: string): string | undefined => {
+  //   const brand = brands.find(
+  //     (b) => b.brand_name?.toLowerCase() === brandName?.toLowerCase(),
+  //   );
+  //   return brand ? brand.logo_path : undefined;
+  // };
 
   const validateDateTime = () => {
     if (
@@ -202,14 +203,11 @@ const listingDetails = () => {
     setIsCheckAvailabilityDisabled(false);
     return true;
   };
-  const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]); // Store selected feature IDs
-  useEffect(() => {
-    console.log(selectedFeatures)
-  }, [selectedFeatures])
+  
   //For OneCar
   useEffect(() => {
     const fetchData = async () => {
-      if (carId) {
+      if (vehicleid) {
         try {
           if (!token) {
             setError("You are not logged in. Redirecting to sign-in page...");
@@ -219,15 +217,15 @@ const listingDetails = () => {
             return;
           }
           if (!validateDateTime()) return;
-          const cars = await postOneCar(
-            carId,
+          const vehicles = await postOneVehicle(
+            vehicleid,
             pickupDate,
             returnDate,
             pickupTime,
             returnTime,
           );
-          setCarResponse(cars);
-          setError(""); // Clear error if the request is successful
+          setCarResponse(vehicles);
+          setError(""); 
         } catch (err) {
           const error = err as Error;
           setError(error.message || "Failed to load car data.");
@@ -235,24 +233,24 @@ const listingDetails = () => {
       }
     };
     fetchData();
-  }, [carId, pickupDate, returnDate, pickupTime, returnTime, token, navigate]);
+  }, [vehicleid, pickupDate, returnDate, pickupTime, returnTime, token, navigate]);
 
   //For getCarAdditionalInfo
   useEffect(() => {
     if (!token) return;
-    if (carId) {
+    if (vehicleid) {
       const fetchAdditionalInfo = async () => {
         try {
-          const data = await getCarAdditionalInfo({ carId: carId });
-          if (data && data.carAdditionals) {
-            setAdditionalInfo(data.carAdditionals);
+          const data = await getVehicleAdditionalInfo({ vehicleid: vehicleid });
+          if (data && data.vehicleAdditionals) {
+            setAdditionalInfo(data.vehicleAdditionals);
             setFeatures(data.updatedFeatures);
 
-            setCarImages(data.carImages || []);
+            setCarImages(data.vehicleImages || []);
             if (
-              data.carImages &&
-              data.carImages.length > 0 &&
-              data.carImages[0] !== null
+              data.vehicleImages &&
+              data.vehicleImages.length > 0 &&
+              data.vehicleImages[0] !== null
             ) {
               setImageLoaded(true);
             }
@@ -266,12 +264,12 @@ const listingDetails = () => {
       };
       fetchAdditionalInfo();
     }
-  }, [carId, token]);
+  }, [vehicleid, token]);
 
   // for feedback
   useEffect(() => {
     const fetchData = async () => {
-      if (carId) {
+      if (vehicleid) {
         try {
           if (!token) {
             setError("You are not logged in. Redirecting to sign-in page...");
@@ -280,7 +278,7 @@ const listingDetails = () => {
             }, 2000);
             return;
           }
-          const feedback = await postfeedback(carId);
+          const feedback = await postfeedback(vehicleid);
           setFeedback(feedback.message);
           setError("");
         } catch (err) {
@@ -290,7 +288,7 @@ const listingDetails = () => {
       }
     };
     fetchData();
-  }, [carId, token]);
+  }, [vehicleid, token]);
 
   const numberOfReviews = feedback.length;
   const averageRating =
@@ -361,12 +359,11 @@ const listingDetails = () => {
       }
 
       const cars = await viewBreakup(
-        carId,
+        vehicleid,
         checkAvailabilityPickupDate,   // Corrected startDate
         checkAvailabilityReturnDate,   // Corrected endDate
         checkAvailabilityPickupTime,   // Corrected startTime
         checkAvailabilityReturnTime,   // Corrected endTime
-        selectedFeatures
       );
 
 
@@ -374,7 +371,7 @@ const listingDetails = () => {
 
       dispatch(
         updateBookingDates({
-          carId: carId,
+          carId: vehicleid,
           startDate: checkAvailabilityPickupDate,
           endDate: checkAvailabilityReturnDate,
           startTime: checkAvailabilityPickupTime,
@@ -436,7 +433,7 @@ const listingDetails = () => {
       } else if (verificationStatus === 2) {
         // Constructing the correct payload
         const bookingPayload = {
-          carId: carId,  // Ensure carId is a string, not an object
+          vehicleid: vehicleid,  // Ensure carId is a string, not an object
           startDate: checkAvailabilityPickupDate,
           endDate: checkAvailabilityReturnDate,
           startTime: checkAvailabilityPickupTime,
@@ -471,9 +468,6 @@ const listingDetails = () => {
   };
 
 
-
-
-
   useEffect(() => {
     if (bookingConfirmed && !error) {
       setShowCheckAvailabilityModal(false);
@@ -481,34 +475,34 @@ const listingDetails = () => {
     }
   }, [bookingConfirmed, error]);
 
-  const handleWishlistUpdate = async (carId: any) => {
+  const handleWishlistUpdate = async (vehicleid: any) => {
     try {
-      await postWishlist(carId);
-      const updatedWishlist = [...wishlist, { carId }];
+      await postWishlist(vehicleid);
+      const updatedWishlist = [...wishlist, { vehicleid }];
       dispatch(setWishlistData(updatedWishlist));
     } catch (error) {
       console.error("Error updating wishlist:", error);
     }
   };
 
-  const handleCancelWishlistUpdate = async (carId: any) => {
+  const handleCancelWishlistUpdate = async (vehicleid: any) => {
     try {
-      await postCancelWishlist(carId);
-      const updatedWishlist = wishlist.filter((item) => item.carId !== carId);
+      await postCancelWishlist(vehicleid);
+      const updatedWishlist = wishlist.filter((item) => item.vehicleid !== vehicleid);
       dispatch(setWishlistData(updatedWishlist));
     } catch (error) {
       console.error("Error updating cancel wishlist:", error);
     }
   };
 
-  const handleWishlistClick = (car: { carId: any }) => {
+  const handleWishlistClick = (vehicle: { vehicleid: any }) => {
     const isWishlisted = wishlist.some(
-      (wishlistCar) => wishlistCar.carId === car.carId,
+      (wishlistCar) => wishlistCar.vehicleid === vehicle.vehicleid,
     );
     if (isWishlisted) {
-      handleCancelWishlistUpdate(car.carId);
+      handleCancelWishlistUpdate(vehicle.vehicleid);
     } else {
-      handleWishlistUpdate(car.carId);
+      handleWishlistUpdate(vehicle.vehicleid);
     }
   };
 
@@ -537,22 +531,22 @@ const listingDetails = () => {
             <i className="fas fa-exclamation-circle"></i>
             {error}
           </div>
-        ) : carResponse && carResponse.cars.carModel ? (
+        ) : carResponse && carResponse.vehicles ? (
           <div>
-            <Helmet>
+            {/* <Helmet>
               <title>
-                Rent {carResponse.cars.carModel} in Bangalore | Spintrip Car
+                Rent {carResponse.vehicles.vehicleModel} in Bangalore | Spintrip Car
                 Rentals
               </title>
               <meta
                 name="description"
-                content={`Rent ${carResponse.cars.carModel} in Bangalore from local hosts. Spintrip Car Rentals offers competitive pricing and well-maintained cars for your self-drive rental needs. Book your ride today.`}
+                content={`Rent ${carResponse.vehicles.vehicleModel} in Bangalore from local hosts. Spintrip Car Rentals offers competitive pricing and well-maintained cars for your self-drive rental needs. Book your ride today.`}
               />
               <meta
                 name="keywords"
-                content={`rent ${carResponse.cars.carModel} Bangalore, Spintrip Car Rentals, self-drive car rentals Bangalore, local car hosts, competitive car rental pricing, book car Bangalore, well-maintained cars, car rental Bangalore`}
+                content={`rent ${carResponse.vehicles.vehicleModel} Bangalore, Spintrip Car Rentals, self-drive car rentals Bangalore, local car hosts, competitive car rental pricing, book car Bangalore, well-maintained cars, car rental Bangalore`}
               />
-            </Helmet>
+            </Helmet> */}
 
             <section className="product-detail-head">
               <div className="container">
@@ -564,17 +558,17 @@ const listingDetails = () => {
                           <div className="d-flex mb-2 align-items-center justify-content-start ">
                             {/* add brand logo here */}
                             <div className="px-2">
-                              {getBrandLogo(carResponse.cars.brand) && (
+                              {/* {getBrandLogo(carResponse.cars.brand) && (
                                 <img
                                   className="car-detail-brand-logo"
                                   src={getBrandLogo(carResponse.cars.brand)}
                                   alt={`${carResponse.cars.brand} logo`}
                                 />
-                              )}
+                              )} */}
                             </div>
 
                             <span className="car-name">
-                              {carResponse.cars.carModel}
+                              {carResponse.Additional.carmodel || carResponse.Additional.bikemodel}
                             </span>
                             {additionalInfo ? (
                               <span className=" font-mono font-bold bg-website-primary px-2 text-white rounded">
@@ -608,14 +602,14 @@ const listingDetails = () => {
               </Link> */}
                       <Link
                         to="#"
-                        className={`border border-danger ${wishlist.some((wishlistCar) => wishlistCar.carId === carResponse.cars.carId) ? "selected" : ""}`}
-                        onClick={() => handleWishlistClick(carResponse.cars)}
+                        className={`border border-danger ${wishlist.some((wishlistCar) => wishlistCar.vehicleid === carResponse.vehicles.vehicleid) ? "selected" : ""}`}
+                        onClick={() => handleWishlistClick(carResponse.vehicles)}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
                           fill="black"
-                          className={`${wishlist.some((wishlistCar) => wishlistCar.carId === carResponse.cars.carId) ? "icon-red" : "icon-grey"}`}
+                          className={`${wishlist.some((wishlistCar) => wishlistCar.vehicleid === carResponse.vehicles.vehicleid) ? "icon-red" : "icon-grey"}`}
                         >
                           <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
                         </svg>
@@ -648,9 +642,9 @@ const listingDetails = () => {
                       {additionalInfo ? (
                         <div className="card-body">
                           {carResponse ? (
-                            <div className="lisiting-featues">
+                            <div className="listing-feature">
                               <div className="row">
-                                {carResponse.cars && carResponse.cars.type && (
+                                {carResponse.Additional && carResponse.Additional.type && (
                                   <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
                                     <div className="feature-img">
                                       <ImageWithBasePath
@@ -660,11 +654,11 @@ const listingDetails = () => {
                                     </div>
                                     <div className="featues-info">
                                       <span>Body </span>
-                                      <h6> {carResponse.cars.type}</h6>
+                                      <h6> {carResponse.Additional.type}</h6>
                                     </div>
                                   </div>
                                 )}
-                                {carResponse.cars && carResponse.cars.brand && (
+                                {carResponse.Additional && carResponse.Additional.brand && (
                                   <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
                                     <div className="feature-img">
                                       <ImageWithBasePath
@@ -674,7 +668,7 @@ const listingDetails = () => {
                                     </div>
                                     <div className="featues-info">
                                       <span>Make </span>
-                                      <h6 className="text-uppercase"> {carResponse.cars.brand}</h6>
+                                      <h6 className="text-uppercase"> {carResponse.Additional.brand}</h6>
                                     </div>
                                   </div>
                                 )}
@@ -688,7 +682,7 @@ const listingDetails = () => {
                                     </div>
                                     <div className="featues-info">
                                       <span>Transmission </span>
-                                      <h6> {additionalInfo.transmission? <>Automatic</> : <>Manual</>}</h6>
+                                      <h6> {carResponse.Additional.Transmission ? <>Automatic</> : <>Manual</>}</h6>
                                     </div>
                                   </div>
                                
@@ -703,7 +697,7 @@ const listingDetails = () => {
                                     <span>Fuel Type </span>
                                     <h6>
                                       {" "}
-                                      {additionalInfo.fuelType
+                                      {carResponse.Additional.fuelType
                                         ? "Diesel"
                                         : "Petrol"}
                                     </h6>
@@ -719,9 +713,9 @@ const listingDetails = () => {
                                   <div className="featues-info">
                                     <span>Mileage </span>
                                     <h6>
-                                      {carResponse.cars.mileage == null
+                                      {carResponse.Additional.mileage == null
                                         ? "NA"
-                                        : carResponse.cars.mileage} kmpl
+                                        : carResponse.Additional.mileage} kmpl
                                     </h6>
                                   </div>
                                 </div>
@@ -735,7 +729,7 @@ const listingDetails = () => {
                                     </div>
                                     <div className="featues-info">
                                       <span> Sunroof </span>
-                                      <h6>{additionalInfo.sunroof}</h6>
+                                      <h6>{carResponse.Additional.sunroof}</h6>
                                     </div>
                                   </div>
                                 )}
@@ -751,7 +745,7 @@ const listingDetails = () => {
                                     <h6> {additionalInfo.registrationYear}</h6>
                                   </div>
                                 </div>
-                                {additionalInfo.ac && (
+                                {carResponse.Additional.AC && (
                                   <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
                                     <div className="feature-img">
                                       <ImageWithBasePath
@@ -761,11 +755,11 @@ const listingDetails = () => {
                                     </div>
                                     <div className="featues-info">
                                       <span>AC </span>
-                                      <h6> {additionalInfo.ac}</h6>
+                                      <h6> {carResponse.Additional.AC}</h6>
                                     </div>
                                   </div>
                                 )}
-                                {additionalInfo.transmission && (
+                                {carResponse.Additional.Autowindow && (
                                   <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
                                     <div className="feature-img">
                                       <ImageWithBasePath
@@ -775,11 +769,11 @@ const listingDetails = () => {
                                     </div>
                                     <div className="featues-info">
                                       <span>Power Window </span>
-                                      <h6> {additionalInfo.powerWindow}</h6>
+                                      <h6> {carResponse.Additional.Autowindow}</h6>
                                     </div>
                                   </div>
                                 )}
-                                {additionalInfo.musicSystem && (
+                                {carResponse.Additional.Musicsystem && (
                                   <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
                                     <div className="feature-img">
                                       <ImageWithBasePath
@@ -789,11 +783,11 @@ const listingDetails = () => {
                                     </div>
                                     <div className="featues-info">
                                       <span>Music System </span>
-                                      <h6> {additionalInfo.musicSystem}</h6>
+                                      <h6> {carResponse.Additional.Musicsystem}</h6>
                                     </div>
                                   </div>
                                 )}
-                                {additionalInfo.sevenSeater && (
+                                {carResponse.Additional.Sevenseater && (
                                   <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
                                     <div className="feature-img">
                                       <ImageWithBasePath
@@ -803,7 +797,7 @@ const listingDetails = () => {
                                     </div>
                                     <div className="featues-info">
                                       <span>7 Seater </span>
-                                      <h6> {additionalInfo.sevenSeater}</h6>
+                                      <h6> {carResponse.Additional.Sevenseater}</h6>
                                     </div>
                                   </div>
                                 )}
@@ -816,7 +810,7 @@ const listingDetails = () => {
                                   </div>
                                   <div className="featues-info">
                                     <span>Engine (Hp) </span>
-                                    <h6>{additionalInfo.horsePower}</h6>
+                                    <h6>{carResponse.Additional.HorsePower}</h6>
                                   </div>
                                 </div>
                               </div>
@@ -833,19 +827,18 @@ const listingDetails = () => {
                       <div className="review-header">
                         <h4>Car Features</h4>
                       </div>
-                      {additionalInfo ? (
+                      {carResponse.Additional ? (
                         <div className="listing-description">
                           <div className="features-grid">
                             {[
-                              { key: "abs", label: "ABS" },
-                              { key: "airBags", label: "AirBags" },
+                              { key: "ABS", label: "ABS" },
+                              { key: "Airbags", label: "AirBags" },
                               { key: "airFreshner", label: "Air Freshner" },
-                              { key: "reverseCamera", label: "Reverse Camera" },
+                              { key: "Reversecamera", label: "Reverse Camera" },
                               { key: "airPurifier", label: "Air Purifier" },
                               { key: "usbCharger", label: "Usb Charger" },
                               { key: "cruiseControl", label: "Cruise Control" },
                               { key: "bluetooth", label: "Bluetooth" },
-                              { key: "autoWindow", label: "Auto Window" },
                               {
                                 key: "fullBootSpace",
                                 label: "Full Boot Space",
@@ -854,10 +847,10 @@ const listingDetails = () => {
                                 key: "ventelatedFrontSeat",
                                 label: "Ventelated Front Seat",
                               },
-                              { key: "keylessEntry", label: "Keyless Entry" },
-                              { key: "petFriendly", label: "Pet Friendly" },
-                              { key: "touchScreen", label: "Touch Screen" },
-                              { key: "powerSteering", label: "Power Steering" },
+                              { key: "KeylessEntry", label: "Keyless Entry" },
+                              { key: "PetFriendly", label: "Pet Friendly" },
+                              { key: "TouchScreen", label: "Touch Screen" },
+                              { key: "PowerSteering", label: "Power Steering" },
                               {
                                 key: "tractionControl",
                                 label: "Traction Control",
@@ -865,7 +858,7 @@ const listingDetails = () => {
                               { key: "voiceControl", label: "Voice Control" },
                             ].map(
                               (feature) =>
-                                additionalInfo[feature.key] && (
+                                carResponse.Additional[feature.key] && (
                                   <div
                                     className="feature-item"
                                     key={feature.key}
@@ -883,40 +876,6 @@ const listingDetails = () => {
                         <span>Loading additional car features...</span>
                       )}
                     </div>
-                    {/*/Listing Features Section*/}
-                    {/* <div className="review-sec extra-service mb-0">
-                <div className="review-header">
-                  <h4>Description of Listing</h4>
-                </div>
-                {carResponse ? (
-                <div className="description-list">
-                  {carResponse.cars.type && (
-                  <p>
-                  Explore the {carResponse.cars.carModel}, a spacious and stylish {carResponse.cars.type} perfect for your next adventure.
-                  This car boasts a sleek design with ample interior room for passengers and cargo. 
-                  Equipped with advanced features and safety technology, the {carResponse.cars.carModel} ensures a 
-                  comfortable and secure ride. Its powerful engine and smooth handling make it ideal
-                  for long drives or city commutes. Rent the {carResponse.cars.carModel} today for an unforgettable 
-                  driving experience!
-                  </p>
-                  )}
-                </div>
-                ):(
-                  <span>Loading  Description of Listing...</span>
-                )}
-              </div> */}
-                    {/* <div className="review-sec extra-service mb-0">
-                <div className="review-header">
-                  <h4>Video</h4>
-                </div>
-                <div className="short-video">
-                  <iframe
-                    src="https://www.youtube.com/embed/ExJZAegsOis"
-                    width={100}
-                    height={350}
-                  />
-                </div>
-              </div> */}
                     <div className="review-sec listing-review border">
                       <div className="review-header">
                         <h4>
@@ -1291,7 +1250,7 @@ const listingDetails = () => {
                       <div className="detail">
                         <span>Total Hours:</span>{" "}
                         <span className="font-mono font-semibold">
-                          {breakupValue?.totalHours.toFixed(2)} hrs
+                          {breakupValue?.totalHours?.toFixed(3)} hrs
                         </span>
                       </div>
                       <div className="detail">
@@ -1301,29 +1260,9 @@ const listingDetails = () => {
                         </span>
                       </div>
                       <div className="detail">
-                        <span>Booking Amount:</span>{" "}
-                        <span className="font-mono font-semibold">
-                          ₹{breakupValue?.baseAmount.toFixed(2)}
-                        </span>
-                      </div>
-                      <div className="detail">
-                        <span>Repair and Maintainance charges </span>{" "}
-                        <span className="font-mono font-semibold">
-                          ₹{breakupValue?.insurance.toFixed(2)}
-                        </span>
-                      </div>
-                      <div className="detail">
-                        <span>GST Amount:</span>{" "}
-                        <span className="font-mono font-semibold">
-                          ₹{breakupValue?.gstAmount.toFixed(2)}
-                        </span>
-                      </div>
-
-
-                      <div className="detail">
                         <span>Total Amount:</span>{" "}
                         <span className="font-mono text-2xl" style={{ fontWeight: '700' }}>
-                          ₹{breakupValue?.grossAmount.toFixed(2)}
+                          ₹{breakupValue?.baseAmount}
                         </span>
                       </div>
                     </div>

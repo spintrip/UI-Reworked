@@ -10,13 +10,11 @@ import ImageWithBasePath1 from "../../../core/data/img/ImageWithBasePath1";
 import useScrollToTop from "../../../hooks/useScrollToTop";
 
 const UserSettings = () => {
-  const navigate = useNavigate();
-  const token = localStorage.getItem("authToken");
-  if (!token) {
-    navigate(all_routes.signup);
-    return null;
-  }
   useScrollToTop();
+  const navigate = useNavigate();
+  const routes = all_routes;
+  const token = localStorage.getItem("authToken");
+  
   const [profileData, setProfileData] = useState({
     userId: "",
     firstName: "",
@@ -62,6 +60,9 @@ const UserSettings = () => {
   
 
   useEffect(() => {
+    if (!token) {
+      navigate(routes.signup);
+    }
     fetchProfile();
     Aos.init({ duration: 1200, once: true });
   }, [fetchProfile]);

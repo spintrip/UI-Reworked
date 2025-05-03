@@ -27,13 +27,13 @@ export const getCars = async () => {
         console.error(error);
     }
 };
-export const postOneCar = async (carId, startDate, endDate, startTime, endTime) => {
+export const postOneVehicle = async (vehicleid, startDate, endDate, startTime, endTime) => {
         const token = localStorage.getItem('authToken');
         if (!token) {
         console.error('No token found');
         return;
         }
-        var apiUrl = 'users/onecar'
+        var apiUrl = 'users/onevehicle'
         const response = await fetch(serverApiUrl + apiUrl, {
             method: 'POST',
             headers: {
@@ -41,7 +41,7 @@ export const postOneCar = async (carId, startDate, endDate, startTime, endTime) 
                 'token': token
             },
             body: JSON.stringify({
-                carId: carId,
+                vehicleid: vehicleid,
                 startDate: startDate,
                 endDate: endDate,
                 startTime: startTime,
@@ -57,14 +57,14 @@ export const postOneCar = async (carId, startDate, endDate, startTime, endTime) 
         return data;
     
 };
-export const findCars = async (startDate, endDate, startTime, endTime, latitude, longitude) => {
+export const findVehicles = async (vehicletype, startDate, endDate, startTime, endTime, latitude, longitude, distance) => {
     try{
         const token = localStorage.getItem('authToken');
         if (!token) {
             console.error('No token found');
         return;
         }
-        var apiUrl = 'users/findcars'
+        var apiUrl = 'users/findvehicles'
         const response = await fetch(serverApiUrl + apiUrl, {
             method: 'POST',
             headers: {
@@ -72,12 +72,14 @@ export const findCars = async (startDate, endDate, startTime, endTime, latitude,
                 'token': token
             },
             body: JSON.stringify({
+                vehicletype: vehicletype,
                 startDate: startDate,
                 endDate: endDate,
                 startTime: startTime,
                 endTime: endTime,
                 latitude: latitude,
-                longitude: longitude
+                longitude: longitude,
+                distance : distance
             }),
         });
          if (!response.ok) {
@@ -85,7 +87,7 @@ export const findCars = async (startDate, endDate, startTime, endTime, latitude,
             throw new Error(`API Error: ${response.status} - ${errorDetails.message}`);
         }
         const data = await response.json();   
-        return data.availableCars;
+        return data.availableVehicles;
     }
     catch (error) {
         console.error(error);
@@ -167,7 +169,7 @@ export const getuserWishlist = async () => {
     }
 };
 
-export const postWishlist = async (carId) => {
+export const postWishlist = async (vehicleid) => {
     try {
         const token = localStorage.getItem('authToken');
         if (!token) {
@@ -181,7 +183,7 @@ export const postWishlist = async (carId) => {
                 'token': token
             },
             body: JSON.stringify({
-                carId : carId,
+                vehicleid : vehicleid,
             }),
         });
 
@@ -196,7 +198,7 @@ export const postWishlist = async (carId) => {
         throw error;
     }
 };
-export const postCancelWishlist = async (carId) => {
+export const postCancelWishlist = async (vehicleid) => {
     try {
         const token = localStorage.getItem('authToken');
         if (!token) {
@@ -210,7 +212,7 @@ export const postCancelWishlist = async (carId) => {
                 'token': token
             },
             body: JSON.stringify({
-                carId : carId,
+                vehicleid : vehicleid,
             }),
         });
 
@@ -226,14 +228,14 @@ export const postCancelWishlist = async (carId) => {
     }
 };
 
-export const getCarAdditionalInfo = async (data) => {
+export const getVehicleAdditionalInfo = async (data) => {
     try {
         const token = localStorage.getItem('authToken');
         if (!token) {
         console.error('No token found');
         return;
         }
-        const response = await fetch(serverApiUrl + 'users/getCarAdditional', {
+        const response = await fetch(serverApiUrl + 'users/getvehicleAdditional', {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json',
@@ -274,7 +276,7 @@ export const getAllCarBrands = async () => {
     }
 };
 
-export const viewBreakup = async (carId, startDate, endDate, startTime, endTime, features = []) => {
+export const viewBreakup = async (vehicleid, startDate, endDate, startTime, endTime) => {
     try {
         const token = localStorage.getItem('authToken');
         if (!token) {
@@ -289,12 +291,11 @@ export const viewBreakup = async (carId, startDate, endDate, startTime, endTime,
                 'token': token,
             },
             body: JSON.stringify({
-                carId: carId,
+                vehicleid: vehicleid,
                 startDate: startDate,
                 endDate: endDate,
                 startTime: startTime,
                 endTime: endTime,
-                features: features // Include selected features in the payload
             }),
         });
 

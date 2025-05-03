@@ -714,6 +714,15 @@
             @extend %display-flex-center-between;
             @include margin-padding(null, 8px);
             @include margin-padding(0 0 15px, null);
+            .location-text{
+                width: 90%; 
+                max-width: 90%;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                font-size: 1rem; 
+                color: #333; 
+            }
             .listing-price {
                 @include respond-below(custom991) {
                     font-size: $__font__size__13;
@@ -1579,7 +1588,7 @@
         margin: 0 5px;
         border-radius: 10px;
         padding: 0 8px;
-        background-color: rgb(255, 111, 0);;
+        background-color: rgb(255, 111, 0);
     }
   }
 
@@ -1593,3 +1602,113 @@
         justify-content: center;
     }
   }
+  .vehicle-pick-container{
+    margin-left: 10vw;
+  }
+  .vehicle-selected {        
+    @include margin-padding(0 0 14px, null);
+    text-align: center;
+    position: $__relative;
+    border: 4px solid rgb(255, 111, 0);;
+    width: 83%;
+    height: 93%;
+    margin: 5px 10px 10px 70px;
+    box-shadow: 0px 5px 20px 10px rgba(4, 4, 4, 0.2);
+    border-radius: 20px;
+    transition: 0.3s all ease;
+    .checkbox-type{
+        display: flex;
+        justify-content: end;
+        margin: 10px 10px 0px 10px;
+    }
+    .vehicle-items{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: #ff6f00;
+        
+        label{
+            margin: 10px;
+        }
+    }
+    @include respond-below(custom991) {
+        margin: 5px 10px 10px 10px;
+        padding: 10px;
+        
+    }
+  }
+  .vehicle-unselected {        
+    @include margin-padding(0 0 14px, null);
+    text-align: center;
+    position: $__relative;
+    border: 2px solid #2f2b2b;
+    width: 80%;
+    height: 90%;
+    margin: 5px 10px 10px 70px;
+    box-shadow: 0px 5px 20px 10px rgba(4, 4, 4, 0.2);
+    border-radius: 20px;
+    transition: 0.3s all ease;
+    .checkbox-type{
+        display: flex;
+        justify-content: end;
+        margin: 10px 10px 0px 10px;
+    }
+    .vehicle-items{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: 500ms all ease;
+        label{
+            margin: 10px;
+        }
+    }
+    @include respond-below(custom991) {
+        margin: 5px 10px 10px 10px;
+        padding: 10px;
+        
+    }
+  }
+  .checkbox {
+    /* Hide the default appearance */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  
+    /* Define size and style */
+    width: 20px;
+    height: 20px;
+    border: 2px solid #333;
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+    position: relative; /* Enable positioning for the pseudo-element */
+  
+    /* Transition for smooth effect */
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+  
+  .checkbox:checked {
+    background-color: #ff6f00; /* Change to your desired color */
+    border-color: #ff6f00;
+  }
+  
+  /* Add a custom tick using pseudo-element */
+  .checkbox:checked::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    width: 6px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  
+  /* Optional: Add hover effect */
+  .checkbox:hover {
+    border-color: #555;
+  }
+  

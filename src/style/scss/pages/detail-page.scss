@@ -351,6 +351,7 @@
     }
     .featureslist {
         margin: 0 0px 24px 0;
+        font-size: smaller;
     }
     .access-feature.featureslist {
         &:last-child {
@@ -358,27 +359,7 @@
         }
     }
 }
-.listing-feature {
-    @include margin-padding(null, 24px 24px 9px);
-    ul {
-        li {
-            @extend %display-flex-center;
-            @include margin-padding(0 0 15px 0,null);
-            color: $__sandstone;
-            span {
-                padding: 8px;
-                @extend %flex-align-center;
-                background: $__dark__blues;
-                border-radius: 50%;
-                margin-right: 8px;
-                i {
-                    font-size: $__font__size__10;
-                    color: $__white;
-                }
-            }
-        }
-    }
-}
+
 .description-list {
     p {
         margin-bottom: 24px;
@@ -1626,29 +1607,67 @@
     max-width: 100%;
     max-height: 100%;
     height: 60vh;
+    position: relative;
+    overflow: hidden;
   }
-  .detailImage-size{
+  
+  .blurred-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: blur(20px);
+    transform: scale(1.1); /* Slightly zoom in to avoid edges being visible */
+    z-index: 0;
+    opacity: 0.5; /* Optional for blending effect */
+  }
+  
+  .detailImage-size {
+    position: relative;
     max-height: 100%;
     max-width: 100%;
-    width: 100vh;
+    width: 120vh;
     height: 60vh;
     object-fit: contain;
     cursor: pointer;
+    z-index: 1; /* Ensures it appears above the blurred background */
+  }
+  .blurred-background-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-height: 100%;
+    max-width: 100%;
+    width: 100%;
+    height: 80vh;
+    background-size: cover;
+    background-position: center;
+    filter: blur(20px);
+    transform: scale(1.1); /* Zoom to avoid visible edges */
+    z-index: 0;
+    opacity: 0.5; /* Optional for subtle effect */
   }
   .image-preview{
+    position: relative;
     max-height: 100%;
     max-width:100%;
     height: 80vh;
-
     width: 100%;
-    object-fit: contain;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
   }
-  .image-car{
+  .image-vehicle{
     max-height: 100%;
     max-width:100%;
     height: 100vh;
     width: 100%;
     object-fit: contain;
+    z-index: 1;
     @include respond-below(custom991) {
         object-fit: contain;
     } 

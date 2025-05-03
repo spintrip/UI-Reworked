@@ -5,6 +5,9 @@ import { all_routes } from "../router/all_routes";
 import { useDispatch } from "react-redux";
 import { setAuthToken } from "../redux/action";
 import { Switch } from "@headlessui/react";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import PersonIcon from '@mui/icons-material/Person';
+import CarRentalIcon from '@mui/icons-material/CarRental';
 import { validateUserOTP, validateusersign } from "../api/Auth";
 import "react-phone-input-2/lib/style.css";
 import { Helmet } from "react-helmet";
@@ -17,7 +20,7 @@ function classNames(...classes: string[]) {
 const route = all_routes;
 const Login = () => {
   const [isOTP, setIsOTP] = useState(false);
-  const [otp, setOtp] = useState("");
+  const [otp, setOtp] = useState<string[]>(["", "", "", ""]);
   const [isLoading, setIsLoading] = useState(false);
   const [enabled, setEnabled] = useState(false);
   const [selectedRole, setSelectedRole] = useState<"user" | "host">("user");
@@ -39,6 +42,33 @@ const Login = () => {
     const phoneRegex = /^[6-9]\d{9}$/;
     return phoneRegex.test(number);
   };
+
+  const handleOtpChange = (index: number, value: string) => {
+    if (/^\d?$/.test(value)) {
+      const newOtp = [...otp];
+      newOtp[index] = value;
+      setOtp(newOtp);
+
+      // Automatically focus on the next input field
+      if (value && index < otp.length - 1) {
+        const nextInput = document.getElementById(`otp-${index + 1}`);
+        if (nextInput) {
+          (nextInput as HTMLInputElement).focus();
+        }
+      }
+    }
+  };
+
+  const handleOtpKeyDown = (index: number, event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Backspace" && !otp[index] && index > 0) {
+      const previousInput = document.getElementById(`otp-${index - 1}`);
+      if (previousInput) {
+        (previousInput as HTMLInputElement).focus();
+      }
+    }
+  };
+
+  const getOtpString = () => otp.join("");
 
   useEffect(() => {
     if (countdown === null) return;
@@ -99,8 +129,10 @@ const Login = () => {
 
   async function otpSignInHandler() {
     const finalNumber = "+91" + phone;
+    const finalOtp = getOtpString();
+    console.log("otp here:", finalOtp);
     setIsLoading(true);
-    validateUserOTP(finalNumber, otp, otpCallBack);
+    validateUserOTP(finalNumber, finalOtp , otpCallBack);
   }
   const handleUserSelect = () => {
     setSelectedRole("user");
@@ -128,8 +160,8 @@ const Login = () => {
 
       </Helmet>
 
-      <div className="main login-body">
-        <header className="bg-white py-3 d-flex align-items-center justify-content-center">
+      <div className="main-login-body">
+        <header className="logo-header py-3 d-flex align-items-center justify-content-center">
           <Link to={route.home}>
             <ImageWithBasePath
               className="spintrip-logo"
@@ -138,185 +170,148 @@ const Login = () => {
             />
           </Link>
         </header>
-        <div className="login-wrapper">
-          <div className="loginbox">
-            <div className="login-auth">
-              <div className="login-auth-wrap p-2">
-                <div className="sign-group">
+        <div className="">
+          <div className="signup-cover">
+            <div className="sign-up">
+              <div className="signup-form-container">
+                <span className="sign-group">
                   <Link
                     to={route.home}
-                    className="text-black font-semibold d-flex align-items-end justify-items-start"
+                    className="text-black font-semibold "
                   >
                     <span>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="1.5"
-                        stroke="currentColor"
-                        className="back-icon"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
-                        />
-                      </svg>
+                    <ArrowBackIcon style={{ marginRight: '8px', color: '#000' }} />
                     </span>{" "}
-                    Back To Home
+                    <span className="ml-2 mt-1 mb-2">Back To Home</span>
+                    
                   </Link>
+                </span>
+                <div className="title-logo">
+                    <ImageWithBasePath className="brand-logo" src="assets/img/logo-fit.png" alt="logo"/>
                 </div>
-                <h2 className="create-account-text">
-                  Sign in to your Spintrip account
-                </h2>
-                <p className="mt-2 text-center text-sm text-gray-600">
-                  Or{" "}
-                  <Link
-                    to={route.signup}
-                    className="authorization-link"
-                  >
-                    <span></span> create an account here
-                  </Link>
-                </p>
                 <div className="authorization-check">
-                  <div className="flex items-center justify-center full mt-10">
-                  <button
+                <button
                   onClick={handleUserSelect}
                   className={classNames(
                     selectedRole === "user" ? "button-on" : "button-off",
-                    "font-semibold mx-2"
+                    "flex items-center justify-center"
                   )}
                 >
-                  User
+                  <PersonIcon
+                    style={{
+                      color: selectedRole === "user" ? "#FFFFFF" : "#e9660f",
+                      fontSize: "1.5rem",
+                    }}
+                  />
+                  <span className="role-type">User</span>
                 </button>
                 <button
                   onClick={handleHostSelect}
                   className={classNames(
                     selectedRole === "host" ? "button-on" : "button-off",
-                    "font-semibold mx-2"
+                    "flex items-center justify-center"
                   )}
                 >
-                  Host
+                  <CarRentalIcon
+                    style={{
+                      color: selectedRole === "host" ? "#FFFFFF" : "#e9660f", 
+                      fontSize: "1.5rem", 
+                  }}/>
+                  <span className="role-type">Host</span>
                 </button>
-                  </div>
                 </div>
-                <div className="input-block">
-                  <label className="form-label">
-                    Phone No <span className="text-danger">*</span>
-                  </label>
-                  <div className="d-flex align-items-center justify-content-center">
-                    <div
-                      className="p-1 form-control h-[45px] d-flex align-items-center justify-content-center border rounded mr-1 bg-light"
-                      style={{ maxWidth: `fit-content`, marginRight: "5px" }}
-                    >
-                      <p className="font-semibold mx-1">+ 91</p>
-                      <ImageWithBasePath
-                        src="assets/img/india-flag.png"
-                        alt="Icon"
-                        className="country-flag"
-                      />
-                    </div>
-                    <input
-                      type="tel"
-                      className="form-control font-mono text-center border border-gray font-semibold"
-                      onChange={handlePhoneChange}
-                      placeholder="Enter Phone"
-                      maxLength={10}
-                    />
-                  </div>
-                </div>
-                <div className="input-block">
-                  {!isOTP ? (
-                    <div>
-                      <label className="form-label">
-                        OTP <span className="text-danger">*</span>
-                      </label>
-                      <div className="mt-1">
-                        <input
-                          type="tel"
-                          className="form-control text-center border border-gray custom-otp-style"
-                          onChange={(event) => setOtp(event.target.value)}
-                          placeholder="Enter OTP"
-                          maxLength={4}
-                          disabled
-                        />
+                    <div className="signup-form-group">
+                      <div className="signup-input-group">
+                          <label className="create-account-text">Sign in to your <span className="logo-name">Spintrip</span> account or {" "}
+                            <Link
+                              to={route.signup}
+                              className="authorization-link"
+                            >
+                              <span></span> Sign Up
+                            </Link>
+                          </label>
                       </div>
-                    </div>
-                  ) : (
-                    <div>
-                      <label className="form-label">
-                        OTP <span className="text-danger">*</span>
-                      </label>
-                      <div className="mt-1">
-                        <input
-                          type="tel"
-                          className="form-control text-center border border-gray font-semibold custom-otp-style"
-                          onChange={(event) => setOtp(event.target.value)}
-                          maxLength={4}
-                        />
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                <div className="input-block">
-                  
-
-                  {isOTP ? (
-                    <button
-                      className="btn btn-outline-light w-100 btn-size mt-1"
-                      onClick={otpSignInHandler}
-                    >
-                      {isLoading ? (
-                        <div
-                          className="spinner-border spinner-border-sm"
-                          role="status"
-                        >
-                          <span className="sr-only">Loading...</span>
+                      <div className="signup-input-group">
+                          <label>Phone</label>
+                          <div className="d-flex align-items-center justify-content-center">
+                            <span
+                              className="country-flag-signup"
+                            >
+                              <span className=" mx-1 country-digit">+91</span>
+                              <ImageWithBasePath
+                                src="assets/img/india-flag.png"
+                                alt="Icon"
+                                className="country-flag"
+                              />
+                            </span>
+                            <input
+                              type="tel"
+                              className="form-control text-center border border-gray font-semibold font-mono "
+                              onChange={(e) => setPhone(e.target.value)}
+                              placeholder="Enter Phone"
+                              maxLength={10}
+                              required
+                            />
+                          </div>
                         </div>
-                      ) : (
-                        "Verify OTP"
-                      )}
-                    </button>
-                  ) : (
-                    <button
-                      className="btn btn-outline-light w-100 btn-size mt-1"
-                      onClick={signInClickHandler}
-                    >
-                      {isLoading ? (
-                        <div
-                          className="spinner-border spinner-border-sm"
-                          role="status"
-                        >
-                          <span className="sr-only">Loading...</span>
+                        <div className="signup-input-group">
+                          <label>OTP</label>
+                          <div className="d-flex justify-content-center gap-2">
+                            {otp.map((digit, index) => (
+                              <input
+                                key={index}
+                                id={`otp-${index}`}
+                                type="text"
+                                className="form-control text-center border border-gray font-semibold font-mono otp-input"
+                                value={digit}
+                                onChange={(e) => handleOtpChange(index, e.target.value)}
+                                onKeyDown={(e) => handleOtpKeyDown(index, e)}
+                                maxLength={1}
+                                required
+                              />
+                            ))}
+                          </div>
                         </div>
-                      ) : (
-                        "Request OTP"
-                      )}
-                    </button>
-                  )}
-                </div>
-                {isOTP && countdown !== null && (
-                  <div className="mt-2 text-center">
-                    {countdown > 0 ? (
-                      <p>Resend OTP in {countdown}s</p>
-                    ) : (
-                      <button
-                        className="btn btn-outline-primary btn-size"
-                        style={{ fontSize: "14px" }}
-                        onClick={signInClickHandler}
-                        disabled={resendDisabled}
-                      >
-                        Resend OTP
-                      </button>
-                    )}
-                  </div>
-                )}
-                {/* /Social Login */}
+                        {isOTP ? (
+                          <button
+                            className="signup-btn"
+                            onClick={otpSignInHandler}
+                          >
+                            {isLoading ? (
+                              <div
+                                className="spinner-border spinner-border-sm"
+                                role="status"
+                              >
+                                <span className="sr-only">Loading...</span>
+                              </div>
+                            ) : (
+                              "Verify OTP"
+                            )}
+                          </button>
+                        ) : (
+                          <button
+                            className="signup-btn"
+                            onClick={signInClickHandler}
+                          >
+                            {isLoading ? (
+                              <div
+                                className="spinner-border spinner-border-sm"
+                                role="status"
+                              >
+                                <span className="sr-only">Loading...</span>
+                              </div>
+                            ) : (
+                              "Request OTP"
+                            )}
+                          </button>
+                        )}
+                    </div>
               </div>
+              <div className="signup-image"></div>
             </div>
           </div>
         </div>
+
         {error && (
           <>
             <div
@@ -347,15 +342,6 @@ const Login = () => {
             </div>
           </>
         )}
-        <footer className="log-footer">
-          <div className="container-fluid">
-            <div className="copyright">
-              <div className="copyright-text">
-                <p>© 2024 SpinTrip. All Rights Reserved.</p>
-              </div>
-            </div>
-          </div>
-        </footer>
       </div>
     </div>
   );

@@ -27,6 +27,10 @@ const CarouselDisplay: React.FC<CarouselDisplayProps> = ({ images }) => {
             className="w-full h-full"
             onClick={() => handleShow(image)}
           >
+            <div
+              className="blurred-background"
+              style={{ backgroundImage: `url(${image})` }}
+            ></div>
             <img
               className="detailImage-size"
               src={image}
@@ -46,12 +50,17 @@ const CarouselDisplay: React.FC<CarouselDisplayProps> = ({ images }) => {
         <Modal.Header closeButton>
           <Modal.Title>Image Preview</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="p-0">
+        <Modal.Body className="p-0 position-relative">
+          
           <div className="image-preview">
+          <div
+            className="blurred-background-modal"
+            style={{ backgroundImage: `url(${selectedImage || ""})` }}
+          ></div>
             <img
               src={selectedImage || ""}
               alt="Selected"
-              className="image-car"
+              className="image-vehicle"
             />
           </div>
         </Modal.Body>

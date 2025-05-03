@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { all_routes } from "../router/all_routes";
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 import MobileNavbar from "./mobile_menu/mobileNavbar";
-import { useJoyride } from "./JoyrideContext";
 import { useDropdown } from './DropdownContext';
 
 
@@ -14,33 +13,13 @@ const Header = () => {
   const [token, setToken] = useState<any>(localStorage.getItem("token"));
   const [host, setHost] = useState(localStorage.getItem("Host"));
   const { activeSubMenu, setActiveSubMenu } = useDropdown();
-  const { startTour , run , setRun } = useJoyride(); 
 
   // useEffect(() => {
   //   if (!run) {
   //     startTour();
   //   }
   // }, [run, startTour]);
-  
-    useEffect(() => {
-    const status = localStorage.getItem("tourCompleted");
-    if (!run && status !== "true") {
-      startTour();
-    }
-  }, [run, startTour]);
 
-  const handleButtonClick = () => {
-    setRun(false); // This will stop Joyride
-  };
-
-  const handleNavigation = () => {
-    setRun(false); // Stop Joyride on navigation
-  };
-
-  useEffect(() => {
-    // Handle location change
-    handleNavigation();
-  }, [location.pathname]);
 
 
   const toggleSubMenu = (menu: string) => {
@@ -369,7 +348,7 @@ const Header = () => {
                     <li className={location.pathname.includes(routes.home) ? "active" : ""}>
                       <Link to={routes.home}>Home</Link>
                     </li>
-                    <li className={`has-submenu ${activeSubMenu === "user" ? "active" : ""} user-joyride-step`}>
+                    <li className={`has-submenu ${activeSubMenu === "user" ? "active" : ""} `}>
                       <Link to="#" onClick={() => toggleSubMenu("user")}>
                         User <i className="fas fa-chevron-down"></i>
                       </Link>
@@ -386,7 +365,7 @@ const Header = () => {
                         <li className={location.pathname.includes(routes.payment) ? "active" : ""}>
                           <Link to={routes.payment}>Payment</Link>
                         </li>
-                        <li className={`${location.pathname.includes(routes.settings) ? "active" : ""} profile-upload-joy`}>
+                        <li className={location.pathname.includes(routes.settings) ? "active" : ""}>
                           <Link to={routes.settings}>Profile</Link>
                         </li>
                       </ul>
@@ -435,7 +414,7 @@ const Header = () => {
                   </>
                 ) : (
                   <>
-                    <li className="nav-item" onClick={handleButtonClick}>
+                    <li className="nav-item" onClick={() => {}}>
                       <Link className="nav-link header-login" to={routes.login}>
                         <span>
                           <i className="fa-regular fa-user" />
@@ -443,7 +422,7 @@ const Header = () => {
                         Sign In
                       </Link>
                     </li>
-                    <li className="nav-item signup-button" onClick={handleButtonClick}>
+                    <li className="nav-item signup-button" onClick={() => {}}>
                       <Link className="nav-link header-reg" to={routes.signup}>
                         <span>
                           <i className="fa-solid fa-lock" />

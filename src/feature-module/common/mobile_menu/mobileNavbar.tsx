@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { all_routes } from "../../router/all_routes";
-import "./mobileNavbar.css";
-import { useJoyride } from "../JoyrideContext";
+import "./mobileNavbar.css";;
 
 
 const MobileNavbar = ({
@@ -14,31 +13,30 @@ const MobileNavbar = ({
 }) => {
   const [burgerStatus, setBurgerStatus] = useState(false);
   const [activeSubMenu, setActiveSubMenu] = useState(null);
-  const { startTour, setStepIndex, setRun, stopTour } = useJoyride();
   const routes = all_routes;
 
-  const toggleMenu = () => {
-    const isMenuOpening = !burgerStatus; 
-    setBurgerStatus(isMenuOpening);
+  // const toggleMenu = () => {
+  //   const isMenuOpening = !burgerStatus; 
+  //   setBurgerStatus(isMenuOpening);
    
-    const event = new Event(isMenuOpening ? 'menuOpen' : 'menuClose');
-    document.dispatchEvent(event);
+  //   const event = new Event(isMenuOpening ? 'menuOpen' : 'menuClose');
+  //   document.dispatchEvent(event);
   
-    // Logic to handle starting/stopping Joyride based on menu status
-    const status = localStorage.getItem("tourCompleted");
-    if (isMenuOpening && status !== "true") {
-      startTour();
-      setStepIndex(1); // Go to the second step (index 1)
-    } else {
-      stopTour();
-    }
-  };
+  //   // Logic to handle starting/stopping Joyride based on menu status
+  //   const status = localStorage.getItem("tourCompleted");
+  //   if (isMenuOpening && status !== "true") {
+  //     startTour();
+  //     setStepIndex(1); // Go to the second step (index 1)
+  //   } else {
+  //     stopTour();
+  //   }
+  // };
   
 
 
   const closeMenu = () => {
     setBurgerStatus(false);
-    setRun(false);
+    // setRun(false);
   };
 
   const toggleSubMenu = (index) => {
@@ -47,7 +45,7 @@ const MobileNavbar = ({
 
   return (
     <div style={{ width: "100%", height: "100vh", zIndex: "" }}>
-      <div className="burger-menu" onClick={toggleMenu}>
+      <div className="burger-menu" onClick={()=> {}}>
         <div
           className={`burger-bar ${burgerStatus ? "clicked" : "unclicked"}`}
         ></div>

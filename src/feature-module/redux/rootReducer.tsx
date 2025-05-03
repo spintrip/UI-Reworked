@@ -6,7 +6,7 @@ import {
   authReducer,
   userChatReducer,
   hostChatReducer,
-  selectedCarIdReducer,
+  selectedVehicleIdReducer,
   hostCarIdReducer,
   HostCarsReducer,
   setUpdatedBookingDatesReducer,
@@ -23,7 +23,7 @@ import profileReducer from "./profilereducer";
 // Define the shape of the root state
 interface RootState {
   profile: ReturnType<typeof profileReducer>;
-  selectedCarId: ReturnType<typeof selectedCarIdReducer>;
+  selectedVehicleId: ReturnType<typeof selectedVehicleIdReducer>;
   auth: ReturnType<typeof authReducer>;
   dateTime: ReturnType<typeof dateTimeReducer>;
   hostData: ReturnType<typeof HostProfileReducer>;
@@ -42,7 +42,7 @@ interface RootState {
 
 const rootReducer = combineReducers({
   profile: profileReducer,
-  selectedCarId: selectedCarIdReducer,
+  selectedVehicleId: selectedVehicleIdReducer,
   auth: authReducer,
   dateTime: dateTimeReducer,
   hostData: HostProfileReducer,
@@ -65,7 +65,7 @@ const persistConfig = {
   whitelist: [
     "dateTime",
     "updatedBookings",
-    "selectedCarId",
+    "selectedVehicleId",
     "BookingId",
     "bookingInfo",
     "listingInfo",
