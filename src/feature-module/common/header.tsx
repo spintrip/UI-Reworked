@@ -62,7 +62,7 @@ const Header = () => {
           subMenus: [],
         },
         {
-          menuValue: "All Cars",
+          menuValue: "All Vehicles",
           routes: routes.hostListing,
           hasSubRoute: false,
           showSubRoute: false,
@@ -316,7 +316,7 @@ const Header = () => {
                           <Link to={routes.hostbookings}>My Bookings</Link>
                         </li>
                         <li className={location.pathname.includes(routes.hostListing) ? "active" : ""}>
-                          <Link to={routes.hostListing}>All Cars</Link>
+                          <Link to={routes.hostListing}>All Vehicles</Link>
                         </li>
                         <li className={location.pathname.includes(routes.hostreviews) ? "active" : ""}>
                           <Link to={routes.hostreviews}>Reviews</Link>

@@ -87,6 +87,7 @@ export const findVehicles = async (vehicletype, startDate, endDate, startTime, e
             throw new Error(`API Error: ${response.status} - ${errorDetails.message}`);
         }
         const data = await response.json();   
+        console.log(data);
         return data.availableVehicles;
     }
     catch (error) {
@@ -309,5 +310,65 @@ export const viewBreakup = async (vehicleid, startDate, endDate, startTime, endT
     } catch (error) {
         console.error(error);
         throw error; // Rethrow the error to be handled by the caller
+    }
+};
+
+export const getAllSubscriptions = async () => {
+    try {
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            console.error('No token found');
+            return;
+        }
+
+        const apiUrl = 'host/getallsubscription'; // endpoint
+        const response = await fetch(serverApiUrl + apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': token,
+            },
+        });
+
+        // if (!response.ok) {
+        //     const errorDetails = await response.json();
+        //     throw new Error(`API Error: ${response.status} - ${errorDetails.message}`);
+        // }
+        const responseData = await response.json();
+
+        return responseData.subscriptions;
+    } catch (error) {
+        console.error('Error fetching subscriptions:', error);
+        throw error;
+    }
+};
+
+export const getAllActiveSubscriptions = async () => {
+    try {
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            console.error('No token found');
+            return;
+        }
+
+        const apiUrl = 'host/getActiveSubscription'; // endpoint
+        const response = await fetch(serverApiUrl + apiUrl, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': token,
+            },
+        });
+
+        if (!response.ok) {
+            const errorDetails = await response.json();
+            throw new Error(`API Error: ${response.status} - ${errorDetails.message}`);
+        }
+        const responseData = await response.json();
+
+        return responseData.subscription;
+    } catch (error) {
+        console.error('Error fetching subscriptions:', error);
+        throw error;
     }
 };

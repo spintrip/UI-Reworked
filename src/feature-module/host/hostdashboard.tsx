@@ -179,11 +179,12 @@ const HostDashboard = () => {
   const carIdToModelMap = useMemo(() => {
     const map: { [key: string]: CarModelMapEntry } = {};
     carListings.forEach((car) => {
-      map[car.carId] = {
-        carModel: car.carModel,
-        carType: car.type,
+      map[car.vehicleid] = {
+        carModel: car.vehicleModel,
+        carType: car.vehicletype,
       };
-    });
+    });`
+    +`
     return map;
   }, [carListings]);
 
@@ -500,7 +501,7 @@ const HostDashboard = () => {
                     <div className="card-body p-0">
                       <div className="table-responsive dashboard-table dashboard-table-info">
                         {filteredBookings.length === 0 ? (
-                          <div className="p-4 text-center">No cars found</div>
+                          <div className="p-4 text-center">No Vehicles found</div>
                         ) : (
                           <table className="table">
                             <tbody>
@@ -520,13 +521,16 @@ const HostDashboard = () => {
                                       </Link>
                                       <div className="table-head-name flex-grow-1">
                                         <Link to={route.hostBookings}>
-                                          {carIdToModelMap[booking.carId]
+                                          {carIdToModelMap[booking.vehicleid]
                                             ?.carModel || "Unknown Model"}
                                         </Link>
                                         <p>
                                           Rent Type :{" "}
-                                          {carIdToModelMap[booking.carId]
-                                            ?.carType || "Unknown Type"}
+                                          {
+                                          carIdToModelMap[booking.vehicleid]
+                                            ?.carType == "1" ? "Bike" : carIdToModelMap[booking.vehicleid]
+                                            ?.carType  == "2" ? "Car" : "NA"
+                                          }
                                         </p>
                                       </div>
                                     </div>
@@ -590,7 +594,7 @@ const HostDashboard = () => {
                     <div className="card-body p-0">
                       <div className="table-responsive dashboard-table dashboard-table-info">
                         {carListings.length === 0 ? (
-                          <div className="p-4 text-center">No cars found</div>
+                          <div className="p-4 text-center">No Vehicle found</div>
                         ) : (
                           <table className="table table-hover">
                             <tbody>
@@ -601,9 +605,9 @@ const HostDashboard = () => {
                                       
                                       <div className="table-head-name flex-grow-1">
                                         <div>
-                                          {carListing.carModel}
+                                          {carListing.vehicleModel}
                                         </div>
-                                        <p>Type : {carListing.type}</p>
+                                        <p>Type : { carListing.vehicletype == 1 ? "Bike" : carListing.vehicletype == 2 ? "Car" : "NA"}</p>
                                         <div className="d-flex align-items-center">
                                           {getCarStatus(carListing).icon}
                                           <p style={{ color: getCarStatus(carListing).color, marginLeft: '8px' }}>
@@ -639,25 +643,25 @@ const HostDashboard = () => {
               keyboard={false}
             >
               <Modal.Header className="bg-light border-bottom d-flex justify-content-between align-items-center" closeButton>
-                <Modal.Title className="text-primary">Pause Listed Car</Modal.Title>
+                <Modal.Title className="text-primary">Pause Listed Vehicle</Modal.Title>
               </Modal.Header>
               <Modal.Body className="p-4">
               {isPaused(pauseListing) ? (
                 <>
-                  <h4 className="mb-4 text-center text-primary">Resume Your Car for an Interval?</h4>
+                  <h4 className="mb-4 text-center text-primary">Resume Your Vehicle for an Interval?</h4>
                   <div className="container">
                     <div className="row justify-content-center">
                       <div className="col-lg-8 col-md-10 col-sm-12 bg-white p-4 rounded border border-light shadow-sm">
                         <div className="mb-3">
                           <hr />
                           <div className="d-flex justify-content-between">
-                            <strong className="text-dark">Car Model:</strong>
-                            <span className="text-secondary">{pauseListing.carModel}</span> {/* Display Car Model */}
+                            <strong className="text-dark">Vehicle Model:</strong>
+                            <span className="text-secondary">{pauseListing.vehicleModel}</span> {/* Display Car Model */}
                           </div>
                           <hr />
                           <div className="d-flex justify-content-between">
-                            <strong className="text-dark">Car Type:</strong>
-                            <span className="text-secondary">{pauseListing.type}</span> {/* Display Car Type */}
+                            <strong className="text-dark">RC Number:</strong>
+                            <span className="text-secondary">{pauseListing.rcNumber}</span> {/* Display Car Type */}
                           </div>
                           <hr />
                           <div className="d-flex justify-content-between">
@@ -687,20 +691,20 @@ const HostDashboard = () => {
                 </>
               ) : (
                 <>
-                  <h4 className="mb-4 text-center text-primary">Pause Your Car for an Interval?</h4>
+                  <h4 className="mb-4 text-center text-primary">Pause Your Vehicle for an Interval?</h4>
                   <div className="container">
                     <div className="row justify-content-center">
                       <div className="col-lg-8 col-md-10 col-sm-12 bg-white p-4 rounded border border-light shadow-sm">
                         <div className="mb-3">
                           <hr />
                           <div className="d-flex justify-content-between">
-                            <strong className="text-dark">Car Model:</strong>
-                            <span className="text-secondary">{pauseListing.carModel}</span>
+                            <strong className="text-dark">Vehicle Model:</strong>
+                            <span className="text-secondary">{pauseListing.vehicleModel}</span>
                           </div>
                           <hr />
                           <div className="d-flex justify-content-between">
-                            <strong className="text-dark">Car Type:</strong>
-                            <span className="text-secondary">{pauseListing.type}</span>
+                            <strong className="text-dark">Vehicle RC:</strong>
+                            <span className="text-secondary">{pauseListing.rcNumber}</span>
                           </div>
                         </div>
                       </div>

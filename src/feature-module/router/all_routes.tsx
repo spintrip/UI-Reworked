@@ -8,6 +8,7 @@ export const all_routes = {
   hostsecurity: "/host/host-security",
   hostBookings: "/host/host-bookings",
   hostListing: "/host/host-listing",
+  hostSubscriptions: "/host/subscription",
   //hostwallet:"/host/wallet",
   hostCarDetails: "/host/hostListingPreview.tsx",
   hostpreference: "/host/host-preferences",

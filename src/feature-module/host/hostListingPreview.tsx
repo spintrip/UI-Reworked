@@ -7,7 +7,7 @@ import Aos from "aos";
 import { all_routes } from "../router/all_routes";
 import useScrollToTop from "../../hooks/useScrollToTop";
 import { getCarAdditionalInfo } from "../api/postcar";
-import AddNewCarAdditional from "../../core/data/modals/addNewCarAdditional";
+import AddNewCarAdditional from "../../core/data/modals/addNewVehicleAdditional";
 import LocationDisplay from "../common/LocationDisplay";
 import CarouselDisplay from "../common/CarouselDisplay";
 import { getAllCarBrands } from "../api/Cars";
@@ -25,7 +25,7 @@ const hostListingPreview = () => {
   const { carId, carModel } = location.state || {};
   const [editState, setEditState] = useState(false);
   const [additionalInfo, setAdditionalInfo] = useState<any>();
-  const [carImages, setCarImages] = useState([]);
+  const [vehicleImages, setvehicleImages] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -72,24 +72,45 @@ const hostListingPreview = () => {
     setLoading(true); // Start loading
     try {
       const data = await getCarAdditionalInfo(carId);
-      if (data && data.carAdditionals) {
-        setAdditionalInfo(data.carAdditionals);
-        setCarImages(data.carImages || []); // Ensure carImages is an array
-        if (
-          data.carImages &&
-          data.carImages.length > 0 &&
-          data.carImages[0] !== null
-        ) {
+
+      if (data && data.vehicleAdditionals) {
+        // Map vehicleAdditionals and additional data together
+        const mappedAdditionalInfo = {
+          vehicleId: data.vehicleAdditionals.vehicleId,
+          vehicleType: data.vehicleAdditionals.vehicleType,
+          latitude: data.vehicleAdditionals.latitude,
+          longitude: data.vehicleAdditionals.longitude,
+          rcNumber: data.vehicleAdditionals.rcNumber,
+          registrationYear: data.vehicleAdditionals.registrationYear,
+          bikeModel: data.additional?.bikeModel || null,
+          carModel: data.additional?.carModel || null,
+          horsePower: data.additional?.horsePower || null,
+          fuelType: data.additional?.fueltype || null,
+          type: data.additional?.type || null,
+          brand: data.additional?.brand || null,
+          variant: data.additional?.variant || null,
+          color: data.additional?.color || null,
+          bodyType: data.additional?.bodyType || null,
+          costPerHr: data.additional?.costperhr || null,
+          booleanSpecs: data.booleanSpecs || [],
+          updatedFeatures: data.updatedFeatures || [],
+        };
+
+        setAdditionalInfo(mappedAdditionalInfo);
+        setvehicleImages(data.vehicleImages || []);
+
+        if (Array.isArray(data.vehicleImages) && data.vehicleImages.length > 0 && data.vehicleImages[0] !== null) {
           setImageLoaded(true);
+        } else {
+          setImageLoaded(false);
         }
       } else {
         throw new Error("No additional information found");
       }
-    } catch (err) {
-      console.error("Failed to fetch additional car info:", err);
-      setError("Failed to load additional car data");
+    } catch (error) {
+      console.error("Error fetching additional info:", error);
     } finally {
-      setLoading(false); // End loading
+      setLoading(false);
     }
   };
 
@@ -219,7 +240,7 @@ const hostListingPreview = () => {
                         className="edit-button  cursor-pointer rounded d-flex align-items-center justify-content-end"
                         onClick={handleEditClick}
                       >
-                        <p className="font-semibold">Edit Car Details</p>
+                        <p className="font-semibold">Edit Vehicle Details</p>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
@@ -255,7 +276,7 @@ const hostListingPreview = () => {
                   <div className="col-lg-12">
                     <div className="detail-product">
                       {imageLoaded ? (
-                        <CarouselDisplay images={carImages} />
+                        <CarouselDisplay images={vehicleImages} />
                       ) : (
                         <div className="bg-light custom-border text-white w-100 p-2 rounded h-[30vh] d-flex align-items-center justify-content-center">
                           <div className="upload-photo-center-div">
@@ -294,6 +315,22 @@ const hostListingPreview = () => {
                                   </div>
                                 </div>
                               )}
+                              {
+                              // additionalInfo["costperhr"] &&
+                               (
+                                <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
+                                  <div className="feature-img">
+                                    <ImageWithBasePath
+                                      src="assets/img/specification/specification-icon-1.svg"
+                                      alt="type"
+                                    />
+                                  </div>
+                                  <div className="featues-info">
+                                    <span>Cost Per Hour </span>
+                                    <h6>{additionalInfo["costperhr"]}</h6>
+                                  </div>
+                                </div>
+                              )}
                               {additionalInfo["brand"] && (
                                 <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
                                   <div className="feature-img">
@@ -308,18 +345,18 @@ const hostListingPreview = () => {
                                   </div>
                                 </div>
                               )}
-                                <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
-                                  <div className="feature-img">
-                                    <ImageWithBasePath
-                                      src="assets/img/specification/specification-icon-3.svg"
-                                      alt="Transmission"
-                                    />
-                                  </div>
-                                  <div className="featues-info">
-                                    <span>Transmission </span>
-                                    <h6>{additionalInfo["transmission"] == 1 ? 'Auto' : 'Manual'}</h6>
-                                  </div>
+                              <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
+                                <div className="feature-img">
+                                  <ImageWithBasePath
+                                    src="assets/img/specification/specification-icon-3.svg"
+                                    alt="Transmission"
+                                  />
                                 </div>
+                                <div className="featues-info">
+                                  <span>Transmission </span>
+                                  <h6>{additionalInfo["transmission"] == 1 ? 'Auto' : 'Manual'}</h6>
+                                </div>
+                              </div>
                               <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
                                 <div className="feature-img">
                                   <ImageWithBasePath
@@ -348,7 +385,7 @@ const hostListingPreview = () => {
                                   <h6>{additionalInfo["mileage"]}</h6>
                                 </div>
                               </div>
-                              {additionalInfo["sunroof"] && (
+                              {/* {additionalInfo["sunroof"] && (
                                 <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
                                   <div className="feature-img">
                                     <ImageWithBasePath
@@ -361,7 +398,7 @@ const hostListingPreview = () => {
                                     <h6>{additionalInfo["sunroof"]}</h6>
                                   </div>
                                 </div>
-                              )}
+                              )} */}
                               <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
                                 <div className="feature-img">
                                   <ImageWithBasePath
@@ -374,7 +411,7 @@ const hostListingPreview = () => {
                                   <h6>{additionalInfo["registrationYear"]}</h6>
                                 </div>
                               </div>
-                              {additionalInfo["ac"] && (
+                              {/* {additionalInfo["ac"] && (
                                 <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
                                   <div className="feature-img">
                                     <ImageWithBasePath
@@ -429,7 +466,7 @@ const hostListingPreview = () => {
                                     <h6>{additionalInfo["sevenSeater"]}</h6>
                                   </div>
                                 </div>
-                              )}
+                              )} */}
                               {additionalInfo["transmission"] && (
                                 <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
                                   <div className="feature-img">
@@ -467,59 +504,37 @@ const hostListingPreview = () => {
                     </div>
                     <div className="review-sec listing-feature">
                       <div className="review-header">
-                        <h4>Car Features</h4>
+                        <h4>Features</h4>
                       </div>
-                      {additionalInfo ? (
+                      {additionalInfo && additionalInfo.booleanSpecs && additionalInfo.booleanSpecs.length > 0 ? (
                         <div className="listing-description">
                           <div className="features-grid">
-                            {[
-                              { key: "abs", label: "ABS" },
-                              { key: "airBags", label: "AirBags" },
-                              { key: "airFreshner", label: "Air Freshner" },
-                              { key: "airPurifier", label: "Air Purifier" },
-                              { key: "usbCharger", label: "USB Charger" },
-                              { key: "cruiseControl", label: "Cruise Control" },
-                              { key: "bluetooth", label: "Bluetooth" },
-                              { key: "autoWindow", label: "Auto Window" },
-                              {
-                                key: "fullBootSpace",
-                                label: "Full Boot Space",
-                              },
-                              {
-                                key: "ventelatedFrontSeat",
-                                label: "Ventelated Front Seat",
-                              },
-                              { key: "keylessEntry", label: "Keyless Entry" },
-                              { key: "petFriendly", label: "Pet Friendly" },
-                              { key: "powerSteering", label: "Power Steering" },
-                              {
-                                key: "tractionControl",
-                                label: "Traction Control",
-                              },
-
-                              { key: "voiceControl", label: "Voice Control" },
-                              { key: "touchScreen", label: "Touch Screen" },
-                              { key: "reverseCamera", label: "Reverse Camera" },
-                            ].map(
-                              (feature) =>
-                                additionalInfo[feature.key] && (
-                                  <div
-                                    className="feature-item"
-                                    key={feature.key}
-                                  >
-                                    <span>
-                                      <i className="fa-solid fa-check-double" />
-                                    </span>
-                                    {feature.label}
-                                  </div>
-                                ),
-                            )}
+                            {additionalInfo.booleanSpecs.map((spec) => (
+                              <div className="feature-item" key={spec.field_name}>
+                                <span>
+                                  {spec.value === true ? (
+                                    <i className="fa-solid fa-check-double text-success" />
+                                  ) : (
+                                    <i className="fa-solid fa-xmark text-danger" />
+                                  )}
+                                </span>
+                                {spec.title}
+                                {typeof spec.value === "string" &&
+                                  spec.value !== "Not Provided" &&
+                                  spec.value !== "true" &&
+                                  spec.value !== "false" && (
+                                    <>: {spec.value}</>
+                                  )}
+                              </div>
+                            ))}
                           </div>
+
                         </div>
                       ) : (
-                        <span>Loading additional car features...</span>
+                        <span>Loading additional vehicle features...</span>
                       )}
                     </div>
+
                   </div>
                   <div className="col-lg-12 theiaStickySidebar">
                     <div className="stickysidebar">

@@ -40,6 +40,7 @@ import HostSettings from "../host/settings/hostsettings";
 import HostDashboard from "../host/hostdashboard";
 import HostSecurity from "../host/settings/hostsecurity";
 import HostListing from "../host/wishlist/hostlisting";
+import HostSubscriptions from "../host/hostSubscriptions";
 import HostMessages from "../host/hostmessages";
 import HostReview from "../host/hostreview";
 import HostBookings from "../host/hostbookings";
@@ -315,6 +316,12 @@ export const hostmodule = [
     path: routes.hostListing,
     name: "listing",
     element: <HostListing />,
+    route: Route,
+  },
+  {
+    path: routes.hostSubscriptions,
+    name: "listing",
+    element: <HostSubscriptions />,
     route: Route,
   },
   {

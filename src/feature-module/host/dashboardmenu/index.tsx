@@ -69,6 +69,7 @@ const DashboardMenu = () => {
                     <span>Reviews</span>
                   </Link>
                 </li>
+                
                 <li>
                   <Link
                     to={routes.hostListing}
@@ -81,7 +82,22 @@ const DashboardMenu = () => {
                         alt="Icon"
                       />
                     </div>
-                    <span>All Cars</span>
+                    <span>All Vehicles</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to={routes.hostSubscriptions}
+                    className={isLinkActive(routes.hostSubscriptions) ? "active" : ""}
+                  >
+                    <div className=" d-flex flex-column align-items-start justify-content-start ">
+                      <ImageWithBasePath
+                        className="custom-car-dashboard-logo"
+                        src="assets/img/icons/car-256.png"
+                        alt="Icon"
+                      />
+                    </div>
+                    <span>Subscriptions</span>
                   </Link>
                 </li>
                 <li>

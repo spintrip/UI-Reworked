@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import ImageWithBasePath from "../img/ImageWithBasePath";
-import { postAdditionCarInfo } from "../../../feature-module/api/host";
+import { postAdditionVehicleInfo } from "../../../feature-module/api/host";
 import { getCarAdditionalInfo } from "../../../feature-module/api/postcar";
 import { getAllFeatures } from "../../../feature-module/api/Features";
 import {
@@ -10,38 +10,12 @@ import {
   deleteFeature
 } from "../../../feature-module/api/Features";
 
-interface AddNewCarAdditionalProps {
+interface addNewVehicleAdditionalProps {
   carId: string;
   onActionComplete: () => void;
   setEditState: (state: boolean) => void;
 }
-
-interface Features {
-  autoWindow: string;
-  ac: string;
-  musicSystem: string;
-  sunroof: string;
-  reverseCamera: string;
-  sevenSeater: string;
-  airBags: string;
-}
-
-interface ExtraFeatures {
-  touchScreen: string;
-  petFriendly: string;
-  powerSteering: string;
-  abs: string;
-  tractionControl: string;
-  fullBootSpace: string;
-  keylessEntry: string;
-  airPurifier: string;
-  cruiseControl: string;
-  voiceControl: string;
-  usbCharger: string;
-  bluetooth: string;
-  airFreshner: string;
-  ventelatedFrontSeat: string;
-}
+// This will store all features and extraFeatures in one list
 
 interface Addon {
   id: string;
@@ -52,88 +26,88 @@ interface Addon {
   price?: string;
 }
 
-interface CarAdditional {
-  updatedFeatures: Addon[];
-  carImages: string[];
-  horsePower?: number;
-  autoWindow?: boolean;
-  ac?: boolean;
-  musicSystem?: boolean;
-  sunroof?: boolean;
-  reverseCamera?: boolean;
-  sevenSeater?: boolean;
-  transmission?: boolean;
-  fuelType?: boolean;
-  airBags?: boolean;
-  touchScreen?: boolean;
-  petFriendly?: boolean;
-  powerSteering?: boolean;
-  abs?: boolean;
-  tractionControl?: boolean;
-  fullBootSpace?: boolean;
-  keylessEntry?: boolean;
-  airPurifier?: boolean;
-  cruiseControl?: boolean;
-  voiceControl?: boolean;
-  usbCharger?: boolean;
-  bluetooth?: boolean;
-  airFreshner?: boolean;
-  ventelatedFrontSeat?: boolean;
+interface BooleanSpec {
+  field_name: string;
+  title: string;
+  value: boolean;
+  logo: string;
 }
 
-const AddNewCarAdditional: React.FC<AddNewCarAdditionalProps> = ({ carId,  onActionComplete,  setEditState}) => {
+interface CarAdditional {
+  updatedFeatures: Addon[];
+  vehicleImages: string[];
+  horsePower?: number;
+  booleanSpecs: BooleanSpec[];
+}
+
+const addNewVehicleAdditional: React.FC<addNewVehicleAdditionalProps> = ({ carId, onActionComplete, setEditState }) => {
   const [addons, setAddons] = useState<Addon[]>([]);
   const [btnLoading, setBtnLoading] = useState(false);
   const [images, setImages] = useState<Array<File | string>>([]);
   const [success, setSuccess] = useState(false);
   const [horsePower, setHorsePower] = useState<number | undefined>();
+  const [vehicleType, setVehicleType] = useState<number | undefined>();
+  const [costPerHr, setcostperhr] = useState<number | undefined>();
   const [fuelType, setFuelType] = useState<string>('Petrol');
+  const [booleanSpecs, setBooleanSpecs] = useState<BooleanSpec[]>([]);
   const [transmission, setTransmission] = useState<string>('Manual');
-  const [features, setFeatures] = useState<Features>({
-    autoWindow: "0",
-    ac: "0",
-    musicSystem: "0",
-    sunroof: "0",
-    reverseCamera: "0",
-    sevenSeater: "0",
-    airBags: "0",
-  });
 
-  const [extraFeatures, setExtraFeatures] = useState<ExtraFeatures>({
-    touchScreen: "0",
-    petFriendly: "0",
-    powerSteering: "0",
-    abs: "0",
-    tractionControl: "0",
-    fullBootSpace: "0",
-    keylessEntry: "0",
-    airPurifier: "0",
-    cruiseControl: "0",
-    voiceControl: "0",
-    usbCharger: "0",
-    bluetooth: "0",
-    airFreshner: "0",
-    ventelatedFrontSeat: "0",
-  });
+  // const [features, setFeatures] = useState<Features>({
+  //   autoWindow: "0",
+  //   ac: "0",
+  //   musicSystem: "0",
+  //   sunroof: "0",
+  //   reverseCamera: "0",
+  //   sevenSeater: "0",
+  //   airBags: "0",
+  // });
+
+  // const [extraFeatures, setExtraFeatures] = useState<ExtraFeatures>({
+  //   touchScreen: "0",
+  //   petFriendly: "0",
+  //   powerSteering: "0",
+  //   abs: "0",
+  //   tractionControl: "0",
+  //   fullBootSpace: "0",
+  //   keylessEntry: "0",
+  //   airPurifier: "0",
+  //   cruiseControl: "0",
+  //   voiceControl: "0",
+  //   usbCharger: "0",
+  //   bluetooth: "0",
+  //   airFreshner: "0",
+  //   ventelatedFrontSeat: "0",
+  // });
+
+  // handler function
+  const handleBooleanSpecChange = (fieldName: string) => {
+    setBooleanSpecs((prevSpecs) =>
+      prevSpecs.map((spec) =>
+        spec.field_name === fieldName
+          ? { ...spec, value: !spec.value }
+          : spec
+      )
+    );
+  };
 
   const [, setOriginalImages] = useState<string[]>([]);
-  const [originalFeatures, setOriginalFeatures] = useState<Features>({
-    ...features,
-  });
-  const [originalExtraFeatures, setOriginalExtraFeatures] =
-    useState<ExtraFeatures>({ ...extraFeatures });
+  // const [originalFeatures, setOriginalFeatures] = useState<Features>({
+  //   ...features,
+  // });
+  // const [originalExtraFeatures, setOriginalExtraFeatures] =
+  //   useState<ExtraFeatures>({ ...extraFeatures });
   const [, setCarAdditional] = useState<CarAdditional | null>(
     null,
   );
   const [selectedFeatures, setSelectedFeatures] = useState<{ [key: string]: { checked: boolean; price: number } }>({});
 
-  const handleFeatureChange = (key: keyof Features) => {
-    setFeatures((prev) => ({
-      ...prev,
-      [key]: prev[key] === "0" ? "1" : "0",
-    }));
-  };
-  AddNewCarAdditional.propTypes = {
+  // const handleFeatureChange = (key: keyof Features) => {
+  //   setFeatures((prev) => ({
+  //     ...prev,
+  //     [key]: prev[key] === "0" ? "1" : "0",
+  //   }));
+  // };
+  addNewVehicleAdditional.propTypes = {
     carId: PropTypes.string.isRequired,
     onActionComplete: PropTypes.func.isRequired,
     setEditState: PropTypes.func.isRequired,
@@ -142,64 +116,65 @@ const AddNewCarAdditional: React.FC<AddNewCarAdditionalProps> = ({ carId,  onAct
     if (carId) {
       getCarAdditionalInfo(carId)
         .then((data) => {
-          const newFeatures = {
-            autoWindow: data.carAdditionals.autoWindow ? "1" : "0",
-            ac: data.carAdditionals.ac ? "1" : "0",
-            musicSystem: data.carAdditionals.musicSystem ? "1" : "0",
-            sunroof: data.carAdditionals.sunroof ? "1" : "0",
-            reverseCamera: data.carAdditionals.reverseCamera ? "1" : "0",
-            sevenSeater: data.carAdditionals.sevenSeater ? "1" : "0",
-            airBags: data.carAdditionals.airBags ? "1" : "0",
-          };
-  
-          const newExtraFeatures = {
-            touchScreen: data.carAdditionals.touchScreen ? "1" : "0",
-            petFriendly: data.carAdditionals.petFriendly ? "1" : "0",
-            powerSteering: data.carAdditionals.powerSteering ? "1" : "0",
-            abs: data.carAdditionals.abs ? "1" : "0",
-            tractionControl: data.carAdditionals.tractionControl ? "1" : "0",
-            fullBootSpace: data.carAdditionals.fullBootSpace ? "1" : "0",
-            keylessEntry: data.carAdditionals.keylessEntry ? "1" : "0",
-            airPurifier: data.carAdditionals.airPurifier ? "1" : "0",
-            cruiseControl: data.carAdditionals.cruiseControl ? "1" : "0",
-            voiceControl: data.carAdditionals.voiceControl ? "1" : "0",
-            usbCharger: data.carAdditionals.usbCharger ? "1" : "0",
-            bluetooth: data.carAdditionals.bluetooth ? "1" : "0",
-            airFreshner: data.carAdditionals.airFreshner ? "1" : "0",
-            ventelatedFrontSeat: data.carAdditionals.ventelatedFrontSeat ? "1" : "0",
-          };
-  
-          setFeatures(newFeatures);
-          setExtraFeatures(newExtraFeatures);
-          setOriginalFeatures(newFeatures);
-          setOriginalExtraFeatures(newExtraFeatures);
-  
-          setImages(data.carImages || []);
-          setOriginalImages(data.carImages || []);
-          setHorsePower(data.carAdditionals?.horsePower || 0);
-          setFuelType(data.carAdditionals?.fuelType == 0 ? 'Petrol' : 'Diesel');
-          setCarAdditional(data.carAdditionals);
+          //         const newFeatures = {
+          //           autoWindow: data.carAdditionals.autoWindow ? "1" : "0",
+          //           ac: data.carAdditionals.ac ? "1" : "0",
+          //           musicSystem: data.carAdditionals.musicSystem ? "1" : "0",
+          //           sunroof: data.carAdditionals.sunroof ? "1" : "0",
+          //           reverseCamera: data.carAdditionals.reverseCamera ? "1" : "0",
+          //           sevenSeater: data.carAdditionals.sevenSeater ? "1" : "0",
+          //           airBags: data.carAdditionals.airBags ? "1" : "0",
+          //         };
+
+          //         const newExtraFeatures = {
+          //           touchScreen: data.carAdditionals.touchScreen ? "1" : "0",
+          //           petFriendly: data.carAdditionals.petFriendly ? "1" : "0",
+          //           powerSteering: data.carAdditionals.powerSteering ? "1" : "0",
+          //           abs: data.carAdditionals.abs ? "1" : "0",
+          //           tractionControl: data.carAdditionals.tractionControl ? "1" : "0",
+          //           fullBootSpace: data.carAdditionals.fullBootSpace ? "1" : "0",
+          //           keylessEntry: data.carAdditionals.keylessEntry ? "1" : "0",
+          //           airPurifier: data.carAdditionals.airPurifier ? "1" : "0",
+          //           cruiseControl: data.carAdditionals.cruiseControl ? "1" : "0",
+          //           voiceControl: data.carAdditionals.voiceControl ? "1" : "0",
+          //           usbCharger: data.carAdditionals.usbCharger ? "1" : "0",
+          //           bluetooth: data.carAdditionals.bluetooth ? "1" : "0",
+          //           airFreshner: data.carAdditionals.airFreshner ? "1" : "0",
+          //           ventelatedFrontSeat: data.carAdditionals.ventelatedFrontSeat ? "1" : "0",
+          //         };
+          //         setFeatures(newFeatures);
+          //         setExtraFeatures(newExtraFeatures);
+          //         setOriginalFeatures(newFeatures);
+          //         setOriginalExtraFeatures(newExtraFeatures);
+          setBooleanSpecs(data.booleanSpecs);
+          //         setImages(data.vehicleImages || []);
+          //         setOriginalImages(data.vehicleImages || []);
+          setHorsePower(data.vehicleAdditionals?.horsePower || 0);
+          setVehicleType(data.vehicleAdditionals?.vehicleType || 0);
+          setcostperhr(data.vehicleAdditionals?.costPerHr || 0);
+          setFuelType(data.vehicleAdditionals?.fuelType == 0 ? 'Petrol' : 'Diesel');
+          // setCarAdditional(data.carAdditionals);
           setTransmission(data.carAdditionals?.transmission ? 'Auto' : 'Manual');
-  
-          // Initialize selectedFeatures with existing features
-          const existingSelectedFeatures = {};
-          data.updatedFeatures.forEach((feature) => {
-            existingSelectedFeatures[feature.featureid] = {
-              checked: true,
-              price: feature.price,
-            };
-          });
-          setSelectedFeatures((prev) => ({
-            ...prev,
-            ...existingSelectedFeatures
-          }));
+
+          //         // Initialize selectedFeatures with existing features
+          //         const existingSelectedFeatures = {};
+          //         data.updatedFeatures.forEach((feature) => {
+          //           existingSelectedFeatures[feature.featureid] = {
+          //             checked: true,
+          //             price: feature.price,
+          //           };
+          //         });
+          //         setSelectedFeatures((prev) => ({
+          //           ...prev,
+          //           ...existingSelectedFeatures
+          //         }));
         })
         .catch((error) => {
           console.error("Error fetching car additional info:", error);
         });
     }
   }, [carId]);
-  
+
 
   useEffect(() => {
     const fetchAddons = async () => {
@@ -236,7 +211,8 @@ const AddNewCarAdditional: React.FC<AddNewCarAdditionalProps> = ({ carId,  onAct
     setSelectedFeatures(prev => {
       const updatedSelectedFeatures = { ...prev };
       addons.forEach(addon => {
-        if (!updatedSelectedFeatures[addon.id]) {
+        if (!updatedSelectedFeatures[addon.id]) 
+          {
           updatedSelectedFeatures[addon.id] = { checked: false, price: 0 };
         }
       });
@@ -287,7 +263,7 @@ const AddNewCarAdditional: React.FC<AddNewCarAdditionalProps> = ({ carId,  onAct
     setBtnLoading(true);
 
     const formData = new FormData();
-    formData.append("carId", carId || "null");
+    formData.append("vehicleid", carId || "null");
 
     if (horsePower !== undefined && horsePower !== 0) {
       formData.append("horsePower", horsePower.toString());
@@ -296,33 +272,28 @@ const AddNewCarAdditional: React.FC<AddNewCarAdditionalProps> = ({ carId,  onAct
     if (fuelType) {
       formData.append("fuelType", fuelType === 'Petrol' ? '0' : '1');
     }
+    if (costPerHr) {
+      formData.append("costperhr", costPerHr.toString());
+    }
+
 
     if (transmission) {
       formData.append("transmission", transmission === 'Manual' ? '0' : '1');
     }
+    booleanSpecs.forEach(spec => {
+      formData.append(spec.field_name, spec.value ? "1" : "0");
+    });
 
-
-    for (const [key, value] of Object.entries(features)) {
-      if (value !== originalFeatures[key as keyof Features]) {
-        formData.append(key, value === "1" ? "1" : "0");
-      }
-    }
-
-    for (const [key, value] of Object.entries(extraFeatures)) {
-      if (value !== originalExtraFeatures[key as keyof ExtraFeatures]) {
-        formData.append(key, value === "1" ? "1" : "0");
-      }
-    }
-
+    console.log(JSON.stringify(formData));
     images.forEach((image, index) => {
       if (typeof image === "string") {
-        formData.append(`existingCarImage_${index + 1}`, image);
+        formData.append(`existingVehicleImage_${index + 1}`, image);
       } else {
-        formData.append(`carImage_${index + 1}`, image);
+        formData.append(`vehicleImage_${index + 1}`, image);
       }
     });
     handleSave()
-    postAdditionCarInfo(carId, formData, postAdditionalCallback);
+    postAdditionVehicleInfo(carId, formData, postAdditionalCallback);
   };
 
   async function postAdditionalCallback(error: any) {
@@ -399,12 +370,12 @@ const AddNewCarAdditional: React.FC<AddNewCarAdditionalProps> = ({ carId,  onAct
       <div className="row">
         <div className="col-xl-8">
           <h4 className="modal-title mb-4">
-            Edit Car Additional Details{" "}
-            <span className="listing-preview-carid">
-              CarId : {carId}
-            </span>
+            Edit Vehicle Additional Details{" "}
+            {/* <span className="listing-preview-carid">
+              Vehicle Id : {carId}
+            </span> */}
           </h4>
-  
+
           <div className="bg-light border rounded shadow-sm p-3">
             <div className="my-4 min-h-[30vh] p-3">
               <form onSubmit={handleAdditionCarInfoSubmit}>
@@ -454,80 +425,155 @@ const AddNewCarAdditional: React.FC<AddNewCarAdditionalProps> = ({ carId,  onAct
                     </div>
                   </div>
                 </div>
-  
+
                 <div className="row">
                   <p className="mb-1 mt-3 font-semibold">Essentials</p>
-                  {Object.keys(features).map((key) => (
-                    <div className="col-md-4" key={key}>
+                  <div className="row">
+                    <div className="col-md-4">
                       <div className="integration-grid">
                         <div className="integration-calendar">
                           <div className="integration-content d-flex align-items-center justify-content-between">
-                            <h5>
-                              {key
-                                .replace(/([A-Z])/g, " $1")
-                                .replace(/^./, (str) => str.toUpperCase())}
-                            </h5>
+                            <h5>{vehicleType == 1 ? "Engine CC" : "Horse Power"}</h5>
                           </div>
-                          <div className="form-check form-switch">
+                          <div className="">
                             <input
-                              className="form-check-input border border-primary border-2"
-                              type="checkbox"
-                              role="switch"
-                              id={`flexSwitchCheck${key}`}
-                              checked={features[key as keyof Features] === "1"}
-                              onChange={() =>
-                                handleFeatureChange(key as keyof Features)
+                              className="form-control font-mono"
+                              type="number"
+                              onChange={(e) =>
+                                setHorsePower(Number(e.target.value))
                               }
+                              value={horsePower || ""}
                             />
                           </div>
                         </div>
                       </div>
                     </div>
-                  ))}
-                </div>
-  
-                <div className="row">
-                  <p className="mb-1 mt-3 font-semibold">Additional Features</p>
-                  {Object.keys(extraFeatures).map((key) => (
-                    <div className="col-md-4" key={key}>
+                    <div className="col-md-4">
                       <div className="integration-grid">
                         <div className="integration-calendar">
                           <div className="integration-content d-flex align-items-center justify-content-between">
-                            <h5>
-                              {key
-                                .replace(/([A-Z])/g, " $1")
-                                .replace(/^./, (str) => str.toUpperCase())}
-                            </h5>
+                            <h5>Fuel Type</h5>
                           </div>
-                          <div className="form-check form-switch">
-                            <input
-                              className="form-check-input border border-primary border-2"
-                              type="checkbox"
-                              role="switch"
-                              id={`flexSwitchCheck${key}`}
-                              checked={
-                                extraFeatures[key as keyof ExtraFeatures] === "1"
-                              }
-                              onChange={() =>
-                                setExtraFeatures((prev) => ({
-                                  ...prev,
-                                  [key]: prev[key] === "0" ? "1" : "0",
-                                }))
-                              }
-                            />
+                          <div className="">
+                            <select
+                              className="form-control font-mono"
+                              value={fuelType}
+                              onChange={(e) => setFuelType(e.target.value)}
+                            >
+                              {vehicleType == 1 ? (
+                                <option value="Petrol">Petrol</option>
+                              ) : (
+                                <>
+                                  <option value="Petrol">Petrol</option>
+                                  <option value="Diesel">Diesel</option>
+                                </>
+                              )}
+                            </select>
                           </div>
                         </div>
                       </div>
                     </div>
-                  ))}
-                </div>
-  
-                <div className="row">
+                    <div className="col-md-4">
+                      <div className="integration-grid">
+                        <div className="integration-calendar">
+                          <div className="integration-content d-flex align-items-center justify-content-between">
+                            <h5>Transmission</h5>
+                          </div>
+                          <div className="">
+                            <select
+                              className="form-control font-mono"
+                              value={transmission}
+                              onChange={(e) => setTransmission(e.target.value)}
+                            >
+                              <option value="Manual">Manual</option>
+                              <option value="Auto">Auto</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <div className="col-md-4">
                     <div className="integration-grid">
                       <div className="integration-calendar">
                         <div className="integration-content d-flex align-items-center justify-content-between">
-                          <h5>Horse Power</h5>
+                          <h5>Cost Per Hour</h5>
+                        </div>
+                        <div className="">
+                          <input
+                            className="form-control font-mono"
+                            type="number"
+                            onChange={(e) =>
+                              setcostperhr(Number(e.target.value))
+                            }
+                            value={costPerHr || ""}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {/* {booleanSpecs.map((spec) => (
+                    <div className="col-md-4" key={spec.field_name}>
+                      <div className="integration-grid">
+                        <div className="integration-calendar">
+                          <div className="integration-content d-flex align-items-center justify-content-between">
+                            <h5>{spec.title}</h5>
+                          </div>
+                          <div className="form-check form-switch">
+                            <input
+                              className="form-check-input border border-primary border-2"
+                              type="checkbox"
+                              role="switch"
+                              id={`flexSwitchCheck${spec.field_name}`}
+                              checked={spec.value}
+                              onChange={() => handleBooleanSpecChange(spec.field_name)}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))} */}
+                </div>
+                <div className="row">
+                  <p className="mb-1 mt-3 font-semibold">Additional Features</p>
+                  {booleanSpecs.map((spec, index) => (
+                    <div className="col-md-4" key={spec.field_name}>
+                      <div className="integration-grid">
+                        <div className="integration-calendar">
+                          <div className="integration-content d-flex align-items-center justify-content-between">
+                            <h5>{spec.title}</h5>
+                          </div>
+                          <div className="form-check form-switch">
+                            <input
+                              className="form-check-input border border-primary border-2"
+                              type="checkbox"
+                              role="switch"
+                              id={`flexSwitchCheck${spec.field_name}`}
+                              checked={spec.value}
+                              onChange={() =>
+                                setBooleanSpecs((prevSpecs) =>
+                                  prevSpecs.map((item, i) =>
+                                    i === index
+                                      ? { ...item, value: !item.value }
+                                      : item
+                                  )
+                                )
+                              }
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+
+                </div>
+
+                {/* <div className="row">
+                  <div className="col-md-4">
+                    <div className="integration-grid">
+                      <div className="integration-calendar">
+                        <div className="integration-content d-flex align-items-center justify-content-between">
+                        <h5>{vehicleType == 1 ? "Engine CC" : "Horse Power"}</h5>
                         </div>
                         <div className="">
                           <input
@@ -580,9 +626,9 @@ const AddNewCarAdditional: React.FC<AddNewCarAdditionalProps> = ({ carId,  onAct
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </form>
-  
+
               {success && (
                 <div
                   className="alert alert-success fixed-bottom w-60 mx-5 d-flex align-items-center justify-content-between"
@@ -617,18 +663,16 @@ const AddNewCarAdditional: React.FC<AddNewCarAdditionalProps> = ({ carId,  onAct
               const addonPrice = isAddonPresent
                 ? selectedFeatures[addon.id]?.price || 0
                 : 0;
-  
+
               return (
                 <div
                   key={addon.id}
-                  className={`d-flex align-items-center my-2 ${
-                    isAddonPresent ? "bg-warning" : "bg-light"
-                  } rounded p-2`}
+                  className={`d-flex align-items-center my-2 ${isAddonPresent ? "bg-warning" : "bg-light"
+                    } rounded p-2`}
                 >
                   <button
-                    className={`font-semibold w-full rounded p-2 me-2 ${
-                      isAddonPresent ? "btn-success" : ""
-                    }`}
+                    className={`font-semibold w-full rounded p-2 me-2 ${isAddonPresent ? "btn-success" : ""
+                      }`}
                     onClick={() => {
                       setSelectedFeatures((prev) => ({
                         ...prev,
@@ -680,8 +724,8 @@ const AddNewCarAdditional: React.FC<AddNewCarAdditionalProps> = ({ carId,  onAct
                 </div>
               );
             })}
-  
-            <p className="mt-3">Available add ons at the moment</p>
+
+            <p className="mt-3">No Available add ons at the moment</p>
           </div>
           <div className="container px-5 mt-4">
             <button
@@ -705,8 +749,8 @@ const AddNewCarAdditional: React.FC<AddNewCarAdditionalProps> = ({ carId,  onAct
       </div>
     </div>
   );
-  
+
 
 }
 
-export default AddNewCarAdditional;
+export default addNewVehicleAdditional;

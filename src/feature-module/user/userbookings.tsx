@@ -959,7 +959,7 @@ const UserBookings = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="p-2 mx-5 my-5 rounded ">
+                    {/* <div className="p-2 mx-5 my-5 rounded ">
                       {selectedBooking?.transactionId != null  && selectedBooking?.transaction != null 
                   && selectedBooking?.transaction?.status == 2 ? (
                         <>
@@ -984,7 +984,7 @@ const UserBookings = () => {
                       ) : (
                         <></>
                       )}
-                    </div>
+                    </div> */}
                   </>
                 )}
               </Modal.Body>
@@ -1014,48 +1014,23 @@ const UserBookings = () => {
                     </svg>
                   </Button>
                 </div>
-                <div className="d-flex align-items-center justify-content-center flex-wrap">
-                  {selectedBooking?.status == 1 &&
-                  selectedBooking.transactionId != null && selectedBooking?.transaction != null 
-                  && selectedBooking?.transaction?.status == 2 ?  (
-                    <Button
-                      className="bg-primary border m-2 d-flex align-items-center justify-content-center start-ride-button"
-                      onClick={async () => {
-                        await handleStartRide();
-                        setShowUpcomingModal(false);
-                        setTimeout(() => setShowRideStartedModal(true), 500);
-                      }}
-                    >
-                      <ImageWithBasePath className="thunder-icon" src="assets/img/thunder.png" alt="thunder"/>
-                      <span className="fw-bold">Start Ride</span>
-                    </Button>
-                  ) : (
-                    <Button
-                      variant="dark"
-                      className="border m-2 d-flex align-items-center justify-content-center paynow-booking-button"
-                      onClick={async () => {
-                        document.body.style.backgroundColor = "grey";
-                        await handlePayment(selectedBooking);
-                        document.body.style.backgroundColor = "";
-                      }}
-                    >
-                      <span>Pay Now</span>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="card-icon"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z"
-                        />
-                      </svg>
-                    </Button>
-                  )}
+                <div className="modal-btn modal-btn-sm text-end">
+                  {/* <Button
+                    variant="dark"
+                    onClick={() => setShowCancelModal(false)}
+                  >
+                    Close
+                  </Button> */}
+                  <Button
+                    variant="danger"
+                    onClick={async () => {
+                      await handleCancelRide(cancelReason);
+                      setShowCancelModal(false);
+                    }}
+                    className="btn btn-danger mx-2"
+                  >
+                    Cancel Booking
+                  </Button>
                 </div>
               </div>
             </Modal.Footer>
@@ -1276,7 +1251,7 @@ const UserBookings = () => {
                   >
                     Chat
                   </Button>
-                  <Button
+                  {/* <Button
                     variant="primary"
                     onClick={async () => {
                       await handleCompletedRide();
@@ -1284,7 +1259,7 @@ const UserBookings = () => {
                       } }
                   >
                     Complete Booking
-                  </Button>
+                  </Button> */}
                 </Modal.Footer></>
             )}
           </Modal>

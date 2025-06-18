@@ -423,7 +423,9 @@ const ListingGrid: React.FC = () => {
         endDate,
         startTimeStr,
         endTimeStr,
-        distance
+        latitude,
+        longitude,
+        distance,
       );
       dispatch(
         setDateTime(

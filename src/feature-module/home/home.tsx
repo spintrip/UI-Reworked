@@ -542,7 +542,7 @@ const Home: React.FC = () => {
                 className="col-lg-6 d-flex flex-column align-items-start justify-content-center md:justify-content-start"
                 data-aos="fade-right"
               >
-                <Link to="/app" className="border  border-2 transluencent-background d-flex align-items-end justify-content-start">
+                {/* <Link to="/app" className="border  border-2 transluencent-background d-flex align-items-end justify-content-start">
                 <div className="explore-text bg-transparent text-white d-flex align-items-end justify-content-start ">
                   {" "}
                   <ImageWithBasePath className="android-icon" src="assets/img/android-icon.png" alt="android-icon"/>
@@ -550,7 +550,7 @@ const Home: React.FC = () => {
                   <div className="">Download App</div>
                   
                 </div>
-                </Link>
+                </Link> */}
                 <h1
                   ref={pickupLocationRef}
                   style={{ fontWeight: '700' }}
@@ -566,7 +566,7 @@ const Home: React.FC = () => {
                     onClick={() => handleViewAllCars()}
                     className=" view-all-cars btn btn-view d-inline-flex align-items-center"
                   >
-                    View all Cars{" "}
+                    View all Vehicles{" "}
                     <span>
                       <i className="feather icon-arrow-right ms-2" />
                     </span>

@@ -107,7 +107,7 @@ export const getHostProfile = async () => {
   
 
 
-export const putHostUpdateProfile = async (updateData) => {
+  export const putHostUpdateProfile = async (updateData) => {
     const tk = localStorage.getItem('authToken');  // Ensure you are retrieving the token correctly.
     if (!tk) {
         console.error('No token found');
@@ -123,9 +123,13 @@ export const putHostUpdateProfile = async (updateData) => {
             },
             body: JSON.stringify({
                 fullName: updateData.fullName,
+                businessName: updateData.businessName,
+                GSTnumber: updateData.GSTnumber,
+                PANnumber: updateData.PANnumber,
                 aadharId: updateData.aadharId,
                 email: updateData.email,
                 address: updateData.address,
+                onlyVerifiedUsers: updateData.onlyVerifiedUsers
             })
         });
         if (!response.ok) {
@@ -136,6 +140,7 @@ export const putHostUpdateProfile = async (updateData) => {
         console.error('Failed to update Host profile:', error);
     }
 };
+
 
 export const putHostVerify = async(formData) => {
 

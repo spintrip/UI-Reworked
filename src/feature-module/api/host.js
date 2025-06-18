@@ -1,37 +1,35 @@
 import  serverApiUrl  from "./server"
 
-const addNewCar = (carData, callback) => {
+const addNewVehicle = async (vehicleData, callback) => {
     const token = localStorage.getItem('authToken');
-    return fetch(serverApiUrl+"host/car", {
+    console.log(vehicleData);
+    try {
+    const response = await fetch(serverApiUrl + "host/vehicle", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'token': token
       },
-      body: JSON.stringify(carData)
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok ' + response.statusText);
-      }
-      return response.json();
-    })
-    .then(data => {
-      if (typeof callback === 'function') {
-        callback(data);
-      }
-      return data;
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      throw error;
+      body: JSON.stringify(vehicleData)
     });
+    if (!response.ok) {
+      throw new Error('Network response was not ok ' + response.statusText);
+    }
+    const data = await response.json();
+    if (typeof callback === 'function') {
+      callback(data);
+    }
+    return data;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
   };
 
-  async function postAdditionCarInfo(carId, carData, postAdditionalCallback) {
+  async function postAdditionVehicleInfo(carId, carData, postAdditionalCallback) {
     const token = localStorage.getItem('authToken');
     try {
-        const response = await fetch(serverApiUrl + "host/carAdditional", {
+        const response = await fetch(serverApiUrl + "host/vehicleAdditional", {
             method: 'PUT',
             headers: {
                 'token': token,
@@ -51,4 +49,4 @@ const addNewCar = (carData, callback) => {
 }
 
 
-  export { addNewCar, postAdditionCarInfo, };
+  export { addNewVehicle, postAdditionVehicleInfo, };

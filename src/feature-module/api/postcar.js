@@ -43,15 +43,15 @@ export const getCarAdditionalInfo = async (carId) => {
             console.error('No token found');
         return;
         }
-        const response = await fetch(`${serverApiUrl}host/getCarAdditional`, {
+        const response = await fetch(`${serverApiUrl}host/getvehicleAdditional`, {
             method: 'POST',
-            headers: {
+            headers: { 
                 'token': token,
                 'Content-Type' : 'application/json',
             },
             body: JSON.stringify(
               {
-                carId: carId,
+                vehicleid: carId,
               }
             )
         });

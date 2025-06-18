@@ -112,7 +112,7 @@ const listingDetails = () => {
     useState(dateTime.endTime);
   const [showCheckAvailabilityModal, setShowCheckAvailabilityModal] =
     useState(false);
-  const [carImages, setCarImages] = useState([]);
+  const [vehicleImages, setvehicleImages] = useState([]);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
@@ -121,7 +121,7 @@ const listingDetails = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
 
-  const [notificationMessage,setNotificationMessage] = useState("")
+  const [notificationMessage, setNotificationMessage] = useState("")
   const [isNotification, setIsNotification] = useState(false)
 
 
@@ -203,7 +203,7 @@ const listingDetails = () => {
     setIsCheckAvailabilityDisabled(false);
     return true;
   };
-  
+
   //For OneCar
   useEffect(() => {
     const fetchData = async () => {
@@ -225,7 +225,7 @@ const listingDetails = () => {
             returnTime,
           );
           setCarResponse(vehicles);
-          setError(""); 
+          setError("");
         } catch (err) {
           const error = err as Error;
           setError(error.message || "Failed to load car data.");
@@ -246,7 +246,7 @@ const listingDetails = () => {
             setAdditionalInfo(data.vehicleAdditionals);
             setFeatures(data.updatedFeatures);
 
-            setCarImages(data.vehicleImages || []);
+            setvehicleImages(data.vehicleImages || []);
             if (
               data.vehicleImages &&
               data.vehicleImages.length > 0 &&
@@ -401,7 +401,7 @@ const listingDetails = () => {
 
     try {
       if (emailStatus === null) {
-        
+
         setNotificationMessage(
           "Update Email in your profile"
         );
@@ -428,7 +428,7 @@ const listingDetails = () => {
         setTimeout(() => {
           setIsNotification(false);
         }, 5000);
-        
+
         return;
       } else if (verificationStatus === 2) {
         // Constructing the correct payload
@@ -625,7 +625,7 @@ const listingDetails = () => {
                   <div className="col-lg-8">
                     <div className="detail-product bg-light">
                       {imageLoaded ? (
-                        <CarouselDisplay images={carImages} />
+                        <CarouselDisplay images={vehicleImages} />
                       ) : (
                         <img
                           className="w-100 h-100"
@@ -672,20 +672,20 @@ const listingDetails = () => {
                                     </div>
                                   </div>
                                 )}
-                               
-                                  <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
-                                    <div className="feature-img">
-                                      <ImageWithBasePath
-                                        src="assets/img/specification/specification-icon-3.svg"
-                                        alt="Transmission"
-                                      />
-                                    </div>
-                                    <div className="featues-info">
-                                      <span>Transmission </span>
-                                      <h6> {carResponse.Additional.Transmission ? <>Automatic</> : <>Manual</>}</h6>
-                                    </div>
+
+                                <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
+                                  <div className="feature-img">
+                                    <ImageWithBasePath
+                                      src="assets/img/specification/specification-icon-3.svg"
+                                      alt="Transmission"
+                                    />
                                   </div>
-                               
+                                  <div className="featues-info">
+                                    <span>Transmission </span>
+                                    <h6> {carResponse.Additional.Transmission ? <>Automatic</> : <>Manual</>}</h6>
+                                  </div>
+                                </div>
+
                                 <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
                                   <div className="feature-img">
                                     <ImageWithBasePath
@@ -825,57 +825,59 @@ const listingDetails = () => {
                     </div>
                     <div className="review-sec listing-feature border">
                       <div className="review-header">
-                        <h4>Car Features</h4>
+                        <h4>Features</h4>
                       </div>
                       {carResponse.Additional ? (
                         <div className="listing-description">
                           <div className="features-grid">
-                            {[
-                              { key: "ABS", label: "ABS" },
-                              { key: "Airbags", label: "AirBags" },
-                              { key: "airFreshner", label: "Air Freshner" },
-                              { key: "Reversecamera", label: "Reverse Camera" },
-                              { key: "airPurifier", label: "Air Purifier" },
-                              { key: "usbCharger", label: "Usb Charger" },
-                              { key: "cruiseControl", label: "Cruise Control" },
-                              { key: "bluetooth", label: "Bluetooth" },
-                              {
-                                key: "fullBootSpace",
-                                label: "Full Boot Space",
-                              },
-                              {
-                                key: "ventelatedFrontSeat",
-                                label: "Ventelated Front Seat",
-                              },
-                              { key: "KeylessEntry", label: "Keyless Entry" },
-                              { key: "PetFriendly", label: "Pet Friendly" },
-                              { key: "TouchScreen", label: "Touch Screen" },
-                              { key: "PowerSteering", label: "Power Steering" },
-                              {
-                                key: "tractionControl",
-                                label: "Traction Control",
-                              },
-                              { key: "voiceControl", label: "Voice Control" },
-                            ].map(
-                              (feature) =>
-                                carResponse.Additional[feature.key] && (
-                                  <div
-                                    className="feature-item"
-                                    key={feature.key}
-                                  >
-                                    <span>
-                                      <i className="fa-solid fa-check-double" />
-                                    </span>
-                                    {feature.label}
-                                  </div>
-                                ),
-                            )}
+                            {(() => {
+                              const carFeatures = [
+                                { key: "ABS", label: "ABS" },
+                                { key: "Airbags", label: "Airbags" },
+                                { key: "airFreshner", label: "Air Freshner" },
+                                { key: "Reversecamera", label: "Reverse Camera" },
+                                { key: "airPurifier", label: "Air Purifier" },
+                                { key: "usbCharger", label: "USB Charger" },
+                                { key: "cruiseControl", label: "Cruise Control" },
+                                { key: "bluetooth", label: "Bluetooth" },
+                                { key: "fullBootSpace", label: "Full Boot Space" },
+                                { key: "ventelatedFrontSeat", label: "Ventilated Front Seat" },
+                                { key: "KeylessEntry", label: "Keyless Entry" },
+                                { key: "PetFriendly", label: "Pet Friendly" },
+                                { key: "Touchscreen", label: "Touch Screen" },
+                                { key: "PowerSteering", label: "Power Steering" },
+                                { key: "tractionControl", label: "Traction Control" },
+                                { key: "voiceControl", label: "Voice Control" },
+                              ];
+
+                              const bikeFeatures = [
+                                { key: "helmet", label: "Helmet Provided" },
+                                { key: "helmetSpace", label: "Helmet Storage" },
+                              ];
+
+                              const isCar = !!carResponse.Additional.carmodel;
+                              const isBike = !!carResponse.Additional.bikemodel;
+                              const selectedFeatures = isCar ? carFeatures : isBike ? bikeFeatures : [];
+
+                              return selectedFeatures.map(
+                                (feature) =>
+                                  carResponse.Additional[feature.key] && (
+                                    <div className="feature-item" key={feature.key}>
+                                      <span>
+                                        <i className="fa-solid fa-check-double" />
+                                      </span>
+                                      {feature.label}
+                                    </div>
+                                  )
+                              );
+                            })()}
                           </div>
                         </div>
                       ) : (
-                        <span>Loading additional car features...</span>
+                        <span>Loading additional features...</span>
                       )}
                     </div>
+
                     <div className="review-sec listing-review border">
                       <div className="review-header">
                         <h4>
@@ -986,30 +988,30 @@ const listingDetails = () => {
 
                                 return (
                                   <div key={feature.id}>
-                                  <div className="feature-item my-1 d-flex align-items-center justify-content-start">
-                                    <input
-                                      type="checkbox"
-                                      id={`feature-${feature.id}`}
-                                      checked={isChecked}
-                                      className="mx-2"
-                                      onChange={(e) => {
-                                        const isSelected = e.target.checked;
-                                        setSelectedFeatures((prev) => {
-                                          if (isSelected) {
-                                            return [...prev, feature.featureid];
-                                          } else {
-                                            return prev.filter((id) => id !== feature.featureid);
-                                          }
-                                        });
-                                      }}
-                                    />
-                                    <label className="d-flex w-100 align-items-center justify-content-between" htmlFor={`feature-${feature.id}`}>
-                                      <span className="font-semibold">{feature.featureName}</span> 
-                                      <span className="font-mono bg-dark text-light p-1 rounded">₹ {feature.price}</span> 
-                                    </label>
-                                    
-                                  </div>
-                                  <hr/>
+                                    <div className="feature-item my-1 d-flex align-items-center justify-content-start">
+                                      <input
+                                        type="checkbox"
+                                        id={`feature-${feature.id}`}
+                                        checked={isChecked}
+                                        className="mx-2"
+                                        onChange={(e) => {
+                                          const isSelected = e.target.checked;
+                                          setSelectedFeatures((prev) => {
+                                            if (isSelected) {
+                                              return [...prev, feature.featureid];
+                                            } else {
+                                              return prev.filter((id) => id !== feature.featureid);
+                                            }
+                                          });
+                                        }}
+                                      />
+                                      <label className="d-flex w-100 align-items-center justify-content-between" htmlFor={`feature-${feature.id}`}>
+                                        <span className="font-semibold">{feature.featureName}</span>
+                                        <span className="font-mono bg-dark text-light p-1 rounded">₹ {feature.price}</span>
+                                      </label>
+
+                                    </div>
+                                    <hr />
                                   </div>
                                 );
                               })}
@@ -1271,7 +1273,7 @@ const listingDetails = () => {
                 )}
               </Modal.Body>
               <Modal.Footer className="custom-modal-footer d-flex flex-column align-items-center justify-content-center">
-                
+
                 <div className="d-flex align-items-center justify-content-start">
                   <input
                     type="checkbox"
@@ -1367,28 +1369,28 @@ const listingDetails = () => {
 
 
       {isNotification && (
-          <div className="container-fluid alert error-login-message mt-1" role="alert" style={{zIndex:'1200'}}>
-            <div
-              className="p-2 location-alert notification-details shadow items-center leading-none rounded-full flex lg:inline-flex"
-              role="alert"
-            >
-              <span className="info-here">
-                Info
-              </span>
-              <span className="font-semibold mr-2 text-left flex-auto d-flex align-items-center justify-content-center text-sm flex-wrap">
-                <div>{notificationMessage}</div>
-                <Link to={routes.settings}>
+        <div className="container-fluid alert error-login-message mt-1" role="alert" style={{ zIndex: '1200' }}>
+          <div
+            className="p-2 location-alert notification-details shadow items-center leading-none rounded-full flex lg:inline-flex"
+            role="alert"
+          >
+            <span className="info-here">
+              Info
+            </span>
+            <span className="font-semibold mr-2 text-left flex-auto d-flex align-items-center justify-content-center text-sm flex-wrap">
+              <div>{notificationMessage}</div>
+              <Link to={routes.settings}>
                 <div className="d-flex align-items-center justify-content-center text-sm flex-wrap text-white text-decoration-underline mx-2">
-                  <span>Go to Settings</span> 
+                  <span>Go to Settings</span>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="arrow-icon">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-              </svg>
-              </div>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                  </svg>
+                </div>
               </Link>
-              </span> 
-            </div>
+            </span>
           </div>
-        )}
+        </div>
+      )}
     </div>
   );
 };

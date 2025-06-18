@@ -14,9 +14,10 @@ export const performance = async (carId) => {
                 'token': token
             },
             body: JSON.stringify({
-               carId: carId
+               vehicleid: carId
             }),
         });
+        console.log("API URL:", serverApiUrl + apiUrl);
          if (!response.ok) {
             throw new Error(`API Error: ${response.status}`);
         }

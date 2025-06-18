@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { all_routes } from "../../router/all_routes";
 import DashboardMenu from "../dashboardmenu";
-import AddNewCar from "../../../core/data/modals/addNewCar";
+import AddNewCar from "../../../core/data/modals/addNewVehicle";
 // import AddNewCarAdditional from "../../../core/data/modals/addNewCarAdditional";
 import dayjs from "dayjs";
 import { setSelectedHostCarId, fetchHostProfile } from "../../redux/action";
@@ -12,10 +12,11 @@ import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
 import { getAllCarBrands } from "../../api/Cars";
 interface Car {
-  carid: string;
-  carmodel: string;
+  vehicleid: string;
+  vehicletype: string;
+  vehicleModel: string;
   type: string;
-  rating: number | null;
+  rating: any | null;
   brand: string;
   transmission: string;
   mileage: number | null;
@@ -24,11 +25,11 @@ interface Car {
   Registrationyear: string;
   seats: number;
   updatedAt: string;
-  color : string;
+  color: string;
 }
 
 interface Profile {
-  cars: Car[];
+  vehicle: Car[];
 }
 
 interface RootState {
@@ -70,7 +71,7 @@ const HostListing = () => {
   }, [dispatch, navigate]);
 
   const handleCarClick = (carId: any, carModel: any, carDetails: Car) => {
-    if (profile && profile.cars && carId) {
+    if (profile && profile.vehicle && carId) {
       if (carId) {
         dispatch(setSelectedHostCarId(carId, carModel, carDetails));
 
@@ -124,7 +125,7 @@ const HostListing = () => {
           ) : (
             <div>
               <Helmet>
-                <title>All Cars | Spintrip Car Rentals</title>
+                <title>All Vehicles | Spintrip Car Rentals</title>
                 <meta
                   name="description"
                   content="Manage all your car listings on Spintrip Car Rentals. View and update your car details, availability, and pricing to attract more renters in Bangalore."
@@ -139,7 +140,7 @@ const HostListing = () => {
                 <div className="container">
                   <div className="row align-items-center text-center">
                     <div className="col-md-12 col-12">
-                      <h2 className="breadcrumb-title">All Cars</h2>
+                      <h2 className="breadcrumb-title">All Vehicles</h2>
                       <nav aria-label="breadcrumb" className="page-breadcrumb">
                         <ol className="breadcrumb">
                           <li className="breadcrumb-item">
@@ -149,7 +150,7 @@ const HostListing = () => {
                             className="breadcrumb-item active"
                             aria-current="page"
                           >
-                            All Cars
+                            All Vehicles
                           </li>
                         </ol>
                       </nav>
@@ -166,7 +167,7 @@ const HostListing = () => {
                 <div className="container">
                   {/* Content Header */}
                   <div className="content-header">
-                    <h4>All Cars</h4>
+                    <h4>All Vehicles</h4>
                   </div>
                   {/* /Content Header */}
                   <div className="row">
@@ -176,21 +177,21 @@ const HostListing = () => {
                         className="btn btn-dark add-car-button"
                         onClick={() => setShowModal(true)}
                       >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1.5}
-                            stroke="currentColor"
-                            className="plus-svg"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                            />
-                          </svg>
-                          <span className="mx-2">Add Car</span>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="plus-svg"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                          />
+                        </svg>
+                        <span className="mx-2">Add Vehicles</span>
                       </Link>
                     </div>
                   </div>
@@ -200,15 +201,15 @@ const HostListing = () => {
                     <div className="col-md-12">
                       <div className="wishlist-wrap">
                         {/* Map host cars on `listview-car` */}
-                        {profile?.cars?.length === 0 ? (
-                          <h2>No cars</h2>
+                        {profile?.vehicle?.length === 0 ? (
+                          <h2>No Vehicles</h2>
                         ) : (
-                          profile?.cars?.map((car, index) => (
+                          profile?.vehicle?.map((car, index) => (
                             <div
                               className="listview-car cursor-pointer"
                               key={index}
                               onClick={() =>
-                                handleCarClick(car.carid, car.carmodel, car)
+                                handleCarClick(car.vehicleid, car.vehicleModel, car)
                               }
                             >
                               <div className="card host-car-listing-card">
@@ -222,43 +223,44 @@ const HostListing = () => {
                                               #{index + 1}
                                             </span> */}
                                             <div className=" d-flex align-items-center justify-content-start">
-                                                {getBrandLogo(car.brand) && (
-                                                  <img
-                                                    className="car-brand-logo"
-                                                    src={getBrandLogo(car.brand)}
-                                                    alt={`${car.brand} logo`}
-                                                  />
-                                                )}
-                                                
-                                                
-                                              </div>
-                                            <h5 className="mx-3 text-gray" style={{fontWeight: '700'}}>{car.carmodel || "NA"}</h5> 
-                                              <span className="mx-3 font-mono font-bold bg-website-primary p-1 text-white rounded">
-                                                {extractYear(car.Registrationyear)}
-                                              </span>
+                                              {getBrandLogo(car.brand) && (
+                                                <img
+                                                  className="car-brand-logo"
+                                                  src={getBrandLogo(car.brand)}
+                                                  alt={`${car.brand} logo`}
+                                                />
+                                              )}
+
+
+                                            </div>
+                                            <h5 className="mx-3 text-gray" style={{ fontWeight: '700' }}>{car.vehicleModel || "NA"}</h5>
+                                            <span className="mx-3 font-mono font-bold bg-website-primary p-1 text-white rounded">
+                                              {extractYear(car.Registrationyear)}
+                                            </span>
                                           </h3>
                                           <h6>
-                                            
+
                                             <span>{car.type || "NA"}</span>
                                           </h6>
                                         </div>
                                         <div className="blog-list-rate d-flex flex-column ">
                                           <div className="list-rating">
-                                            {renderStars(car.rating)}
+                                            {renderStars(car?.rating === "not provided" || car.rating == null ? 0 : car.rating)}
                                             <span>
                                               (
-                                              {car.rating === null
+                                              {car?.rating === "not provided" || car?.rating == null
                                                 ? "Not Rated Yet"
-                                                : car.rating.toFixed(2)}
+                                                : Number(car.rating).toFixed(2)}
                                               )
                                             </span>
+
                                           </div>
                                         </div>
                                       </div>
-                                      
+
                                       <div className="listing-details-group">
                                         <ul className="host-listing-list">
-                                          <li>
+                                          {/* <li>
                                             <span>
                                               <ImageWithBasePath
                                                 src="assets/img/icons/car-parts-05.svg"
@@ -280,7 +282,7 @@ const HostListing = () => {
                                               {car.mileage || 'N/A'}{" "}
                                               Km
                                             </p>
-                                          </li>
+                                          </li> */}
                                           <li>
                                             <span>
                                               <p>Chassis No.: </p>
@@ -291,7 +293,7 @@ const HostListing = () => {
                                           </li>
                                           <li>
                                             <span>
-                                              Rc No.- 
+                                              Rc No.-
                                             </span>
                                             <p>{car.Rcnumber || "NA"}</p>
                                           </li>
@@ -325,8 +327,8 @@ const HostListing = () => {
                                                 Updated At:{" "}
                                                 {car.updatedAt
                                                   ? dayjs(car.updatedAt).format(
-                                                      "DD/MM/YYYY",
-                                                    )
+                                                    "DD/MM/YYYY",
+                                                  )
                                                   : "N/A"}
                                               </h6>
                                             </div>

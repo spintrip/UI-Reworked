@@ -25,7 +25,7 @@ const authReducer = (
 
 const initialSelectedCarId = {
   carId: "",
-  carImages: {
+  vehicleImages: {
     carImage1: null,
     carImage2: null,
     carImage3: null,

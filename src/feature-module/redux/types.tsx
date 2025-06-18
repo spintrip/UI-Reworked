@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 export interface HostBooking {
   bookingId: string;
   totalHostAmount: number;
-  carModel: string;
+  vehicleModel: string;
   startTripDate: string;
   startTripTime: string;
   endTripDate: string;
@@ -21,7 +21,7 @@ export interface HostBooking {
   longitude: number;
   cancelDate: string | null;
   cancelReason: string | null;
-  carId: string;
+  vehicleid: string;
 }
 
 export interface HostBookingInfoState {

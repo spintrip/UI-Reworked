@@ -78,7 +78,7 @@ export const userBooking = async () => {
 
 export const tripStart = async (bookingId) => {
   const token = localStorage.getItem('authToken');
-  var apiUrl = 'users/Trip-Started'
+  var apiUrl = 'host/Trip-Started'
 
   try {
     if (!token) {
@@ -138,7 +138,7 @@ export const cancelBooking = async (bookingId) => {
 
 export const bookingCompleted = async (bookingId) => {
   const token = localStorage.getItem('authToken');
-  var apiUrl = 'users/booking-completed'
+  var apiUrl = 'host/booking-completed'
 
   try {
     if (!token) {

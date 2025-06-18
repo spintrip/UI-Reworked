@@ -19,6 +19,8 @@ import ImageWithBasePath1 from "../../core/data/img/ImageWithBasePath1";
 import useScrollToTop from "../../hooks/useScrollToTop";
 import { getHostProfile } from "../api/Profile";
 import { Helmet } from "react-helmet";
+import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
+import { bookingCompleted, tripStart } from "../api/Booking";
 
 const HostBookings = () => {
   useScrollToTop;
@@ -40,6 +42,7 @@ const HostBookings = () => {
   const [showCancelledModal, setShowCancelledModal] = useState(false);
   const [showStatus5Modal, setShowStatus5Modal] = useState(false);
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+  const [showRideStartedModal, setShowRideStartedModal] = useState(false);
   const [cancelDate, setCancelDate] = useState("");
   const [sortOrder, setSortOrder] = useState<SortOrder>("relevance");
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
@@ -51,7 +54,7 @@ const HostBookings = () => {
   useEffect(() => {
     const total = filteredBookings().length;
     setTotalBookings(total);
-  
+
   }, [dispatch, hostBookings]);
 
   const fetchStatus = useCallback(async () => {
@@ -128,7 +131,7 @@ const HostBookings = () => {
     // Apply search filter
     if (searchInput) {
       bookingsCopy = bookingsCopy.filter((booking) =>
-        booking.carModel.toLowerCase().includes(searchInput.toLowerCase()),
+        booking.vehicleModel.toLowerCase().includes(searchInput.toLowerCase()),
       );
     }
     return bookingsCopy;
@@ -172,25 +175,25 @@ const HostBookings = () => {
     }
   };
 
-  const carModel = (res: {
-    carModel:
-      | string
-      | number
-      | boolean
-      | React.ReactElement<any, string | React.JSXElementConstructor<any>>
-      | Iterable<React.ReactNode>
-      | React.ReactPortal
-      | null
-      | undefined;
+  const vehicleModel = (res: {
+    vehicleModel:
+    | string
+    | number
+    | boolean
+    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+    | Iterable<React.ReactNode>
+    | React.ReactPortal
+    | null
+    | undefined;
     deliveryStatus:
-      | string
-      | number
-      | boolean
-      | React.ReactElement<any, string | React.JSXElementConstructor<any>>
-      | Iterable<React.ReactNode>
-      | React.ReactPortal
-      | null
-      | undefined;
+    | string
+    | number
+    | boolean
+    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+    | Iterable<React.ReactNode>
+    | React.ReactPortal
+    | null
+    | undefined;
   }) => {
     return (
       <div className="table-avatar">
@@ -202,7 +205,7 @@ const HostBookings = () => {
           />
         </Link> */}
         <div className="table-head-name flex-grow-1">
-          <Link to="">{res.carModel}</Link>
+          <Link to="">{res.vehicleModel}</Link>
           <p>{res.deliveryStatus}</p>
         </div>
       </div>
@@ -248,6 +251,33 @@ const HostBookings = () => {
       </p>
     );
   };
+  const handleStartRide = async () => {
+    if (!selectedBooking) {
+      console.error("No booking selected");
+      return;
+    }
+    try {
+      await tripStart(selectedBooking.bookingId);
+      await fetchUpdatedBookings();
+      setSelectedBooking(null);
+    } catch (error) {
+      console.error("Error starting trip:", error);
+    }
+  };
+
+    const handleCompletedRide = async () => {
+      if (!selectedBooking) {
+        console.error("No booking selected");
+        return;
+      }
+      try {
+        await bookingCompleted(selectedBooking.bookingId);
+        setShowInProgressModal(false);
+        await fetchUpdatedBookings();
+      } catch (error) {
+        console.error("Error completing trip:", error);
+      }
+    };
 
   const dropoff = (res: any) => {
     return (
@@ -321,8 +351,7 @@ const HostBookings = () => {
     }
     return (
       <span
-        className={`${
-          res.status == 1
+        className={`${res.status == 1
             ? "badge badge-light-secondary"
             : res.status == 2
               ? "badge badge-light-warning"
@@ -333,7 +362,7 @@ const HostBookings = () => {
                   : res.status == 5
                     ? "badge badge-light-purple"
                     : ""
-        }`}
+          }`}
       >
         {statusText}
       </span>
@@ -441,7 +470,7 @@ const HostBookings = () => {
                                   All Bookings
                                 </Link>
                               </li>
-                              <li className="mt-2">
+                              {/* <li className="mt-2">
                                 <Link
                                   className={
                                     activeTab === "requested" ? "active" : ""
@@ -451,7 +480,7 @@ const HostBookings = () => {
                                 >
                                   Requested
                                 </Link>
-                              </li>
+                              </li> */}
                               <li className="mt-2">
                                 <Link
                                   className={
@@ -584,8 +613,8 @@ const HostBookings = () => {
                           ></Column>
                           <Column
                             field="carName"
-                            header="Car Name"
-                            body={carModel}
+                            header="Vehicle Model"
+                            body={vehicleModel}
                           ></Column>
                           <Column
                             field="deliveryStatus"
@@ -613,7 +642,7 @@ const HostBookings = () => {
                         <Alert variant="danger" className="mt-4">
                           {errorMessage}
                         </Alert>
-                      )} 
+                      )}
                     </div>
                   </div>
                 </div>
@@ -625,7 +654,7 @@ const HostBookings = () => {
 
           {/* Upcoming Modal */}
           <Modal
-          className="mt-[10vh] pb-[10vh]"
+            className="mt-[10vh] pb-[10vh]"
             show={showUpcomingModal}
             onHide={() => {
               setShowUpcomingModal(false);
@@ -652,7 +681,7 @@ const HostBookings = () => {
                       />
                     </div>
                     <div className="book-info">
-                      <h6>{selectedBooking["carModel"]}</h6>
+                      <h6>{selectedBooking["vehicleModel"]}</h6>
                       <p>
                         Location :{" "}
                         <LocationDisplay
@@ -664,7 +693,7 @@ const HostBookings = () => {
                   </div>
                   <div className="book-amount">
                     <p>Total Amount</p>
-                    <h6 className="font-mono text-black" style={{fontWeight: '700'}}>
+                    <h6 className="font-mono text-black" style={{ fontWeight: '700' }}>
                       Rs. {selectedBooking["amount"]}{" "}
                       <Link to="">
                         <i className="feather-alert-circle" />
@@ -726,6 +755,21 @@ const HostBookings = () => {
               >
                 Chat
               </Button>
+              <div className="d-flex align-items-center justify-content-center flex-wrap">
+                {selectedBooking?.status == 1 && (
+                  <Button
+                    className="bg-primary border m-2 d-flex align-items-center justify-content-center start-ride-button"
+                    onClick={async () => {
+                      await handleStartRide();
+                      setShowUpcomingModal(false);
+                      setTimeout(() => setShowRideStartedModal(true), 500);
+                    }}
+                  >
+                    <ImageWithBasePath className="thunder-icon" src="assets/img/thunder.png" alt="thunder" />
+                    <span className="fw-bold">Start Ride</span>
+                  </Button>
+                )}
+              </div>
             </Modal.Footer>
           </Modal>
 
@@ -761,7 +805,7 @@ const HostBookings = () => {
                       />
                     </div>
                     <div className="book-info">
-                      <h6>{selectedBooking["carModel"]}</h6>
+                      <h6>{selectedBooking["vehicleModel"]}</h6>
                       <p>
                         Location :
                         <LocationDisplay
@@ -835,6 +879,19 @@ const HostBookings = () => {
               >
                 Chat
               </Button>
+              <div className="d-flex align-items-center justify-content-center flex-wrap">
+                {selectedBooking?.status == 2 && (
+                  <Button
+                  variant="primary"
+                  onClick={async () => {
+                    await handleCompletedRide();
+                    setShowInProgressModal(false);
+                    } }
+                >
+                  Complete Booking
+                </Button>
+                )}
+              </div>
             </Modal.Footer>
           </Modal>
 
@@ -866,7 +923,7 @@ const HostBookings = () => {
                       />
                     </div>
                     <div className="book-info">
-                      <h6>{selectedBooking["carModel"]}</h6>
+                      <h6>{selectedBooking["vehicleModel"]}</h6>
                       <p>
                         Location :{" "}
                         <LocationDisplay
@@ -941,7 +998,7 @@ const HostBookings = () => {
                   setShowFeedbackModal(true);
                   setShowCompletedModal(false);
                 }}
-                
+
               >
                 <span>Give feedback</span>
                 <svg
@@ -1043,7 +1100,7 @@ const HostBookings = () => {
                       />
                     </div>
                     <div className="book-info">
-                      <h6>{selectedBooking["carModel"]}</h6>
+                      <h6>{selectedBooking["vehicleModel"]}</h6>
                       <p>
                         Location :{" "}
                         <LocationDisplay
@@ -1079,7 +1136,7 @@ const HostBookings = () => {
                         <div className="booking-view">
                           <h6>Status</h6>
                           {status(selectedBooking)}
-                          
+
                         </div>
                       </div>
                       <div className="col-lg-4 col-md-6">
@@ -1109,7 +1166,7 @@ const HostBookings = () => {
                       <div className="col-lg-4 col-md-6">
                         <div className="booking-view">
                           <h6>Cancel Date</h6>
-                          
+
                           <h6>{cancelDate}</h6>
                         </div>
                       </div>
@@ -1141,7 +1198,7 @@ const HostBookings = () => {
             </Modal.Header>
             {selectedBooking && (
               <Modal.Body className="modal-body">
-               {errorMessage && (
+                {errorMessage && (
                   <Alert variant="danger" className="mb-4">
                     {errorMessage}
                   </Alert>
@@ -1159,7 +1216,7 @@ const HostBookings = () => {
                       />
                     </div>
                     <div className="book-info">
-                      <h6>{selectedBooking["carModel"]}</h6>
+                      <h6>{selectedBooking["vehicleModel"]}</h6>
                       <p>
                         Location :{" "}
                         <LocationDisplay
@@ -1171,8 +1228,8 @@ const HostBookings = () => {
                   </div>
                   <div className="book-amount">
                     <p>Total Amount</p>
-                    <h6 className="font-mono text-2xl text-black" style={{fontWeight: '700'}}>
-                    ₹{selectedBooking["amount"]}{" "}
+                    <h6 className="font-mono text-2xl text-black" style={{ fontWeight: '700' }}>
+                      ₹{selectedBooking["amount"]}{" "}
                       <Link to="">
                         <i className="feather-alert-circle" />
                       </Link>
@@ -1242,18 +1299,19 @@ const HostBookings = () => {
             )}
             <Modal.Footer>
               <div className="w-100 d-flex  align-items-center justify-content-center">
-              <input
-                    type="checkbox"
-                    id="termsCheckbox"
-                    checked={isChecked}
-                    className="mr-2"
-                    onChange={(e) => setIsChecked(e.target.checked)}
-                  />
-                  <label htmlFor="termsCheckbox" className="mx-2 d-flex flex-wrap align-items-center justify-content-start">
-                    I hereby have read the{' '}
-                    <Link className="p-1 bg-light mx-1 text-danger rounded" to={routes.termsconditions}>terms and conditions</Link> for lending my ride
-                  </label>
+                <input
+                  type="checkbox"
+                  id="termsCheckbox"
+                  checked={isChecked}
+                  className="mr-2"
+                  onChange={(e) => setIsChecked(e.target.checked)}
+                />
+                <label htmlFor="termsCheckbox" className="mx-2 d-flex flex-wrap align-items-center justify-content-start">
+                  I hereby have read the{' '}
+                  <Link className="p-1 bg-light mx-1 text-danger rounded" to={routes.termsconditions}>terms and conditions</Link> for lending my ride
+                </label>
               </div>
+
               <div className="d-flex flex-wrap pl-5 pr-1 mb-3 w-full align-items-center justify-content-center justify-content-md-between">
                 <div>
                   <Button

@@ -20,6 +20,9 @@ const HostSettings: React.FC = () => {
     phone: "",
     address: "",
     aadharNumber: "",
+    businessName: "",
+    GSTnumber: "",
+    PANnumber: "",
   });
   const [loading, setLoading] = useState(false); // Add loading state
   const [success, setSuccess] = useState(false); // Add success state
@@ -57,6 +60,9 @@ const HostSettings: React.FC = () => {
           phone: profile.phone || "",
           address: profile.address || "",
           aadharNumber: profile.aadharNumber || "",
+          businessName: profile.businessName || "",
+          GSTnumber: profile.GSTnumber || "",
+          PANnumber: profile.PANnumber || "",
         });
         setProfileUpdatedAt(hostDetails); // Set profile updated data
       } else {
@@ -84,6 +90,10 @@ const HostSettings: React.FC = () => {
         aadharId: profileData.aadharNumber,
         email: profileData.email,
         address: profileData.address,
+        businessName: profileData.businessName,
+        GSTnumber: profileData.GSTnumber,
+        PANnumber: profileData.PANnumber
+
       };
       const response = await putHostUpdateProfile(updateData);
       if (response) {
@@ -111,57 +121,57 @@ const HostSettings: React.FC = () => {
           content="Spintrip Car Rentals host settings page, DL Verification, photo verification, car rental listings inquiries, car rental messages Bangalore"
         />
       </Helmet>
-    
-    <div className="main-wrapper">
-      {/* Breadcrumb Section */}
-      <div className="breadcrumb-bar">
-        <div className="container">
-          <div className="row align-items-center text-center">
-            <div className="col-md-12 col-12">
-              <h2 className="breadcrumb-title">Host Settings</h2>
-              <nav aria-label="breadcrumb" className="page-breadcrumb">
-                <ol className="breadcrumb">
-                  <li className="breadcrumb-item">
-                    <Link to={route.hostdashboard}>Host Dashboard</Link>
-                  </li>
-                </ol>
-              </nav>
+
+      <div className="main-wrapper">
+        {/* Breadcrumb Section */}
+        <div className="breadcrumb-bar">
+          <div className="container">
+            <div className="row align-items-center text-center">
+              <div className="col-md-12 col-12">
+                <h2 className="breadcrumb-title">Host Settings</h2>
+                <nav aria-label="breadcrumb" className="page-breadcrumb">
+                  <ol className="breadcrumb">
+                    <li className="breadcrumb-item">
+                      <Link to={route.hostdashboard}>Host Dashboard</Link>
+                    </li>
+                  </ol>
+                </nav>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      {/* /Breadcrumb Section */}
-      {/* Dashboard Menu */}
-      <DashboardMenu />
-      {/* /Dashboard Menu */}
-      {/* Page Content */}
-      <div className="content">
-        <div className="container">
-          {/* Content Header */}
-          <div className="content-header content-settings-header">
-            <h4>Settings</h4>
-          </div>
-          {/* /Content Header */}
-          <div className="row">
-            {/* Settings Menu */}
-            <HostSettingsSidebar />
-            {/* /Settings Menu */}
-            {/* Settings Details */}
-            <div className="col-lg-9">
-              <div className="settings-info">
-                <div className="settings-sub-heading">
-                  <h4>Profile</h4>
-                </div>
-                <form onSubmit={handleSubmit}>
-                  {/* Basic Info */}
-                  <div className="profile-info-grid">
-                    <div className="profile-info-header">
-                      <h5>Basic Information</h5>
-                      <p>Information about user</p>
-                    </div>
-                    <div className="profile-inner">
-                      <div className="profile-info-pic">
-                        {/* <div className="profile-info-img">
+        {/* /Breadcrumb Section */}
+        {/* Dashboard Menu */}
+        <DashboardMenu />
+        {/* /Dashboard Menu */}
+        {/* Page Content */}
+        <div className="content">
+          <div className="container">
+            {/* Content Header */}
+            <div className="content-header content-settings-header">
+              <h4>Settings</h4>
+            </div>
+            {/* /Content Header */}
+            <div className="row">
+              {/* Settings Menu */}
+              <HostSettingsSidebar />
+              {/* /Settings Menu */}
+              {/* Settings Details */}
+              <div className="col-lg-9">
+                <div className="settings-info">
+                  <div className="settings-sub-heading">
+                    <h4>Profile</h4>
+                  </div>
+                  <form onSubmit={handleSubmit}>
+                    {/* Basic Info */}
+                    <div className="profile-info-grid">
+                      <div className="profile-info-header">
+                        <h5>Basic Information</h5>
+                        <p>Information about user</p>
+                      </div>
+                      <div className="profile-inner">
+                        <div className="profile-info-pic">
+                          {/* <div className="profile-info-img">
                                           <ImageWithBasePath1
                                             src={profileData.profilePic || "assets/img/profiles/avatar-02.jpg"}
                                             alt="Profile"
@@ -171,150 +181,202 @@ const HostSettings: React.FC = () => {
                                             alt="Profile image"
                                           />
                                           </div> */}
-                      </div>
-                      <div className="row">
-                        <div className="col-md-6">
-                          <div className="profile-form-group">
-                            <label>
-                              First Name <span className="text-danger">*</span>
-                            </label>
-                            <input
-                              type="text"
-                              className="form-control border"
-                              name="fullName"
-                              placeholder="Enter First Name"
-                              value={profileData.fullName}
-                              onChange={handleChange}
-                            />
-                          </div>
                         </div>
-                        <div className="col-md-6">
-                          <div className="profile-form-group">
-                            <label>
-                              Last Name <span className="text-danger">*</span>
-                            </label>
-                            <input
-                              type="text"
-                              className="form-control border"
-                              name="lastName"
-                              placeholder="Enter Last Name"
-                              value={profileData.lastName}
-                              onChange={handleChange}
-                            />
+                        <div className="row">
+                          <div className="col-md-6">
+                            <div className="profile-form-group">
+                              <label>
+                                First Name <span className="text-danger">*</span>
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control border"
+                                name="fullName"
+                                placeholder="Enter First Name"
+                                value={profileData.fullName}
+                                onChange={handleChange}
+                              />
+                            </div>
                           </div>
-                        </div>
-                        <div className="col-md-4">
-                          <div className="profile-form-group">
-                            <label>
-                              Phone Number{" "}
-                              <span className="text-danger">*</span>
-                            </label>
-                            <input
-                              type="text"
-                              className="form-control border font-mono"
-                              name="phone"
-                              placeholder="+ 91 "
-                              value={profileData.phone}
-                              onChange={handleChange}
-                              readOnly
-                            />
+                          <div className="col-md-6">
+                            <div className="profile-form-group">
+                              <label>
+                                Last Name <span className="text-danger">*</span>
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control border"
+                                name="lastName"
+                                placeholder="Enter Last Name"
+                                value={profileData.lastName}
+                                onChange={handleChange}
+                              />
+                            </div>
                           </div>
-                        </div>
-                        <div className="col-md-4">
-                          <div className="profile-form-group">
-                            <label>
-                              Email <span className="text-danger">*</span>
-                            </label>
-                            <input
-                              type="text"
-                              className="form-control border"
-                              name="email"
-                              placeholder="Enter Email"
-                              value={profileData.email}
-                              onChange={handleChange}
-                            />
+                          <div className="col-md-4">
+                            <div className="profile-form-group">
+                              <label>
+                                Phone Number{" "}
+                                <span className="text-danger">*</span>
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control border font-mono"
+                                name="phone"
+                                placeholder="+ 91 "
+                                value={profileData.phone}
+                                onChange={handleChange}
+                                readOnly
+                              />
+                            </div>
                           </div>
-                        </div>
-                        <div className="col-md-4">
-                          <div className="profile-form-group">
-                            <label>
-                              Aadhaar Number{" "}
-                              <span className="text-danger">*</span>
-                            </label>
-                            <input
-                              type="text"
-                              className="form-control border font-mono"
-                              name="aadharNumber"
-                              placeholder="Enter Aadhaar Number"
-                              value={profileData.aadharNumber}
-                              onChange={handleChange}
-                            />
+                          <div className="col-md-4">
+                            <div className="profile-form-group">
+                              <label>
+                                Email <span className="text-danger">*</span>
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control border"
+                                name="email"
+                                placeholder="Enter Email"
+                                value={profileData.email}
+                                onChange={handleChange}
+                              />
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* /Basic Info */}
-                  {/* Address Info */}
-                  <div className="profile-info-grid">
-                    <div className="profile-info-header">
-                      <h5>Address Information</h5>
-                      <p>Information about address of user</p>
-                    </div>
-                    <div className="profile-inner">
-                      <div className="row">
-                        <div className="col-md-12">
-                          <div className="profile-form-group">
-                            <label>
-                              Address <span className="text-danger">*</span>
-                            </label>
-                            <textarea
-                              className="form-control border"
-                              name="address"
-                              placeholder="Enter Address"
-                              value={profileData.address}
-                              onChange={handleChange}
-                            />
+                          <div className="col-md-4">
+                            <div className="profile-form-group">
+                              <label>
+                                Aadhaar Number{" "}
+                                <span className="text-danger">*</span>
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control border font-mono"
+                                name="aadharNumber"
+                                placeholder="Enter Aadhaar Number"
+                                value={profileData.aadharNumber}
+                                onChange={handleChange}
+                              />
+                            </div>
                           </div>
+
                         </div>
                       </div>
                     </div>
-                  </div>
-                  {/* /Address Info */}
-                  {/* Profile Submit */}
-                  <div className="profile-submit-btn">
-                    <Link to="#" className="btn btn-secondary">
-                      Cancel
-                    </Link>
-                    <button type="submit" className="btn btn-primary">
-                      {loading ? (
-                        <span
-                          className="spinner-border spinner-border-sm"
-                          role="status"
-                          aria-hidden="true"
-                        ></span>
-                      ) : (
-                        "Save Changes"
-                      )}
-                    </button>
-                  </div>
-                  {/* /Profile Submit */}
-                  {success && (
-                    <div className="alert alert-success mt-3">
-                      Profile updated successfully!
+                    {/* /Basic Info */}
+                    {/* Business & Tax Info */}
+                    <div className="profile-info-grid mt-4">
+                      <div className="profile-info-header">
+                        <h5>Business & Tax Information</h5>
+                        <p>Information about your business and tax details</p>
+                      </div>
+                      <div className="profile-inner">
+                        <div className="row">
+                          <div className="col-md-4">
+                            <div className="profile-form-group">
+                              <label>Business Name</label>
+                              <input
+                                type="text"
+                                className="form-control border"
+                                name="businessName"
+                                placeholder="Enter Business Name"
+                                value={profileData.businessName}
+                                onChange={handleChange}
+                              />
+                            </div>
+                          </div>
+                          <div className="col-md-4">
+                            <div className="profile-form-group">
+                              <label>GST Number</label>
+                              <input
+                                type="text"
+                                className="form-control border font-mono"
+                                name="GSTnumber"
+                                placeholder="Enter GST Number"
+                                value={profileData.GSTnumber}
+                                onChange={handleChange}
+                              />
+                            </div>
+                          </div>
+                          <div className="col-md-4">
+                            <div className="profile-form-group">
+                              <label>PAN Number</label>
+                              <input
+                                type="text"
+                                className="form-control border font-mono"
+                                name="PANnumber"
+                                placeholder="Enter PAN Number"
+                                value={profileData.PANnumber}
+                                onChange={handleChange}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  )}
-                </form>
+
+                    {/* Address Info */}
+                    <div className="profile-info-grid">
+                      <div className="profile-info-header">
+                        <h5>Address Information</h5>
+                        <p>Information about address of user</p>
+                      </div>
+                      <div className="profile-inner">
+                        <div className="row">
+                          <div className="col-md-12">
+                            <div className="profile-form-group">
+                              <label>
+                                Address <span className="text-danger">*</span>
+                              </label>
+                              <textarea
+                                className="form-control border"
+                                name="address"
+                                placeholder="Enter Address"
+                                value={profileData.address}
+                                onChange={handleChange}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {/* /Address Info */}
+                    {/* Profile Submit */}
+                    <div className="profile-submit-btn">
+                      <Link to="#" className="btn btn-secondary">
+                        Cancel
+                      </Link>
+                      <button type="submit" className="btn btn-primary">
+                        {loading ? (
+                          <span
+                            className="spinner-border spinner-border-sm"
+                            role="status"
+                            aria-hidden="true"
+                          ></span>
+                        ) : (
+                          "Save Changes"
+                        )}
+                      </button>
+                    </div>
+                    {/* /Profile Submit */}
+                    {success && (
+                      <div className="alert alert-success mt-3">
+                        Profile updated successfully!
+                      </div>
+                    )}
+                  </form>
+                </div>
+                {/* Profile Updated At Section */}
+
               </div>
-              {/* Profile Updated At Section */}
-              
+              {/* /Settings Details */}
             </div>
-            {/* /Settings Details */}
           </div>
         </div>
+        {/* /Page Content */}
       </div>
-      {/* /Page Content */}
-    </div>
     </div>
   );
 };
