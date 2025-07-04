@@ -100,7 +100,7 @@ const DashboardMenu = () => {
                     <span>Subscriptions</span>
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link
                     to={routes.hostpayment}
                     className={isLinkActive(routes.hostpayment) ? "active" : ""}
@@ -113,7 +113,7 @@ const DashboardMenu = () => {
                     </div>
                     <span>Payments</span>
                   </Link>
-                </li>
+                </li> */}
                 <li>
                   <Link
                     to={routes.hostsettings}

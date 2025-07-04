@@ -151,10 +151,10 @@ const HostDashboard = () => {
       setFilteredBookings(filteredBookings);
 
       const completedBookings = hostBookings.filter(
-        (booking) => booking.transactionId !== null,
+        (booking) => booking.status == 3,
       );
       const totalAmount = completedBookings.reduce(
-        (sum, booking) => sum + booking.totalHostAmount,
+        (sum, booking) => sum + booking.amount,
         0,
       );
       setTotalTransactionAmount(totalAmount);
@@ -442,10 +442,10 @@ const HostDashboard = () => {
                         </span>
                       </div>
                     </div>
-                    <Link to={route.hostpayment} className="view-link">
+                    {/* <Link to={route.hostpayment} className="view-link">
                       View all Transactions{" "}
                       <i className="feather-arrow-right" />
-                    </Link>
+                    </Link> */}
                   </div>
                 </div>
                 {/* /Widget Item */}

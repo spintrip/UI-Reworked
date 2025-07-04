@@ -13,7 +13,7 @@ const Breadcrumbs = (props: breadcrumbs) => {
     routes.hostbookings,
     routes.hostreviews,
     routes.hostmessages,
-    routes.hostpayment,
+    // routes.hostpayment,
     routes.hostsettings,
   ];
 
@@ -72,7 +72,7 @@ const Breadcrumbs = (props: breadcrumbs) => {
     location.pathname === routes.hostbookings ||
     location.pathname === routes.hostreviews ||
     location.pathname === routes.hostmessages ||
-    location.pathname === routes.hostpayment ||
+    // location.pathname === routes.hostpayment ||
     location.pathname === routes.hostsettings ||
     location.pathname === routes.messages ||
     location.pathname === routes.payment ||

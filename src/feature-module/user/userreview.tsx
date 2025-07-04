@@ -225,7 +225,7 @@ const UserReview = () => {
                       <Column body={checkbox} header={checkbox}></Column>
                       <Column
                         field="carName"
-                        header="Car Name"
+                        header="Vehicle"
                         body={carName}
                       ></Column>
                       <Column field="rentalType" header="Rental Type"></Column>

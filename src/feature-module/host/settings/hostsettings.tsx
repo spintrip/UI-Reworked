@@ -49,8 +49,8 @@ const HostSettings: React.FC = () => {
         const { profile, hostDetails, cars } = response; // Destructure the necessary fields
         dispatch(setHostCars(cars));
         dispatch(sethostProfile(profile));
-        const nameParts = profile.fullName
-          ? profile.fullName.split(" ")
+        const nameParts = profile.FullName
+          ? profile.FullName.split(" ")
           : ["", ""]; // Split fullName
         setProfileData({
           profilePic: profile.profilePic || "assets/img/profiles/avatar-02.jpg",

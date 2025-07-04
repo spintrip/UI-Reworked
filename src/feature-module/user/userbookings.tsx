@@ -790,7 +790,7 @@ const UserBookings = () => {
                           ></Column>
                           <Column
                             field="carName"
-                            header="Car Name"
+                            header="Vehicle"
                             body={vehicleModel}
                           ></Column>
                           <Column

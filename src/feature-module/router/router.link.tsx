@@ -47,7 +47,7 @@ import HostBookings from "../host/hostbookings";
 import HostCarDetails from "../host/hostListingPreview";
 import HostTicket from "../host/HostTicket";
 import DownloadApp from "../pages/downloadApp/downloadApp";
-import HostPayment from "../host/hostpayment";
+// import HostPayment from "../host/hostpayment";
 const routes = all_routes;
 
 export const publicRoutes = [
@@ -330,12 +330,12 @@ export const hostmodule = [
     element: <HostMessages />,
     route: Route,
   },
-  {
-    path: routes.hostpayment,
-    name: "payment",
-    element: <HostPayment />,
-    route: Route,
-  },
+  // {
+  //   path: routes.hostpayment,
+  //   name: "payment",
+  //   element: <HostPayment />,
+  //   route: Route,
+  // },
   {
     path: routes.hostreviews,
     name: "reviews",

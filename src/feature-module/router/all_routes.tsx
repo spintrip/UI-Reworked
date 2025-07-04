@@ -19,7 +19,7 @@ export const all_routes = {
   hostbookings: "/host/host-bookings",
   hostreviews: "/host/host-reviews",
   hostintegration: "/host/host-integration",
-  hostpayment: "/host/host-payment",
+  // hostpayment: "/host/host-payment",
   hostTicket: "/host/host-ticket",
   signup: "/authentication/register",
   login: "/authentication/login",

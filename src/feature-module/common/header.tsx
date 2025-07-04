@@ -75,13 +75,13 @@ const Header = () => {
           showSubRoute: false,
           subMenus: [],
         },
-       {
-          menuValue: "Payment",
-          routes: routes.hostpayment,
-          hasSubRoute: false,
-          showSubRoute: false,
-          subMenus: [],
-        },
+      //  {
+      //     menuValue: "Payment",
+      //     routes: routes.hostpayment,
+      //     hasSubRoute: false,
+      //     showSubRoute: false,
+      //     subMenus: [],
+      //   },
         {
           menuValue: "Profile",
           routes: routes.hostsettings,
@@ -321,9 +321,9 @@ const Header = () => {
                         <li className={location.pathname.includes(routes.hostreviews) ? "active" : ""}>
                           <Link to={routes.hostreviews}>Reviews</Link>
                         </li>
-                        <li className={location.pathname.includes(routes.hostpayment) ? "active" : ""}>
+                        {/* <li className={location.pathname.includes(routes.hostpayment) ? "active" : ""}>
                           <Link to={routes.hostpayment}>Payment</Link>
-                        </li>
+                        </li> */}
                         <li className={location.pathname.includes(routes.hostsettings) ? "active" : ""}>
                           <Link to={routes.hostsettings}>Profile</Link>
                         </li>
