@@ -248,7 +248,7 @@ const HostListing = () => {
                                             {renderStars(car?.rating === "not provided" || car.rating == null ? 0 : car.rating)}
                                             <span>
                                               (
-                                              {car?.rating === "not provided" || car?.rating == null
+                                              {car?.rating === "Not Provided" || car?.rating == null
                                                 ? "Not Rated Yet"
                                                 : Number(car.rating).toFixed(2)}
                                               )

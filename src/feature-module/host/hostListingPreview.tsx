@@ -29,6 +29,7 @@ const hostListingPreview = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [vehicleType, setVehicleType] = useState<number | undefined>();
   const [brands, setBrands] = useState<Brand[]>([]);
   // const [showModal, setShowModal] = useState(false); // State to manage modal visibility
   const token = localStorage.getItem("authToken");
@@ -75,6 +76,10 @@ const hostListingPreview = () => {
 
       if (data && data.vehicleAdditionals) {
         // Map vehicleAdditionals and additional data together
+        const fuelTypeSpec = data.booleanSpecs.find((spec: { field_name: string; }) => spec.field_name === "fuelType");
+        const transmissionSpec = data.booleanSpecs.find((spec: { field_name: string; }) => spec.field_name === "transmission");
+        setVehicleType(data.vehicleAdditionals.vehicleType);
+
         const mappedAdditionalInfo = {
           vehicleId: data.vehicleAdditionals.vehicleId,
           vehicleType: data.vehicleAdditionals.vehicleType,
@@ -85,7 +90,8 @@ const hostListingPreview = () => {
           bikeModel: data.additional?.bikeModel || null,
           carModel: data.additional?.carModel || null,
           horsePower: data.additional?.horsePower || null,
-          fuelType: data.additional?.fueltype || null,
+          fuelType: fuelTypeSpec?.value === 0 ? "Petrol" : "Diesel",
+          transmission: transmissionSpec?.value === false ? "Manual" : "Auto",
           type: data.additional?.type || null,
           brand: data.additional?.brand || null,
           variant: data.additional?.variant || null,
@@ -316,21 +322,21 @@ const hostListingPreview = () => {
                                 </div>
                               )}
                               {
-                              // additionalInfo["costperhr"] &&
-                               (
-                                <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
-                                  <div className="feature-img">
-                                    <ImageWithBasePath
-                                      src="assets/img/specification/specification-icon-1.svg"
-                                      alt="type"
-                                    />
+                                // additionalInfo["costperhr"] &&
+                                (
+                                  <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
+                                    <div className="feature-img">
+                                      <ImageWithBasePath
+                                        src="assets/img/specification/specification-icon-1.svg"
+                                        alt="type"
+                                      />
+                                    </div>
+                                    <div className="featues-info">
+                                      <span>Cost Per Hour </span>
+                                      <h6>{additionalInfo["costPerHr"]}</h6>
+                                    </div>
                                   </div>
-                                  <div className="featues-info">
-                                    <span>Cost Per Hour </span>
-                                    <h6>{additionalInfo["costperhr"]}</h6>
-                                  </div>
-                                </div>
-                              )}
+                                )}
                               {additionalInfo["brand"] && (
                                 <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
                                   <div className="feature-img">
@@ -345,35 +351,37 @@ const hostListingPreview = () => {
                                   </div>
                                 </div>
                               )}
-                              <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
-                                <div className="feature-img">
-                                  <ImageWithBasePath
-                                    src="assets/img/specification/specification-icon-3.svg"
-                                    alt="Transmission"
-                                  />
-                                </div>
-                                <div className="featues-info">
-                                  <span>Transmission </span>
-                                  <h6>{additionalInfo["transmission"] == 1 ? 'Auto' : 'Manual'}</h6>
-                                </div>
-                              </div>
-                              <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
-                                <div className="feature-img">
-                                  <ImageWithBasePath
-                                    src="assets/img/specification/specification-icon-4.svg"
-                                    alt="fuel"
-                                  />
-                                </div>
-                                <div className="featues-info">
-                                  <span>Fuel Type </span>
-                                  <h6>
-                                    {additionalInfo["fuelType"] == 1
-                                      ? "Diesel"
-                                      : "Petrol"}
-                                  </h6>
-                                </div>
-                              </div>
-                              <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
+                              {vehicleType == 2 && (
+                                <>
+                                  <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
+                                    <div className="feature-img">
+                                      <ImageWithBasePath
+                                        src="assets/img/specification/specification-icon-3.svg"
+                                        alt="Transmission"
+                                      />
+                                    </div>
+                                    <div className="featues-info">
+                                      <span>Transmission</span>
+                                      <h6>{additionalInfo["transmission"]}</h6>
+                                    </div>
+                                  </div>
+
+                                  <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
+                                    <div className="feature-img">
+                                      <ImageWithBasePath
+                                        src="assets/img/specification/specification-icon-4.svg"
+                                        alt="Fuel"
+                                      />
+                                    </div>
+                                    <div className="featues-info">
+                                      <span>Fuel Type</span>
+                                      <h6>{additionalInfo["fuelType"]}</h6>
+                                    </div>
+                                  </div>
+                                </>
+                              )}
+
+                              {/* <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
                                 <div className="feature-img">
                                   <ImageWithBasePath
                                     src="assets/img/specification/specification-icon-5.svg"
@@ -384,7 +392,7 @@ const hostListingPreview = () => {
                                   <span>Mileage </span>
                                   <h6>{additionalInfo["mileage"]}</h6>
                                 </div>
-                              </div>
+                              </div> */}
                               {/* {additionalInfo["sunroof"] && (
                                 <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
                                   <div className="feature-img">
@@ -467,7 +475,7 @@ const hostListingPreview = () => {
                                   </div>
                                 </div>
                               )} */}
-                              {additionalInfo["transmission"] && (
+                              {/* {additionalInfo["transmission"] && (
                                 <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
                                   <div className="feature-img">
                                     <ImageWithBasePath
@@ -480,16 +488,16 @@ const hostListingPreview = () => {
                                     <h6>{additionalInfo["transmission"]}</h6>
                                   </div>
                                 </div>
-                              )}
+                              )} */}
                               <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
                                 <div className="feature-img">
                                   <ImageWithBasePath
                                     src="assets/img/specification/specification-icon-12.svg"
-                                    alt="Engine"
+                                    alt="Engine (BHP)"
                                   />
                                 </div>
                                 <div className="featues-info">
-                                  <span>Engine (Hp) </span>
+                                  <span>Engine </span>
                                   <h6 className="font-mono">
                                     {additionalInfo["horsePower"]}
                                   </h6>
@@ -509,7 +517,7 @@ const hostListingPreview = () => {
                       {additionalInfo && additionalInfo.booleanSpecs && additionalInfo.booleanSpecs.length > 0 ? (
                         <div className="listing-description">
                           <div className="features-grid">
-                            {additionalInfo.booleanSpecs.map((spec) => (
+                            {additionalInfo.booleanSpecs.filter((spec: { field_name: string; }) => spec.field_name !== "transmission" && spec.field_name !== "fuelType").map((spec: { field_name: React.Key | null | undefined; value: string | boolean; title: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; }) => (
                               <div className="feature-item" key={spec.field_name}>
                                 <span>
                                   {spec.value === true ? (

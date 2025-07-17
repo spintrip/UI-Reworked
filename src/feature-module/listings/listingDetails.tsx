@@ -378,7 +378,7 @@ const listingDetails = () => {
           endTime: checkAvailabilityReturnTime,
         })
       );
-      setAvailabilityMessage(`Car is available.`);
+      setAvailabilityMessage(`Vehicle is available.`);
       setShowCheckAvailabilityModal(true); // Show the availability modal
       setError(""); // Clear error if the request is successful
     } catch (err) {
@@ -568,7 +568,7 @@ const listingDetails = () => {
                             </div>
 
                             <span className="car-name">
-                              {carResponse.Additional.carmodel || carResponse.Additional.bikemodel}
+                              {carResponse.Additional.brand.charAt(0).toUpperCase() + carResponse.Additional.brand.slice(1).toLowerCase()}
                             </span>
                             {additionalInfo ? (
                               <span className=" font-mono font-bold bg-website-primary px-2 text-white rounded">
@@ -697,13 +697,13 @@ const listingDetails = () => {
                                     <span>Fuel Type </span>
                                     <h6>
                                       {" "}
-                                      {carResponse.Additional.fuelType
+                                      {carResponse.Additional.FuelType
                                         ? "Diesel"
                                         : "Petrol"}
                                     </h6>
                                   </div>
                                 </div>
-                                <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
+                                {/* <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
                                   <div className="feature-img">
                                     <ImageWithBasePath
                                       src="assets/img/specification/specification-icon-5.svg"
@@ -718,7 +718,7 @@ const listingDetails = () => {
                                         : carResponse.Additional.mileage} kmpl
                                     </h6>
                                   </div>
-                                </div>
+                                </div> */}
                                 {additionalInfo.sunroof && (
                                   <div className="featureslist d-flex align-items-center col-lg-3 col-md-4">
                                     <div className="feature-img">

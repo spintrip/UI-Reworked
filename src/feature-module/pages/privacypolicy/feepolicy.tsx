@@ -16,80 +16,116 @@ const FeePolicy = () => {
           <div className="row">
             <div className="col-lg-12">
               <div className="terms-policy">
-                <h1 className="text-black mb-5" style={{fontSize:'32px', fontWeight:'700'}}>
-                  Spintrip Car Rentals Pvt Ltd Fee Policy
+                <h1 className="text-black mb-5" style={{ fontSize: '32px', fontWeight: '700' }}>
+                  Spintrip Dealer Services Fee Policy
                 </h1>
-
-                <h2 className="mb-4" data-aos="fade-down">
-                  Guest Fee Policy
-                </h2>
-
-                <h3 className="mb-3" data-aos="fade-down">
-                  Driver's License Submission
-                </h3>
-                <p data-aos="fade-down">
-                  For each booking made through the Spintrip Platform, the Guest shall be required to submit their driver’s license hardcopy to the Host before starting the trip. The driver’s license must be collected back by the Guest while returning the car.
+  
+                <h2 className="mb-4">Introduction</h2>
+                <p>
+                  Spintrip Dealer Services is a subscription-based software platform enabling automotive rental
+                  dealers (“Dealers”) to manage their bookings and connect with customers (“Customers”). Spintrip
+                  provides a robust marketplace for Dealers to boost their business while maintaining complete
+                  financial independence over booking revenue. Spintrip does not charge a commission or retain any
+                  share of the booking amount; 100% of the payment received for rentals is transferred directly to the
+                  Dealer.
                 </p>
-
-                <h3 className="mb-3" data-aos="fade-down">
-                  Lease Rental Fee
-                </h3>
-                <p data-aos="fade-down">
-                  For each booking made through the Spintrip Platform, the Guest shall have to pay Lease Rental in advance, which includes:
+                <p>This document outlines the subscription fees and policies applicable to Dealers for using Spintrip’s services.</p>
+  
+                <hr />
+  
+                <h2 className="mb-4">Dealer Subscription Fees</h2>
+                <p>Spintrip offers a flexible and transparent subscription model for Dealers based on vehicle type. The subscription fees are as follows:</p>
+                <ul>
+                  <li><strong>Cars</strong>: ₹256 per vehicle per month.</li>
+                  <li><strong>Bikes</strong>: ₹129 per vehicle per month.</li>
+                  <li><strong>Heavy Vehicles</strong> (e.g., Tempo Travellers, 12-seater vehicles): ₹333 per vehicle per month.</li>
+                </ul>
+  
+                <h3 className="mb-3">Optional Security Device Subscription</h3>
+                <p>
+                  Dealers can enhance vehicle security by opting for Spintrip’s security devices, which include features
+                  like GPS tracking and driver behavior monitoring. The subscription fee for security devices is ₹188 per
+                  device per month.
                 </p>
-                <ul data-aos="fade-down">
-                  <li>Lease Rental calculated based on the start and end time of the trip. The Lease Rental fee per hour is dynamically driven and changes based on the demand, lead time to booking start, location of the booking, vehicle chosen, and the duration of the booking.</li>
+  
+                <hr />
+  
+                <h2 className="mb-4">Revenue Model</h2>
+                <ul>
+                  <li><strong>100% Dealer Earnings</strong>: Spintrip does not retain any share of the booking amount. All payments made by Customers for vehicle bookings will be directly transferred to the Dealer’s account.</li>
+                  <li><strong>Payment Options for Customers</strong>:
+                    <ul>
+                      <li><strong>Online Payment</strong>: Customers can pay electronically through the Spintrip platform.</li>
+                      <li><strong>Cash Payment</strong>: Dealers may allow Customers to pay in cash directly at the time of vehicle handover.</li>
+                    </ul>
+                  </li>
                 </ul>
-
-                <h3 className="mb-3" data-aos="fade-down">
-                  Refunds, Charges, and Payments
-                </h3>
-                <ul data-aos="fade-down">
-                  <li>All refunds shall be initiated to the original payment account/mode. Refund initiation shall be processed immediately after the cancellation request is received. However, all such refunds may take 5-15 days to reflect in the Guest’s accounts.</li>
-                  <li>Payments owed by Guests under this Fee Policy or other applicable policies must be paid electronically within 24 hours of the booking end time, as per Spintrip’s payment instructions.</li>
-                  <li>Guests may be charged a processing fee for a declined credit or debit card payment.</li>
-                  <li>In the event the Guest defaults on any payments, Spintrip is entitled to charge reminder fees and default interest in accordance with the provisions of the law. In addition, Spintrip may designate third parties to collect amounts owed by a Guest.</li>
-                  <li>Spintrip reserves the right to prohibit a Guest from making a subsequent booking on the Platform until all outstanding fees in the Guest's account have been paid in full.</li>
-                  <li>The Guest should not make any direct payments to the Host or to any Spintrip executive in any mode except for any settlements related to fuel or Fastag.</li>
+                <p>Spintrip solely provides the software infrastructure to facilitate these transactions and does not act as a payment intermediary.</p>
+  
+                <hr />
+  
+                <h2 className="mb-4">Subscription Payment Terms</h2>
+                <ul>
+                  <li><strong>Billing Cycle</strong>: Subscription fees will be charged monthly in advance.</li>
+                  <li><strong>Payment Due Date</strong>: Payments for subscriptions must be made within the first five days of the billing cycle to avoid service disruption.</li>
+                  <li><strong>Payment Modes</strong>: Dealers can pay subscription fees via bank transfer, UPI, credit/debit card, or any other mode specified on the Platform.</li>
                 </ul>
-
-                <h3 className="mb-3" data-aos="fade-down">
-                  Fees and Penalties
-                </h3>
-                <p data-aos="fade-down">
-                  Here is a comprehensive list of fees and penalties for certain scenarios after you have created your booking/reservation:
+  
+                <hr />
+  
+                <h2 className="mb-4">Subscription Policies</h2>
+                <h3 className="mb-3">Adding or Removing Vehicles</h3>
+                <p>Dealers can add or remove vehicles from their subscription at any time. Fees will be adjusted on a prorated basis for the current billing cycle.</p>
+  
+                <h3 className="mb-3">Cancellation of Subscription</h3>
+                <p>
+                  Dealers can cancel their subscription by providing 7 days’ notice. No refunds will be issued for partially used billing cycles.
+                  Upon cancellation, Dealers must return any security devices provided by Spintrip.
                 </p>
-                <ul data-aos="fade-down">
-                  <li><strong>Cancellation by Guest:</strong> Details of the cancellation fees based on timing before the booking start time.</li>
-                  <li><strong>Reschedule before booking start time:</strong> No modification allowed between 0 - 2 hours before booking start time.</li>
-                  <li><strong>Extension:</strong> Extensions can be made before or after booking ends with normal tariff rates applying.</li>
-                  <li><strong>Late Return:</strong> Late returns are charged up to 1.5-2x the hourly Lease Rental fee per hour.</li>
-                  <li><strong>Minimum Duration:</strong> The minimum booking duration is 8 hours.</li>
-                  <li><strong>Discounts:</strong> Discounts apply to trips of 8 hours or more and do not apply on blackout days.</li>
-                  <li><strong>Fuel Policy:</strong> Guests are responsible for fuel discrepancies based on the actual cost per litre.</li>
-                  <li><strong>Breakdown of Vehicle:</strong> Guest liable for breakdowns due to negligence.</li>
-                  <li><strong>Returning the Vehicle to the Wrong Location:</strong> A flat fee of INR 10,000 applies for incorrect returns.</li>
-                  <li><strong>No Show:</strong> Bookings will be canceled if no show within 4 hours of start time, with no refunds.</li>
-                  <li><strong>Over Speeding:</strong> Fees and potential expulsion for exceeding speed limits.</li>
-                  <li><strong>Smoking:</strong> Charges apply for smoking inside the vehicle.</li>
-                  <li><strong>Wrong Fuelling:</strong> Guest liable for full repair costs.</li>
-                  <li><strong>Loss of Keys and Documents:</strong> Charges apply for lost keys and documents.</li>
-                  <li><strong>Vehicle Damage:</strong> Guest liable for damages as per selected Damage Protection Plan.</li>
-                  <li><strong>Cleaning Required:</strong> Charges apply for returning the vehicle in a dirty condition.</li>
-                  <li><strong>Fastags/Tolls:</strong> Guest responsible for all tolls incurred during booking.</li>
+  
+                <hr />
+  
+                <h2 className="mb-4">Optional Security Device Policies</h2>
+                <ul>
+                  <li><strong>Installation and Maintenance</strong>:
+                    <ul>
+                      <li>Dealers opting for security devices must allow Spintrip representatives to install and maintain the devices.</li>
+                      <li>Devices remain the property of Spintrip and must not be tampered with or removed.</li>
+                    </ul>
+                  </li>
+                  <li><strong>Device Recovery</strong>: Upon subscription cancellation or vehicle removal from the platform, Dealers must return the devices. Failure to do so will result in a penalty equivalent to the device’s market value.</li>
+                  <li><strong>Liability</strong>: Dealers are responsible for any damage or loss of devices during the subscription period.</li>
                 </ul>
-
-                <h3 className="mb-3" data-aos="fade-down">
-                  Additional Conditions
-                </h3>
-                <ul data-aos="fade-down">
-                  <li>All rates include GST where applicable.</li>
-                  <li>Spintrip is not responsible for any property left in the vehicle after the booking ends.</li>
-                  <li>KYC - Guest’s profile should be verified before the booking start.</li>
+  
+                <hr />
+  
+                <h2 className="mb-4">Customer Payment and Revenue Policies</h2>
+                <ul>
+                  <li><strong>Online Payments</strong>: Payments made by Customers through the Platform will be transferred directly to the Dealer’s account. Spintrip does not charge a transaction fee or retain any percentage of the booking revenue.</li>
+                  <li><strong>Cash Payments</strong>: Dealers can allow Customers to pay in cash. Spintrip will not be responsible for collecting or managing cash payments.</li>
+                  <li><strong>Refunds</strong>: All refund requests by Customers must be handled directly by the Dealer. Spintrip will not mediate or process refunds.</li>
                 </ul>
-
-                <p data-aos="fade-down">
-                  This policy will help you understand Spintrip's fee structure and conditions. For any questions, please contact us at <a href="mailto:support@spintrip.in">support@spintrip.in</a>.
+  
+                <hr />
+  
+                <h2 className="mb-4">Dealer Responsibilities</h2>
+                <ul>
+                  <li><strong>Compliance</strong>: Dealers must ensure their vehicles comply with all applicable legal and regulatory requirements, including registration, insurance, and maintenance.</li>
+                  <li><strong>Payment Disputes</strong>: Any disputes related to payments, including refunds or cash settlements, must be resolved directly between the Dealer and the Customer.</li>
+                </ul>
+  
+                <hr />
+  
+                <h2 className="mb-4">Additional Terms</h2>
+                <ul>
+                  <li><strong>Taxes</strong>: All subscription fees are inclusive of applicable GST.</li>
+                  <li><strong>KYC Compliance</strong>: Dealers must complete a one-time KYC verification process to use the Spintrip platform.</li>
+                  <li><strong>Account Suspension</strong>: Failure to pay subscription fees on time may result in temporary suspension of platform access until payment is received.</li>
+                </ul>
+  
+                <p className="mt-4">
+                  For any queries or support related to the Fee Policy, Dealers can contact Spintrip support at{' '}
+                  <a href="mailto:support@spintrip.in">support@spintrip.in</a>.
                 </p>
               </div>
             </div>
@@ -98,6 +134,7 @@ const FeePolicy = () => {
       </div>
     </div>
   );
+  
 };
 
 export default FeePolicy;

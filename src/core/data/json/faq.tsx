@@ -28,7 +28,7 @@ const faqData = [
   {
     question: "Are there any additional fees?",
     answer:
-      "Additional fees may include fuel charges, late return fees, extra driver fees, and insurance options. All fees will be clearly outlined in your rental agreement.",
+      "Additional fees may include fuel charges, late return fees, extra driver fees but all needs to be payed to the Car Host. All fees will be clearly outlined in your rental agreement.",
   },
 ];
 export default faqData;

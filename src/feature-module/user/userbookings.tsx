@@ -637,7 +637,7 @@ const UserBookings = () => {
                                   All Bookings
                                 </Link>
                               </li>
-                              <li>
+                              {/* <li>
                                 <Link
                                   className={
                                     activeTab === "requested" ? "active" : ""
@@ -647,7 +647,7 @@ const UserBookings = () => {
                                 >
                                   Requested
                                 </Link>
-                              </li>
+                              </li> */}
                               <li>
                                 <Link
                                   className={

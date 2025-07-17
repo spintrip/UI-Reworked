@@ -32,8 +32,8 @@ const LocationInput = React.lazy(() => import('../common/locationInput'));
 const LocationDisplay = React.lazy(() => import('../common/LocationDisplay'));
 import { postWishlist, postCancelWishlist } from "../api/Cars";
 import { Car, Location } from '../redux/types';
-import {getAllCarBrands } from "../api/Cars";
-import {getTopReviews} from "../api/Listing"
+import { getAllCarBrands } from "../api/Cars";
+import { getTopReviews } from "../api/Listing"
 import { debounce } from "lodash";
 import TestimonySlider from "../common/TestimonySlider";
 import GoogleAnalyticsScript from "../common/GoogleAnalyticsScript";
@@ -87,12 +87,12 @@ const Home: React.FC = () => {
     dayjs(new Date()),
   );
   const [date2, setDate2] = useState<any>(() =>
-    (dayjs().add(1,'day')),
+    (dayjs().add(1, 'day')),
   );
   const [startTime, setStartTime] = useState<any>(() =>
     dayjs(dateTime.startTime, "HH:mm").isValid()
       ? dayjs(dateTime.startTime, "HH:mm")
-      : dayjs().add(5,'minute'),
+      : dayjs().add(5, 'minute'),
   );
   const [endTime, setEndTime] = useState<any>(() =>
     dayjs(dateTime.endTime, "HH:mm").isValid()
@@ -116,23 +116,23 @@ const Home: React.FC = () => {
   const [testimonialsLoading, setTestimonialsLoading] = useState(true);
   const [latitude, setLatitude] = useState<number>(0);
   const [longitude, setLongitude] = useState<number>(0);
-  const [sendError , setSendError] = useState<any>('');
+  const [sendError, setSendError] = useState<any>('');
   const toggleFAQ = (index: number | null) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
   const [vehicleType, setVehicleType] = useState("2");
- 
+
   useEffect(() => {
     if (dayjs().isValid()) {
       setDate1(dayjs(new Date()));
     }
     if (dayjs().isValid()) {
-      setDate2(dayjs().add(1,'day'));
-    } 
+      setDate2(dayjs().add(1, 'day'));
+    }
 
     if (dayjs().isValid()) {
-      setStartTime(dayjs().add(5,'minute'));
-    } 
+      setStartTime(dayjs().add(1, "hour"));
+    }
 
     if (dayjs().isValid()) {
       setEndTime(dayjs().add(4, "hour"));
@@ -197,7 +197,7 @@ const Home: React.FC = () => {
     const fetchReviews = async () => {
       try {
         const testimonialsData = await getTopReviews();
-    
+
         if (testimonialsData && testimonialsData.feedback) {
           setTestimonials(testimonialsData.feedback);
           setTestimonialsLoading(false);
@@ -207,7 +207,7 @@ const Home: React.FC = () => {
       } catch (error) {
         console.error("Error fetching reviews:", error);
         setTestimonials([]);
-        
+
       }
     };
 
@@ -230,8 +230,8 @@ const Home: React.FC = () => {
       setDate2(newValue);
     }
   };
-  
-  const handleTimeChange = (newValue: React.SetStateAction<any> , type: any) => {
+
+  const handleTimeChange = (newValue: React.SetStateAction<any>, type: any) => {
     if (type === 'start') {
       setStartTime(newValue);
       setEndTime(newValue.add(12, "hour"));
@@ -246,12 +246,12 @@ const Home: React.FC = () => {
         console.error("No token found");
         return;
       }
-      
+
     } catch (error) {
       console.error("Error fetching car data", error);
     }
   }
-  
+
 
   const startDate = date1.format('YYYY-MM-DD');
   const endDate = date2.format('YYYY-MM-DD');
@@ -259,91 +259,91 @@ const Home: React.FC = () => {
   const endTimeStr = endTime.format('HH:mm');
 
   const validateDateTime = () => {
-      if (
-        !startDate ||
-        !endDate ||
-        !startTimeStr ||
-        !endTimeStr
-      ) {
-        setSendError(
-          "All fields must be filled out, including a valid location.",
-        );
-        setDateTimeError(true);
-        setTimeout(() => {
-          setDateTimeError(false);
-        }, 5000);
-        return false;
-      }
-      const currentDateTime = dayjs();
-      const pickupDateTime = dayjs(`${startDate}T${startTimeStr}`);
-      const returnDateTime = dayjs(`${endDate}T${endTimeStr}`);
-    
-      if (pickupDateTime.isBefore(currentDateTime)) {
-        setSendError("Start date or time cannot be before the current date/time.");
-        setDateTimeError(true);
-        setTimeout(() => {
-          setDateTimeError(false);
-        }, 5000);
-        return false;
-      }
-  
-      if (returnDateTime.isBefore(pickupDateTime)) {
-        setSendError("Start date or time must be before End date or time.");
-        setDateTimeError(true);
-        setTimeout(() => {
-          setDateTimeError(false);
-        }, 5000);
-        return false;
-      }
-      if (pickupDateTime.isSame(returnDateTime)) {
-        setSendError("Start date or time cannot be the same as End date or time.");
-        setDateTimeError(true);
-        setTimeout(() => {
-          setDateTimeError(false);
-        }, 5000);
-        return false;
-      }
-    
-      if (!returnDateTime.isAfter(pickupDateTime.add(1, 'hour'))) {
-        setSendError("Start date or time must be at least one hour after the End date or time.");
-        setDateTimeError(true);
-        setTimeout(() => {
-          setDateTimeError(false);
-        }, 5000);
-        return false;
-      }
-    
-      setSendError("");
-      setDateTimeError(false);
-      return true;
-    };
+    if (
+      !startDate ||
+      !endDate ||
+      !startTimeStr ||
+      !endTimeStr
+    ) {
+      setSendError(
+        "All fields must be filled out, including a valid location.",
+      );
+      setDateTimeError(true);
+      setTimeout(() => {
+        setDateTimeError(false);
+      }, 5000);
+      return false;
+    }
+    const currentDateTime = dayjs();
+    const pickupDateTime = dayjs(`${startDate}T${startTimeStr}`);
+    const returnDateTime = dayjs(`${endDate}T${endTimeStr}`);
 
-    const handleFindCarsSubmit = (event: { preventDefault: () => void; }) => {
-      event.preventDefault();
-      if (!vehicleType || !pickupLocation || !pickupLocation.isValidLocation || !inputValue || inputValue.length <= 2 || !hasSuggestions) {
-        setLocationAlert(true);
-        setTimeout(() => {
-          setLocationAlert(false);
-        }, 5000); 
-        return;
-      }
-      if(!validateDateTime()){
-        return;
-      }
+    if (pickupDateTime.isBefore(currentDateTime)) {
+      setSendError("Start date or time cannot be before the current date/time.");
+      setDateTimeError(true);
+      setTimeout(() => {
+        setDateTimeError(false);
+      }, 5000);
+      return false;
+    }
 
-    
-      startTransition(() => {
-        dispatch(setDateTime(vehicleType, startDate, startTimeStr, endDate, endTimeStr, pickupLocation, distance));
-        fetchCarData()
-          .then(() => navigate(routes.listinggrid))
-          .catch((error) => console.error("Error found", error));
-      });
-    };
-    
+    if (returnDateTime.isBefore(pickupDateTime)) {
+      setSendError("Start date or time must be before End date or time.");
+      setDateTimeError(true);
+      setTimeout(() => {
+        setDateTimeError(false);
+      }, 5000);
+      return false;
+    }
+    if (pickupDateTime.isSame(returnDateTime)) {
+      setSendError("Start date or time cannot be the same as End date or time.");
+      setDateTimeError(true);
+      setTimeout(() => {
+        setDateTimeError(false);
+      }, 5000);
+      return false;
+    }
+
+    if (!returnDateTime.isAfter(pickupDateTime.add(1, 'hour'))) {
+      setSendError("Start date or time must be at least one hour after the End date or time.");
+      setDateTimeError(true);
+      setTimeout(() => {
+        setDateTimeError(false);
+      }, 5000);
+      return false;
+    }
+
+    setSendError("");
+    setDateTimeError(false);
+    return true;
+  };
+
+  const handleFindCarsSubmit = (event: { preventDefault: () => void; }) => {
+    event.preventDefault();
+    if (!vehicleType || !pickupLocation || !pickupLocation.isValidLocation || !inputValue || inputValue.length <= 2 || !hasSuggestions) {
+      setLocationAlert(true);
+      setTimeout(() => {
+        setLocationAlert(false);
+      }, 5000);
+      return;
+    }
+    if (!validateDateTime()) {
+      return;
+    }
+
+
+    startTransition(() => {
+      dispatch(setDateTime(vehicleType, startDate, startTimeStr, endDate, endTimeStr, pickupLocation, distance));
+      fetchCarData()
+        .then(() => navigate(routes.listinggrid))
+        .catch((error) => console.error("Error found", error));
+    });
+  };
+
 
   const handleRentNowClick = (selectedVehicle: any) => {
 
-    if(!token){
+    if (!token) {
       navigate(routes.login);
     }
 
@@ -351,50 +351,49 @@ const Home: React.FC = () => {
       setLocationAlert(true);
       setTimeout(() => {
         setLocationAlert(false);
-      }, 5000); 
+      }, 5000);
       if (pickupLocationRef.current) {
         pickupLocationRef.current.scrollIntoView({ behavior: "smooth" });
       }
-      return; 
+      return;
     }
     const today = dayjs();
-      if (date1.isBefore(today, 'day')) {
-        
-        setDateTimeError(true)
-        setTimeout(() => {
-          setDateTimeError(false);
-        }, 5000);
-        return;
-      }
-    
-      if (date2.isBefore(date1, 'day')) {
-        setDateTimeError(true)
-        setTimeout(() => {
-          setDateTimeError(false);
-        }, 5000);
-        return;
-      }
-    
-      if (date1.isSame(date2, 'day') && endTime.isBefore(startTime) || date1.isSame(date2, 'day') &&  endTime.isSame(startTime) || date1.isSame(date2, 'day') && 
-          endTime.isAfter(startTime) && 
-          endTime.diff(startTime, 'hours') < 1) 
-        {
-        setDateTimeError(true)
-        setTimeout(() => {
-          setDateTimeError(false);
-        }, 5000);
-        return;
-      }   
-      const endDateTime = date2.isSame(date1, 'day') ? date1.set('hour', endTime.hour()).set('minute', endTime.minute()) : date2.set('hour', endTime.hour()).set('minute', endTime.minute());
-      const startDateTime = date1.set('hour', startTime.hour()).set('minute', startTime.minute());
+    if (date1.isBefore(today, 'day')) {
 
-      if (endDateTime.isBefore(startDateTime)) {
-        setDateTimeError(true);
-        setTimeout(() => {
-          setDateTimeError(false);
-        }, 5000);
-        return;
-      }
+      setDateTimeError(true)
+      setTimeout(() => {
+        setDateTimeError(false);
+      }, 5000);
+      return;
+    }
+
+    if (date2.isBefore(date1, 'day')) {
+      setDateTimeError(true)
+      setTimeout(() => {
+        setDateTimeError(false);
+      }, 5000);
+      return;
+    }
+
+    if (date1.isSame(date2, 'day') && endTime.isBefore(startTime) || date1.isSame(date2, 'day') && endTime.isSame(startTime) || date1.isSame(date2, 'day') &&
+      endTime.isAfter(startTime) &&
+      endTime.diff(startTime, 'hours') < 1) {
+      setDateTimeError(true)
+      setTimeout(() => {
+        setDateTimeError(false);
+      }, 5000);
+      return;
+    }
+    const endDateTime = date2.isSame(date1, 'day') ? date1.set('hour', endTime.hour()).set('minute', endTime.minute()) : date2.set('hour', endTime.hour()).set('minute', endTime.minute());
+    const startDateTime = date1.set('hour', startTime.hour()).set('minute', startTime.minute());
+
+    if (endDateTime.isBefore(startDateTime)) {
+      setDateTimeError(true);
+      setTimeout(() => {
+        setDateTimeError(false);
+      }, 5000);
+      return;
+    }
 
 
     // If the pickup location is valid and a car is selected
@@ -435,27 +434,27 @@ const Home: React.FC = () => {
   const renderStars = useCallback((rating: any) => {
     return Array.from({ length: rating }, (_, index) => <i key={index} className="fas fa-star filled" />);
   }, []);
-  
+
 
   const handleViewAllCars = () => {
     // Check if the pickup location is selected and valid
     if (!pickupLocation || !pickupLocation.isValidLocation) {
-      setLocationAlert(true); 
+      setLocationAlert(true);
       setTimeout(() => {
         setLocationAlert(false);
-      }, 5000); 
+      }, 5000);
       if (pickupLocationRef.current) {
         pickupLocationRef.current.scrollIntoView({ behavior: "smooth" });
       }
       return; // Prevent navigation to listing details
     }
-    
+
     // If the pickup location is valid and a car is selected
     navigate(routes.listinggrid);
   };
   useEffect(() => {
     if (pickupLocation) {
-  
+
       setLatitude(pickupLocation.lat);
       setLongitude(pickupLocation.lng);
     }
@@ -482,7 +481,7 @@ const Home: React.FC = () => {
       console.error("Error updating cancel wishlist:", error);
     }
   };
-  
+
   const handleWishlistClick = useCallback((car: { [x: string]: any; }) => {
     const isWishlisted = wishlist.some((wishlistCar) => wishlistCar.vehicleid === car['vehicleid']);
     if (isWishlisted) {
@@ -491,7 +490,7 @@ const Home: React.FC = () => {
       handleWishlistUpdate(car['vehicleid']);
     }
   }, [wishlist]);
-  
+
   const displayedCars = carListings.length >= 6 ? carListings.slice(0, 6) : carListings.slice(0, 3);
 
   const debouncedSetInputValue = useCallback(
@@ -501,15 +500,15 @@ const Home: React.FC = () => {
     []
   );
 
-  const handleVehicleChange = (value : any) => {
-    setVehicleType(value); 
+  const handleVehicleChange = (value: any) => {
+    setVehicleType(value);
   }
 
   function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(" ");
   }
-  const getFuelType = (value : boolean) => {
-    return value === true ? 'Diesel' : 'Petrol' ;
+  const getFuelType = (value: boolean) => {
+    return value === true ? 'Diesel' : 'Petrol';
   }
 
 
@@ -519,20 +518,20 @@ const Home: React.FC = () => {
 
   return (
     <div>
-        <GoogleAnalyticsScript/>
-        <Helmet>
-          <title>Home - Spintrip Car Rentals </title>
-          <meta
-            name="description"
-            content="Spintrip Car Rentals - Affordable self-drive car rentals in Bangalore. Rent top-notch cars from local hosts and enjoy competitive pricing. Hosts earn exciting commissions by listing their cars with us."
-          />
-          <meta
-            name="keywords"
-            content="Spintrip Car Rentals, affordable car rentals Bangalore, self-drive car rentals Bangalore, rent cars Bangalore, top-notch cars Bangalore, local car hosts Bangalore, competitive car rental pricing, car rental commissions, list your car Bangalore, Bangalore car hire, best car rentals Bangalore, car rental deals Bangalore, self-drive cars Bangalore, car rental service Bangalore, rent a car Bangalore, car rental company Bangalore, self-drive rental services, weekend car rentals Bangalore, hourly car rentals Bangalore, economic car rentals Bangalore"
-          ></meta>
-        </Helmet>
-     
-  
+      <GoogleAnalyticsScript />
+      <Helmet>
+        <title>Home - Spintrip Car Rentals </title>
+        <meta
+          name="description"
+          content="Spintrip Car Rentals - Affordable self-drive car rentals in Bangalore. Rent top-notch cars from local hosts and enjoy competitive pricing. Hosts earn exciting commissions by listing their cars with us."
+        />
+        <meta
+          name="keywords"
+          content="Spintrip Car Rentals, affordable car rentals Bangalore, self-drive car rentals Bangalore, rent cars Bangalore, top-notch cars Bangalore, local car hosts Bangalore, competitive car rental pricing, car rental commissions, list your car Bangalore, Bangalore car hire, best car rentals Bangalore, car rental deals Bangalore, self-drive cars Bangalore, car rental service Bangalore, rent a car Bangalore, car rental company Bangalore, self-drive rental services, weekend car rentals Bangalore, hourly car rentals Bangalore, economic car rentals Bangalore"
+        ></meta>
+      </Helmet>
+
+
       {/* Banner */}
       <section className="banner-section banner-slider">
         <div className="container">
@@ -589,7 +588,7 @@ const Home: React.FC = () => {
         </div>
       </section>
       {/* /Banner */}
-  
+
       {/* Search */}
       <div className="section-search ">
         <div className="container">
@@ -600,16 +599,16 @@ const Home: React.FC = () => {
                   <div className="pickup-location h-100 input-block d-flex flex-column align-items-start justify-content-between">
                     <label>Pickup Location</label>
                     <Suspense fallback={<div>Loading location input...</div>}>
-                      <LocationInput 
-                        setLocation={setPickupLocation} 
-                        setInputValue={debouncedSetInputValue } 
-                        setHasSuggestions={setHasSuggestions} 
-                        initialValue={initialPickupLocation?.address || ''} 
+                      <LocationInput
+                        setLocation={setPickupLocation}
+                        setInputValue={debouncedSetInputValue}
+                        setHasSuggestions={setHasSuggestions}
+                        initialValue={initialPickupLocation?.address || ''}
                       />
                     </Suspense>
                   </div>
                 </li>
-  
+
                 <li className="col-12 col-md-4 mt-2">
                   <div className="input-block Pickup-Date">
                     <label>Pickup Date</label>
@@ -629,30 +628,27 @@ const Home: React.FC = () => {
                             />
                           ),
                         }}
-                        minDate={dayjs()} 
+                        minDate={dayjs()}
                       />
                       <TimePicker
                         label="Pickup Time"
                         value={startTime}
-                        onChange={(newValue) =>
-                          handleTimeChange(newValue, "start")
-                        }
-                        ampm={false} // Use 24-hour format
+                        onChange={(newValue) => handleTimeChange(newValue, "start")}
+                        ampm={false}
                         views={["hours", "minutes"]}
                         openTo="hours"
-                         
+
                         slotProps={{
                           textField: (params) => (
-                            <TextField
-                              {...params}
-                            />
+                            <TextField {...params} />
                           ),
                         }}
                       />
+
                     </LocalizationProvider>
                   </div>
                 </li>
-  
+
                 <li className="col-12 col-md-4 mt-2">
                   <div className="input-block">
                     <label>Return Date</label>
@@ -663,9 +659,9 @@ const Home: React.FC = () => {
                         label="Return Date"
                         value={date2}
                         onChange={(newValue) =>
-                            handleDateChange(newValue, "end")
-                          }
-                       
+                          handleDateChange(newValue, "end")
+                        }
+
                         slotProps={{
                           textField: (params) => (
                             <TextField
@@ -678,17 +674,16 @@ const Home: React.FC = () => {
                       <TimePicker
                         label="Return Time"
                         value={endTime}
-                        onChange={(newValue) => handleTimeChange(newValue , "end")}
-                        slotProps={{
-                          textField: (params) => (
-                            <TextField
-                              {...params}
-                            />
-                          ),
-                        }}
-                        ampm={false} // Use 24-hour format
+                        onChange={(newValue) => handleTimeChange(newValue, "drop")}
+                        ampm={false}
                         views={["hours", "minutes"]}
                         openTo="hours"
+                        // 👈 Ensures 15-minute intervals
+                        slotProps={{
+                          textField: (params) => (
+                            <TextField {...params} />
+                          ),
+                        }}
                       />
                     </LocalizationProvider>
                   </div>
@@ -702,9 +697,9 @@ const Home: React.FC = () => {
                             <span className="sr-only">Loading...</span>
                           </div>
                         ) : (
-                          <button 
-                            className="btn search-button" 
-                            onClick={handleFindCarsSubmit} 
+                          <button
+                            className="btn search-button"
+                            onClick={handleFindCarsSubmit}
                             type="submit"
                           >
                             <i className="fa fa-search" aria-hidden="true" />
@@ -721,10 +716,10 @@ const Home: React.FC = () => {
         </div>
       </div>
       {/* /Search */}
-      
+
       {/* Vehicle Type */}
       <section className="section services">
-        
+
         <div className="container">
           {/* Heading title*/}
           <div className="section-heading" data-aos="fade-down">
@@ -736,9 +731,9 @@ const Home: React.FC = () => {
               {/* Car Selection */}
               <div className="col-lg-5 col-md-5 col-12 " data-aos="fade-down">
                 <div className={classNames(
-                      vehicleType === "2" ? "vehicle-selected" : "vehicle-unselected",
-                    )} 
-                    onClick={() => handleVehicleChange("2")}
+                  vehicleType === "2" ? "vehicle-selected" : "vehicle-unselected",
+                )}
+                  onClick={() => handleVehicleChange("2")}
                 >
                   <div className="checkbox-type">
                     <input
@@ -757,12 +752,12 @@ const Home: React.FC = () => {
 
               {/* Two-Wheeler Selection */}
               <div className="col-lg-5 col-md-5 col-12" data-aos="fade-down">
-              <div className={classNames(
-                      vehicleType === "1" ? "vehicle-selected" : "vehicle-unselected",
-                    )} 
-                    onClick={() => handleVehicleChange("1")}
-                  >
-                <div className="checkbox-type">
+                <div className={classNames(
+                  vehicleType === "1" ? "vehicle-selected" : "vehicle-unselected",
+                )}
+                  onClick={() => handleVehicleChange("1")}
+                >
+                  <div className="checkbox-type">
                     <input
                       className="checkbox"
                       type="checkbox"
@@ -781,7 +776,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      
+
       {/* Services */}
       <section className="section services">
         <div className="service-right">
@@ -863,7 +858,7 @@ const Home: React.FC = () => {
         </div>
       </section>
       {/* /Services */}
-  
+
       {/* Popular Brands */}
       <section className="section popular-services popular-explore">
         <div className="container  pt-5 rounded-xl">
@@ -875,7 +870,7 @@ const Home: React.FC = () => {
             </p>
           </div>
           {/* /Heading title */}
-          
+
           <div className="tab-content">
             <div className="tab-pane active" id="Carmazda">
               <div className="row">
@@ -912,20 +907,19 @@ const Home: React.FC = () => {
                             )} */}
                           </span>
                           {token && (
-                          <Link
-                            to="#"
-                            className={`fav-icon ${
-                              wishlist.some(
+                            <Link
+                              to="#"
+                              className={`fav-icon ${wishlist.some(
                                 (wishlistCar: { vehicleid: any }) =>
                                   wishlistCar.vehicleid === vehicle.vehicleid
                               )
-                                ? "selected"
-                                : ""
-                            }`}
-                            onClick={() => handleWishlistClick(vehicle)}
-                          >
-                            <i className="feather icon-heart" />
-                          </Link>
+                                  ? "selected"
+                                  : ""
+                                }`}
+                              onClick={() => handleWishlistClick(vehicle)}
+                            >
+                              <i className="feather icon-heart" />
+                            </Link>
                           )}
                         </div>
                       </div>
@@ -938,7 +932,7 @@ const Home: React.FC = () => {
                           </h3>
                           <div className="list-rating">
                             {renderStars(vehicle["rating"])}
-  
+
                             <span>
                               (
                               {vehicle["rating"]
@@ -949,36 +943,36 @@ const Home: React.FC = () => {
                           </div>
                         </div>
                         <div className="listing-details-group">
-                        <div className="row">
-                                <div className="col-md-4 col-sm-6 d-flex align-items-center mb-3">
-                                  <span className="me-2">
-                                    <ImageWithBasePath
-                                      src="assets/img/icons/car-parts-02.svg"
-                                      alt={vehicle.Additional.HorsePower}
-                                    />
-                                  </span>
-                                  <p className="mb-0">{vehicle.Additional.HorsePower || "NA"} bHp</p>
-                                </div>
-                                <div className="col-md-4 col-sm-6 d-flex align-items-center mb-3">
-                                  <span className="me-2">
-                                    <ImageWithBasePath
-                                      src="assets/img/icons/calendar-icon.svg"
-                                      alt={vehicle.year}
-                                    />
-                                  </span>
-                                  <p className="mb-0">{vehicle.registrationYear.split("-")[0]}</p>
-                                </div>
-                                <div className="col-md-4 col-sm-6 d-flex align-items-center mb-3">
-                                  <span className="me-2">
-                                    <ImageWithBasePath
-                                      src="assets/img/icons/car-parts-03.svg"
-                                      alt={getFuelType(vehicle.Additional.fuelType)}
-                                    />
-                                  </span>
-                                  <p className="mb-0">{getFuelType(vehicle.Additional.fuelType)}</p>
-                                </div>
-                              </div>
-                          
+                          <div className="row">
+                            <div className="col-md-4 col-sm-6 d-flex align-items-center mb-3">
+                              <span className="me-2">
+                                <ImageWithBasePath
+                                  src="assets/img/icons/car-parts-02.svg"
+                                  alt={vehicle.Additional.HorsePower}
+                                />
+                              </span>
+                              <p className="mb-0">{vehicle.Additional.HorsePower || "NA"} bHp</p>
+                            </div>
+                            <div className="col-md-4 col-sm-6 d-flex align-items-center mb-3">
+                              <span className="me-2">
+                                <ImageWithBasePath
+                                  src="assets/img/icons/calendar-icon.svg"
+                                  alt={vehicle.year}
+                                />
+                              </span>
+                              <p className="mb-0">{vehicle.registrationYear.split("-")[0]}</p>
+                            </div>
+                            <div className="col-md-4 col-sm-6 d-flex align-items-center mb-3">
+                              <span className="me-2">
+                                <ImageWithBasePath
+                                  src="assets/img/icons/car-parts-03.svg"
+                                  alt={getFuelType(vehicle.Additional.fuelType)}
+                                />
+                              </span>
+                              <p className="mb-0">{getFuelType(vehicle.Additional.fuelType)}</p>
+                            </div>
+                          </div>
+
                         </div>
                         {token ? (
                           <div className="listing-location-details">
@@ -989,7 +983,7 @@ const Home: React.FC = () => {
                                   longitude={vehicle.longitude}
                                 />
                               </div>
-                            </Suspense> 
+                            </Suspense>
                             <div className="listing-price">
                               <div>
                                 <h6 className="font-mono text-black">
@@ -1033,7 +1027,7 @@ const Home: React.FC = () => {
         </div>
       </section>
       {/* /Popular Services */}
-  
+
       {/* Why Choose Us */}
       <section className="section why-choose popular-explore">
         <div className="choose-left">
@@ -1131,7 +1125,7 @@ const Home: React.FC = () => {
         </div>
       </section>
       {/* /Why Choose Us */}
-  
+
       {/* About us Testimonials */}
       <section className="section about-testimonial testimonials-section">
         <div className="container">
@@ -1155,7 +1149,7 @@ const Home: React.FC = () => {
               </div>
             ) : (
               <Suspense fallback={<div>Loading testimonials...</div>}>
-                
+
                 <TestimonySlider testimonials={testimonials} />
               </Suspense>
             )}
@@ -1163,7 +1157,7 @@ const Home: React.FC = () => {
         </div>
       </section>
       {/* /About us Testimonials */}
-  
+
       {/* FAQ */}
       <section className="section faq-section ">
         <div className="container">
@@ -1203,9 +1197,8 @@ const Home: React.FC = () => {
                   </button>
                 </h4>
                 <div
-                  className={`faq-answer ${
-                    activeIndex === index ? "show" : ""
-                  }`}
+                  className={`faq-answer ${activeIndex === index ? "show" : ""
+                    }`}
                 >
                   <p className="font-smibold text-center">{faq.answer}</p>
                 </div>
@@ -1244,6 +1237,6 @@ const Home: React.FC = () => {
       {/* /FAQ */}
     </div>
   );
-  
+
 };
 export default Home;

@@ -70,7 +70,7 @@ const DashboardMenu = () => {
                    
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link
                     to={routes.payment}
                     className={isLinkActive(routes.payment) ? "active" : ""}
@@ -84,7 +84,7 @@ const DashboardMenu = () => {
                     <span>Payments</span>
                     
                   </Link>
-                </li>
+                </li> */}
                 
                 <li>
                   <Link

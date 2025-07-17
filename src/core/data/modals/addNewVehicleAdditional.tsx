@@ -51,6 +51,16 @@ const addNewVehicleAdditional: React.FC<addNewVehicleAdditionalProps> = ({ carId
   const [fuelType, setFuelType] = useState<string>('Petrol');
   const [booleanSpecs, setBooleanSpecs] = useState<BooleanSpec[]>([]);
   const [transmission, setTransmission] = useState<string>('Manual');
+  const excludeFields = ["transmission", "fuelType"];
+
+  const fieldNameMap = {
+    touchscreen: "touchScreen",
+    airbags: "airBags",
+    ventilatedFrontSeat: "ventelatedFrontSeat",
+    airFreshener: "airFreshner"
+    // add more as needed
+  };
+
 
   // const [features, setFeatures] = useState<Features>({
   //   autoWindow: "0",
@@ -112,6 +122,7 @@ const addNewVehicleAdditional: React.FC<addNewVehicleAdditionalProps> = ({ carId
     onActionComplete: PropTypes.func.isRequired,
     setEditState: PropTypes.func.isRequired,
   };
+
   useEffect(() => {
     if (carId) {
       getCarAdditionalInfo(carId)
@@ -149,12 +160,17 @@ const addNewVehicleAdditional: React.FC<addNewVehicleAdditionalProps> = ({ carId
           setBooleanSpecs(data.booleanSpecs);
           //         setImages(data.vehicleImages || []);
           //         setOriginalImages(data.vehicleImages || []);
-          setHorsePower(data.vehicleAdditionals?.horsePower || 0);
+          setHorsePower(data.additional?.horsePower || 0);
           setVehicleType(data.vehicleAdditionals?.vehicleType || 0);
-          setcostperhr(data.vehicleAdditionals?.costPerHr || 0);
-          setFuelType(data.vehicleAdditionals?.fuelType == 0 ? 'Petrol' : 'Diesel');
-          // setCarAdditional(data.carAdditionals);
-          setTransmission(data.carAdditionals?.transmission ? 'Auto' : 'Manual');
+          setcostperhr(data.additional?.costperhr || 0);
+          // setFuelType(String(data.vehicleAdditionals?.fueltype) === "0" ? 'Petrol' : 'Diesel');
+          // // setCarAdditional(data.carAdditionals);
+          // setTransmission(data.carAdditionals?.transmission ? 'Manual':'Auto');
+        
+          const fuelTypeSpec = data.booleanSpecs.find(spec => spec.field_name === "fuelType");
+          const transmissionSpec = data.booleanSpecs.find(spec => spec.field_name === "transmission");
+          setFuelType(fuelTypeSpec?.value == true ? "Diesel" : "Petrol");
+          setTransmission(transmissionSpec?.value == false ? "Manual" : "Auto");
 
           //         // Initialize selectedFeatures with existing features
           //         const existingSelectedFeatures = {};
@@ -211,8 +227,7 @@ const addNewVehicleAdditional: React.FC<addNewVehicleAdditionalProps> = ({ carId
     setSelectedFeatures(prev => {
       const updatedSelectedFeatures = { ...prev };
       addons.forEach(addon => {
-        if (!updatedSelectedFeatures[addon.id]) 
-          {
+        if (!updatedSelectedFeatures[addon.id]) {
           updatedSelectedFeatures[addon.id] = { checked: false, price: 0 };
         }
       });
@@ -280,9 +295,13 @@ const addNewVehicleAdditional: React.FC<addNewVehicleAdditionalProps> = ({ carId
     if (transmission) {
       formData.append("transmission", transmission === 'Manual' ? '0' : '1');
     }
+
     booleanSpecs.forEach(spec => {
-      formData.append(spec.field_name, spec.value ? "1" : "0");
-    });
+      if (spec.field_name !== "transmission" && spec.field_name !== "fuelType") {
+        formData.append(spec.field_name, spec.value ? "1" : "0");
+      }
+    })
+
 
     console.log(JSON.stringify(formData));
     images.forEach((image, index) => {
@@ -433,7 +452,7 @@ const addNewVehicleAdditional: React.FC<addNewVehicleAdditionalProps> = ({ carId
                       <div className="integration-grid">
                         <div className="integration-calendar">
                           <div className="integration-content d-flex align-items-center justify-content-between">
-                            <h5>{vehicleType == 1 ? "Engine CC" : "Horse Power"}</h5>
+                            <h5>{vehicleType == 1 ? "Engine HP" : "Horse Power"}</h5>
                           </div>
                           <div className="">
                             <input
@@ -460,15 +479,10 @@ const addNewVehicleAdditional: React.FC<addNewVehicleAdditionalProps> = ({ carId
                               value={fuelType}
                               onChange={(e) => setFuelType(e.target.value)}
                             >
-                              {vehicleType == 1 ? (
-                                <option value="Petrol">Petrol</option>
-                              ) : (
-                                <>
-                                  <option value="Petrol">Petrol</option>
-                                  <option value="Diesel">Diesel</option>
-                                </>
-                              )}
+                              <option value="Petrol">Petrol</option>
+                              {vehicleType != 1 && <option value="Diesel">Diesel</option>}
                             </select>
+
                           </div>
                         </div>
                       </div>
@@ -536,35 +550,45 @@ const addNewVehicleAdditional: React.FC<addNewVehicleAdditionalProps> = ({ carId
                 </div>
                 <div className="row">
                   <p className="mb-1 mt-3 font-semibold">Additional Features</p>
-                  {booleanSpecs.map((spec, index) => (
-                    <div className="col-md-4" key={spec.field_name}>
-                      <div className="integration-grid">
-                        <div className="integration-calendar">
-                          <div className="integration-content d-flex align-items-center justify-content-between">
-                            <h5>{spec.title}</h5>
-                          </div>
-                          <div className="form-check form-switch">
-                            <input
-                              className="form-check-input border border-primary border-2"
-                              type="checkbox"
-                              role="switch"
-                              id={`flexSwitchCheck${spec.field_name}`}
-                              checked={spec.value}
-                              onChange={() =>
-                                setBooleanSpecs((prevSpecs) =>
-                                  prevSpecs.map((item, i) =>
-                                    i === index
-                                      ? { ...item, value: !item.value }
-                                      : item
-                                  )
-                                )
-                              }
-                            />
+                  {booleanSpecs
+                    .filter(spec => spec.field_name !== "transmission" && spec.field_name !== "fuelType")
+                    .map((spec, index) => {
+                      const adjustedFieldName = fieldNameMap[spec.field_name] || spec.field_name;
+
+                      return (
+                        <div className="col-md-4" key={adjustedFieldName}>
+                          <div className="integration-grid">
+                            <div className="integration-calendar">
+                              <div className="integration-content d-flex align-items-center justify-content-between">
+                                <h5>{spec.title}</h5>
+                              </div>
+                              <div className="form-check form-switch">
+                                <input
+                                  className="form-check-input border border-primary border-2"
+                                  type="checkbox"
+                                  role="switch"
+                                  id={`flexSwitchCheck${adjustedFieldName}`}
+                                  checked={spec.value}
+                                  onChange={() =>
+                                    setBooleanSpecs((prevSpecs) =>
+                                      prevSpecs.map((item) =>
+                                        item.field_name === spec.field_name
+                                          ? {
+                                            ...item,
+                                            field_name: adjustedFieldName,
+                                            value: !item.value
+                                          }
+                                          : item
+                                      )
+                                    )
+                                  }
+                                />
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  ))}
+                      );
+                    })}
 
                 </div>
 

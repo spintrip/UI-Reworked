@@ -1,8 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/types";
 
 interface ListingSidebarProps {
+  vehicleType: string;
   selectedFilters: { [key: string]: string[] };
   setSelectedFilters: React.Dispatch<
     React.SetStateAction<{ [key: string]: string[] }>
@@ -12,11 +15,13 @@ interface ListingSidebarProps {
 }
 
 const ListingSidebar: React.FC<ListingSidebarProps> = ({
+  vehicleType,
   selectedFilters,
   setSelectedFilters,
   handleSearchChange,
   resetFilters,
 }) => {
+
   const handleCheckboxChange = (title: string, value: string) => {
     setSelectedFilters((prevState) => {
       const currentFilters = prevState[title] || [];
@@ -28,10 +33,13 @@ const ListingSidebar: React.FC<ListingSidebarProps> = ({
   };
 
   const filterData = {
-    "Car Category": ["SUV", "Sedan", "Hatchback", "Compact suv"],
-    "Car Type": ["Petrol", "Diesel", "Electric"],
-    Capacity: ["5 Seater", "6 Seater", "7 Seater"],
-    "Price (INR)": ["< 200/Day", "200-400", "> 400/Day"],
+    "Category":
+      vehicleType === "1"
+        ? ["Scooter", "Cruiser", "Sports Bike", "Commuter"]
+        : ["SUV", "Sedan", "Hatchback", "Compact suv"],
+    "Type": ["Petrol", "Diesel"],
+    Capacity: ["5 Seater", "7 Seater"],
+    "Price (INR/Hr)": ["< 200", "200-400", "> 400"],
     Ratings: ["1 ⭐", "2 ⭐", "3 ⭐", "4 ⭐", "5 ⭐"],
   };
 
@@ -61,41 +69,58 @@ const ListingSidebar: React.FC<ListingSidebarProps> = ({
         <div className="sidebar">
           <div className="sidebar-section">
             <h4 className="mb-3">Filters</h4>
-            {Object.entries(filterData).map(([title, options]) => (
-              <div key={title} className="filter-group">
-                <h5 className="sidebar-grid-title">{title}</h5>
-                <div className="scrollable-checkboxes px-2 mt-2 mb-3 w-100 justify-content-between flex-wrap">
-                  {options.map((option) => (
-                    <label
-                      key={option}
-                      className="custom_check font-mono d-flex overflow-hidden w-content"
-                    >
-                      <div className="">
-                        <input
-                          type="checkbox"
-                          value={option}
-                          className="bg-black"
-                          checked={(selectedFilters[title] || []).includes(
-                            option,
-                          )}
-                          onChange={() => handleCheckboxChange(title, option)}
-                        />
-                        {title === "Car Category" ? (
-                          <img
-                            src={`/assets/carTypes/${option.toLowerCase()}.png`}
-                            alt={option}
-                            className={`car-category-image  p-2 rounded shadow-sm ${selectedFilters[title] && selectedFilters[title].includes(option) ? "car-option-selected" : ""}`}
+            {Object.entries(filterData).map(([title, options]) => {
+              // Skip "Capacity" when vehicleType is "1"
+              if (title === "Capacity" && vehicleType === "1") return null;
+
+              return (
+                <div key={title} className="filter-group">
+                  <h5 className="sidebar-grid-title">{title}</h5>
+                  <div className="scrollable-checkboxes px-2 mt-2 mb-3 w-100 justify-content-between flex-wrap">
+                    {options.map((option) => (
+                      
+                      <label
+                        key={option}
+                        className="custom_check font-mono d-flex overflow-hidden w-content"
+
+                      >
+                        <div className="">
+                          
+                          <input
+                            type="checkbox"
+                            value={option}
+                            className="bg-black"
+                            checked={(selectedFilters[title] || []).includes(option)}
+                            onChange={() => handleCheckboxChange(title, option)}
                           />
-                        ) : (
-                          <span className="checkmark" />
-                        )}
-                        <span className="font-bold text-black">{option}</span>
-                      </div>
-                    </label>
-                  ))}
+                          {title === "Category" ? (
+                            <img
+                              src={`/assets/carTypes/${option.toLowerCase()}.png`}
+                              alt={option}
+                              className={`car-category-image p-2 rounded shadow-sm ${selectedFilters[title]?.includes(option)
+                                ? "car-option-selected"
+                                : ""
+                                }`}
+                                style={{
+                                  width: "40px",
+                                  height: "40px",
+                                  objectFit: "contain",
+                                  borderRadius: "10px",
+                                  background: "#fff",
+                                }}
+                            />
+                          ) : (
+                            <span className="checkmark" />
+                          )}
+                          <span className="font-bold text-black">{option}</span>
+                        </div>
+                      </label>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
+
           </div>
           <hr />
         </div>

@@ -252,10 +252,10 @@ const hostBookingsReducer = (
 
 interface ListingInfoState {
   listingInfo: {
-    carId: string;
-    carModel: string;
+    vehicleid: string;
+    vehicleModel: string;
     rcNumber: string;
-    carImage1: string;
+    vehicleImage1: string;
     latitude: number;
     longitude: number;
   }[];

@@ -78,7 +78,7 @@ const AddNewCar: React.FC<AddNewCarProps> = ({ onActionComplete, setShowModal, s
     bodyType,
     variant,
     color,
-    mileage,
+    // mileage,
     address,
     latitude,
     longitude,
@@ -135,7 +135,7 @@ const AddNewCar: React.FC<AddNewCarProps> = ({ onActionComplete, setShowModal, s
       rcNumber &&
       registrationYear &&
       bodyType &&
-      mileage &&
+      // mileage &&
       pickupLocation &&
       pickupLocation.isValidLocation
     );
@@ -308,13 +308,10 @@ const AddNewCar: React.FC<AddNewCarProps> = ({ onActionComplete, setShowModal, s
                         >
                           <option value="null">Select Type</option>
                           <option value="Commuter">Commuter</option>
-                          <option value="Sports">Sports</option>
+                          <option value="Sports Bike">Sports Bike</option>
                           <option value="Cruiser">Cruiser</option>
-                          <option value="Adventure">Adventure</option>
-                          <option value="Touring">Touring</option>
-                          <option value="Off-road">Off-road / Dirt</option>
                           <option value="Scooter">Scooter</option>
-                          <option value="Electric">Electric</option>
+                          {/* <option value="Electric">Electric</option> */}
                         </select>
                       </div>
                     </div>
@@ -388,7 +385,7 @@ const AddNewCar: React.FC<AddNewCarProps> = ({ onActionComplete, setShowModal, s
                     </div>
                   </div>
                 </div>
-                <div className="col-md-12">
+                {/* <div className="col-md-12">
                   <div className="modal-form-group mt-2">
                     <label>Current Mileage</label>
                     <div className="w-100">
@@ -402,7 +399,7 @@ const AddNewCar: React.FC<AddNewCarProps> = ({ onActionComplete, setShowModal, s
                       />
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="row py-2 border mx-1 rounded">
                   <div className="col-12 col-md-12">
                     <div className="modal-form-group mt-2">

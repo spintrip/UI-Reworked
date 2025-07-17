@@ -90,6 +90,7 @@ export interface WishlistItem {
 
 export interface RootState {
   dateTime: {
+    vehicleType: any;
     location: Location;
   };
   wishlist: {

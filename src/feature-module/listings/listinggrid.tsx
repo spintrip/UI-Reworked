@@ -31,7 +31,7 @@ import LocationInput from "../common/locationInput";
 import LocationDisplay from "../common/LocationDisplay"; // Adjust the import path as necessary
 
 interface DateTimeState {
-  vehicleType:string,
+  vehicleType: string,
   startDate: string;
   endDate: string;
   startTime: string;
@@ -96,13 +96,13 @@ const ListingGrid: React.FC = () => {
     dayjs(dateTime.startDate || new Date()),
   );
   const [date2, setDate2] = useState<any>(() =>
-    dayjs(dateTime.endDate ||  new Date()),
+    dayjs(dateTime.endDate || new Date()),
   );
 
   const [startTime, setStartTime] = useState<any>(() =>
     dayjs(dateTime.startTime, "HH:mm").isValid()
       ? dayjs(dateTime.startTime, "HH:mm")
-      : dayjs().add(1,'seconds'),
+      : dayjs().add(1, 'seconds'),
   );
   const [endTime, setEndTime] = useState<any>(() =>
     dayjs(dateTime.endTime, "HH:mm").isValid()
@@ -187,7 +187,7 @@ const ListingGrid: React.FC = () => {
     ) {
       fetchData();
     }
-  }, [location, token, navigate, dateTime, latitude, longitude , vehicletype]);
+  }, [location, token, navigate, dateTime, latitude, longitude, vehicletype]);
 
   const handleDateChange = (newValue: Dayjs, type: "start" | "end") => {
     if (type === "start") {
@@ -214,7 +214,7 @@ const ListingGrid: React.FC = () => {
   const handleItemsPerPageChange = (newValue: SingleValue<OptionType>) => {
     if (newValue) {
       setItemsPerPage(newValue.value);
-      setCurrentPage(1); 
+      setCurrentPage(1);
     }
   };
 
@@ -271,23 +271,23 @@ const ListingGrid: React.FC = () => {
       if (values && values.length > 0) {
         filteredCars = filteredCars.filter(
           (car: {
-            Additional: {type: string , fuelType: any, sevenSeater: any};
+            Additional: { type: string, FuelType: any, Sevenseater: any };
             pricing: { costPerHr: number };
             rating: any;
           }) => {
             switch (key) {
-              case "Car Category":
+              case "Category":
                 return values.includes(car.Additional.type);
-              case "Car Type": {
-                const carFuelType = car.Additional.fuelType ? "Diesel" : "Petrol";
+              case "Type": {
+                const carFuelType = car.Additional.FuelType ? "Diesel" : "Petrol";
                 return values.includes(carFuelType);
               }
               case "Capacity":
                 return values.includes(
-                  car.Additional.sevenSeater ? "7 Seater" : "5 Seater",
+                  car.Additional.Sevenseater ? "7 Seater" : "5 Seater",
                 );
-              case "Price (INR)":
-                if (values.includes("< 200/Day") && car.pricing.costPerHr < 200)
+              case "Price (INR/Hr)":
+                if (values.includes("< 200") && car.pricing.costPerHr < 200)
                   return true;
                 if (
                   values.includes("200-400") &&
@@ -295,22 +295,25 @@ const ListingGrid: React.FC = () => {
                   car.pricing.costPerHr <= 400
                 )
                   return true;
-                if (values.includes("> 400/Day") && car.pricing.costPerHr > 400)
+                if (values.includes("> 400") && car.pricing.costPerHr > 400)
                   return true;
                 return false;
-                case "Ratings":
-                    return values.some((ratingRange: any) => {
-                      const [lowerBound, upperBound] = ratingRange
-                        .split("⭐")[0]
-                        .trim()
-                        .split("-")
-                        .map(Number);
+              case "Ratings":
+                return values.some((ratingRange: any) => {
+                  const [lowerBound, upperBound] = ratingRange
+                    .split("⭐")[0]
+                    .trim()
+                    .split("-")
+                    .map(Number);
 
-                      if (!upperBound) {
-                        return car.rating === lowerBound;
-                      }
-                      return car.rating >= lowerBound && car.rating <= upperBound;
-                    });
+                  const rating = car.rating === "Not Provided" ? 5 : Number(car.rating);
+
+                  if (!upperBound) {
+                    return rating === lowerBound;
+                  }
+                  return rating >= lowerBound && rating <= upperBound;
+
+                });
               default:
                 return true;
             }
@@ -345,47 +348,47 @@ const ListingGrid: React.FC = () => {
     event.preventDefault();
     const today = dayjs().startOf('day');
     const currentTime = dayjs();
-      if (date1.isBefore(today, 'day')) {
-        
-        setDateTimeError(true)
-        setTimeout(() => {
-          setDateTimeError(false);
-        }, 5000);
-        return;
-      }
-    
-      if (date2.isBefore(date1, 'day')) {
-        setDateTimeError(true)
-        setTimeout(() => {
-          setDateTimeError(false);
-        }, 5000);
-        return;
-      }
-    
-      if (
-        date1.isSame(today, 'day') && startTime.isBefore(currentTime, 'minute') ||
-        date2.isSame(today, 'day') && endTime.isBefore(currentTime, 'minute')
-      ) {
-        setDateTimeError(true);
-        setTimeout(() => {
-          setDateTimeError(false);
-        }, 5000);
-        return;
-      }
+    if (date1.isBefore(today, 'day')) {
 
-      if (
-        date1.isSame(date2, 'day') && (
-          endTime.isBefore(startTime) ||
-          endTime.isSame(startTime) ||
-          endTime.diff(startTime, 'hours') < 1
-        )
-      ) {
-        setDateTimeError(true);
-        setTimeout(() => {
-          setDateTimeError(false);
-        }, 5000);
-        return;
-      }
+      setDateTimeError(true)
+      setTimeout(() => {
+        setDateTimeError(false);
+      }, 5000);
+      return;
+    }
+
+    if (date2.isBefore(date1, 'day')) {
+      setDateTimeError(true)
+      setTimeout(() => {
+        setDateTimeError(false);
+      }, 5000);
+      return;
+    }
+
+    if (
+      date1.isSame(today, 'day') && startTime.isBefore(currentTime, 'minute') ||
+      date2.isSame(today, 'day') && endTime.isBefore(currentTime, 'minute')
+    ) {
+      setDateTimeError(true);
+      setTimeout(() => {
+        setDateTimeError(false);
+      }, 5000);
+      return;
+    }
+
+    if (
+      date1.isSame(date2, 'day') && (
+        endTime.isBefore(startTime) ||
+        endTime.isSame(startTime) ||
+        endTime.diff(startTime, 'hours') < 1
+      )
+    ) {
+      setDateTimeError(true);
+      setTimeout(() => {
+        setDateTimeError(false);
+      }, 5000);
+      return;
+    }
     // Check the conditions previously used for disabling the button
     if (
       !vehicletype ||
@@ -398,7 +401,7 @@ const ListingGrid: React.FC = () => {
       setLocationAlert(true);
       setTimeout(() => {
         setLocationAlert(false);
-      }, 5000); 
+      }, 5000);
       return;
     }
 
@@ -406,7 +409,7 @@ const ListingGrid: React.FC = () => {
       setLocationAlert(true);
       setTimeout(() => {
         setLocationAlert(false);
-      }, 5000); 
+      }, 5000);
       return;
     }
 
@@ -484,10 +487,10 @@ const ListingGrid: React.FC = () => {
       handleWishlistUpdate(vehicle.vehicleid);
     }
   };
-      const startDate = date1.format("YYYY-MM-DD");
-      const endDate = date2.format("YYYY-MM-DD");
-      const startTimeStr = startTime.format("HH:mm");
-      const endTimeStr = endTime.format("HH:mm");
+  const startDate = date1.format("YYYY-MM-DD");
+  const endDate = date2.format("YYYY-MM-DD");
+  const startTimeStr = startTime.format("HH:mm");
+  const endTimeStr = endTime.format("HH:mm");
 
   const handleRentNowClick = (selectedVehicle: any) => {
     if (!pickupLocation || !pickupLocation.isValidLocation) {
@@ -498,54 +501,54 @@ const ListingGrid: React.FC = () => {
       if (pickupLocationRef.current) {
         pickupLocationRef.current.scrollIntoView({ behavior: "smooth" });
       }
-      return; 
+      return;
     }
     const today = dayjs().startOf('day');
     const currentTime = dayjs();
-      if (date1.isBefore(today, 'day')) {
-        
-        setDateTimeError(true)
-        setTimeout(() => {
-          setDateTimeError(false);
-        }, 5000);
-        return;
-      }
-    
-      if (date2.isBefore(date1, 'day')) {
-        setDateTimeError(true)
-        setTimeout(() => {
-          setDateTimeError(false);
-        }, 5000);
-        return;
-      }
-    
-      if (
-        date1.isSame(today, 'day') && startTime.isBefore(currentTime, 'minute') ||
-        date2.isSame(today, 'day') && endTime.isBefore(currentTime, 'minute')
-      ) {
-        setDateTimeError(true);
-        setTimeout(() => {
-          setDateTimeError(false);
-        }, 5000);
-        return;
-      }
+    if (date1.isBefore(today, 'day')) {
 
-      if (
-        date1.isSame(date2, 'day') && (
-          endTime.isBefore(startTime) ||
-          endTime.isSame(startTime) ||
-          endTime.diff(startTime, 'hours') < 1
-        )
-      ) {
-        setDateTimeError(true);
-        setTimeout(() => {
-          setDateTimeError(false);
-        }, 5000);
-        return;
-      }
+      setDateTimeError(true)
+      setTimeout(() => {
+        setDateTimeError(false);
+      }, 5000);
+      return;
+    }
+
+    if (date2.isBefore(date1, 'day')) {
+      setDateTimeError(true)
+      setTimeout(() => {
+        setDateTimeError(false);
+      }, 5000);
+      return;
+    }
+
+    if (
+      date1.isSame(today, 'day') && startTime.isBefore(currentTime, 'minute') ||
+      date2.isSame(today, 'day') && endTime.isBefore(currentTime, 'minute')
+    ) {
+      setDateTimeError(true);
+      setTimeout(() => {
+        setDateTimeError(false);
+      }, 5000);
+      return;
+    }
+
+    if (
+      date1.isSame(date2, 'day') && (
+        endTime.isBefore(startTime) ||
+        endTime.isSame(startTime) ||
+        endTime.diff(startTime, 'hours') < 1
+      )
+    ) {
+      setDateTimeError(true);
+      setTimeout(() => {
+        setDateTimeError(false);
+      }, 5000);
+      return;
+    }
 
     if (selectedVehicle) {
-      
+
       dispatch(setSelectedVehicleId(selectedVehicle.vehicleid));
       dispatch(
         setDateTime(
@@ -639,7 +642,7 @@ const ListingGrid: React.FC = () => {
                           }
                           ampm={false} // Use 24-hour format
                           views={["hours", "minutes"]}
-                          openTo="hours" 
+                          openTo="hours"
                           slotProps={{
                             textField: (params) => (
                               <TextField
@@ -693,7 +696,7 @@ const ListingGrid: React.FC = () => {
                           ampm={false} // Use 24-hour format
                           views={["hours", "minutes"]}
                           openTo="hours"
-                          
+
                           slotProps={{
                             textField: (params) => (
                               <TextField
@@ -826,6 +829,7 @@ const ListingGrid: React.FC = () => {
             >
               <div className="">
                 <ListingSidebar
+                  vehicleType={vehicletype}
                   selectedFilters={selectedFilters}
                   setSelectedFilters={setSelectedFilters}
                   handleSearchChange={handleSearchChange}
@@ -882,11 +886,11 @@ const ListingGrid: React.FC = () => {
                                     : "/assets/img/cars/no_img_found.jpg"
                                 }
                                 className="img-fluid"
-                                alt={item?.vehicleModel}
+                                alt={item?.Additional?.brand}
                               />
                             </div>
                             <div className="fav-item">
-                              
+
                               <Link
                                 to="#"
                                 className={`fav-icon ${wishlist.some((wishlistCar: { vehicleid: any }) => wishlistCar?.vehicleid === item?.vehicleid) ? "selected" : ""}`}
@@ -904,27 +908,27 @@ const ListingGrid: React.FC = () => {
                                     className="car-model"
                                     onClick={() => handleRentNowClick(item)}
                                   >
-                                    {item?.vehicleModel || 'N/A'}
+                                    {item?.Additional?.brand
+                                      ? item.Additional.brand.charAt(0).toUpperCase() + item.Additional.brand.slice(1).toLowerCase()
+                                      : 'N/A'}
+
                                   </div>
                                 </h3>
                                 <div className="list-rating">
-                                  {Array.from(
-                                    { length: Math.floor(item?.rating || 0) },
-                                    (_, index) => (
-                                      <i
-                                        key={index}
-                                        className="fas fa-star filled"
-                                      />
-                                    ),
-                                  )}
+                                  {(() => {
+                                    const rating = Number(item?.rating);
+                                    const validRating = Number.isFinite(rating) ? Math.floor(rating) : 5;
 
-                                  <span>
-                                    (
-                                    {item?.rating
-                                      ? item?.rating
-                                      : "Not rated Yet"}
-                                    )
-                                  </span>
+                                    return (
+                                      <>
+                                        {Array.from({ length: validRating }, (_, index) => (
+                                          <i key={index} className="fas fa-star filled" />
+                                        ))}
+                                        <span>({Number.isFinite(rating) ? rating : "5"})</span>
+                                      </>
+                                    );
+                                  })()}
+
                                 </div>
                               </div>
                               <div>
@@ -965,7 +969,9 @@ const ListingGrid: React.FC = () => {
                                       alt={item?.Additional.HorsePower || "N/A"}
                                     />
                                   </span>
-                                  <p className="mb-0">{item?.Additional.HorsePower || "NA"} bHp</p>
+                                  <p className="mb-0">
+                                    {(item?.Additional?.HorsePower != 'Not Provided' ? item.Additional.HorsePower : "NA")} bHp
+                                  </p>
                                 </div>
                                 <div className="col-md-4 col-sm-6 d-flex align-items-center mb-3">
                                   <span className="me-2">
@@ -977,13 +983,18 @@ const ListingGrid: React.FC = () => {
                                   <p className="mb-0">{item?.registrationYear.split("-")[0]}</p>
                                 </div>
                                 <div className="col-md-4 col-sm-6 d-flex align-items-center mb-3">
-                                  <span className="me-2">
-                                    <ImageWithBasePath
-                                      src="assets/img/icons/car-parts-06.svg"
-                                      alt="Persons"
-                                    />
-                                  </span>
-                                  <p className="mb-0">{item?.Additional.sevenSeater === true ? "7 seater" : "5 seater"}</p>
+
+
+                                  {Number(vehicletype) !== 1 && (
+                                    <><span className="me-2">
+                                      <ImageWithBasePath
+                                        src="assets/img/icons/car-parts-06.svg"
+                                        alt="Persons" />
+                                    </span><p className="mb-0">
+                                        {item?.Additional.Sevenseater === true ? "7 seater" : "5 seater"}
+                                      </p></>
+                                  )}
+
                                 </div>
                               </div>
                             </div>

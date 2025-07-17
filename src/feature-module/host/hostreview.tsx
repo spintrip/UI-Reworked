@@ -10,11 +10,11 @@ import ImageWithBasePath1 from "../../core/data/img/ImageWithBasePath1";
 import { RootState } from "../redux/rootReducer";
 import { Helmet } from "react-helmet";
 interface ListingInfo {
-  carId: string;
-  carImage: string;
-  carModel: string;
+  vehicleid: string;
+  vehicleImage: string;
+  vehicleModel: string;
   rcNumber: string;
-  carImage1: string;
+  vehicleImage1: string;
   latitude: number;
   longitude: number;
 }
@@ -36,7 +36,8 @@ const HostReview: React.FC = () => {
     const fetchReviews = async () => {
       const listingsWithReviews = await Promise.all(
         Listings.map(async (lstg: ListingInfo) => {
-          const reviewsObject = await reviews(lstg.carId);
+          console.log("Fetching reviews for carId:", lstg);
+          const reviewsObject = await reviews(lstg.vehicleid);
 
           if (reviewsObject && Array.isArray(reviewsObject.message)) {
             const combinedReviews = reviewsObject.message.map(

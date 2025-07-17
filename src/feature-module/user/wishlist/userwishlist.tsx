@@ -20,6 +20,7 @@ import {
 } from "../../api/Cars";
 import LocationDisplay from "../../common/LocationDisplay";
 
+
 const UserWishList: React.FC = () => {
   const [wishlist, setWishlist] = useState<any[]>([]);
   const location = useSelector((state: any) => state.dateTime.location);
@@ -90,8 +91,8 @@ const UserWishList: React.FC = () => {
 
   const handleRentNowClick = (selectedCar: any) => {
     if (selectedCar) {
-      dispatch(setSelectedCarId(selectedCar.carId));
-      dispatch(setDateTime(startDate, startTime, endDate, endTime, location));
+      dispatch(setSelectedVehicleId(selectedCar.vehicleid));
+      dispatch(setDateTime(selectedCar.vehicleType, startDate, startTime, endDate, endTime, location, 50000000));
       navigate(routes.listingdetails);
     } else {
       alert("Car information is not available.");
@@ -223,7 +224,7 @@ const UserWishList: React.FC = () => {
                                     </span>
                                     <p>{car["type"]}</p>
                                   </li>
-                                  <li>
+                                  {/* <li>
                                     <span>
                                       <ImageWithBasePath
                                         src="assets/img/icons/car-parts-02.svg"
@@ -231,7 +232,7 @@ const UserWishList: React.FC = () => {
                                       />
                                     </span>
                                     <p>{car["mileage"] || "N/A"} KM</p>
-                                  </li>
+                                  </li> */}
                                   <li>
                                     <span>
                                       <ImageWithBasePath
