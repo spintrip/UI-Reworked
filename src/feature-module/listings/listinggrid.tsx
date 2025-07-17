@@ -970,7 +970,7 @@ const ListingGrid: React.FC = () => {
                                     />
                                   </span>
                                   <p className="mb-0">
-                                    {(item?.Additional?.HorsePower != 'Not Provided' ? item.Additional.HorsePower : "NA")} bHp
+                                    {(item?.Additional?.HorsePower != 'Not Provided' ? item?.Additional?.HorsePower : "NA")} bHp
                                   </p>
                                 </div>
                                 <div className="col-md-4 col-sm-6 d-flex align-items-center mb-3">
