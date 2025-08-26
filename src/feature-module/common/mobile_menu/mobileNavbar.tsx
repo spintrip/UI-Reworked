@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import { all_routes } from "../../router/all_routes";
-import "./mobileNavbar.css";;
-
+import "./mobileNavbar.css";
 
 const MobileNavbar = ({
   header,
@@ -12,64 +11,54 @@ const MobileNavbar = ({
   token,
 }) => {
   const [burgerStatus, setBurgerStatus] = useState(false);
-  const [activeSubMenu, setActiveSubMenu] = useState(null);
+  const [activeSubMenu, setActiveSubMenu] = useState<number | null>(null);
+  const location = useLocation(); // use router location instead of window.location
   const routes = all_routes;
 
-  // const toggleMenu = () => {
-  //   const isMenuOpening = !burgerStatus; 
-  //   setBurgerStatus(isMenuOpening);
-   
-  //   const event = new Event(isMenuOpening ? 'menuOpen' : 'menuClose');
-  //   document.dispatchEvent(event);
-  
-  //   // Logic to handle starting/stopping Joyride based on menu status
-  //   const status = localStorage.getItem("tourCompleted");
-  //   if (isMenuOpening && status !== "true") {
-  //     startTour();
-  //     setStepIndex(1); // Go to the second step (index 1)
-  //   } else {
-  //     stopTour();
-  //   }
-  // };
-  
+  const toggleMenu = () => {
+    const open = !burgerStatus;
+    setBurgerStatus(open);
 
-
-  const closeMenu = () => {
-    setBurgerStatus(false);
-    // setRun(false);
+    // If you need those custom events for Joyride later:
+    // document.dispatchEvent(new Event(open ? "menuOpen" : "menuClose"));
   };
 
-  const toggleSubMenu = (index) => {
+  const closeMenu = () => setBurgerStatus(false);
+
+  const toggleSubMenu = (index: number) =>
     setActiveSubMenu(activeSubMenu === index ? null : index);
-  };
+
+  // Close the menu automatically on route change
+  useEffect(() => {
+    closeMenu();
+    setActiveSubMenu(null);
+  }, [location.pathname]);
 
   return (
     <div style={{ width: "100%", height: "100vh", zIndex: "" }}>
-      <div className="burger-menu" onClick={()=> {}}>
-        <div
-          className={`burger-bar ${burgerStatus ? "clicked" : "unclicked"}`}
-        ></div>
-        <div
-          className={`burger-bar ${burgerStatus ? "clicked" : "unclicked"}`}
-        ></div>
-        <div
-          className={`burger-bar ${burgerStatus ? "clicked" : "unclicked"}`}
-        ></div>
-      </div>
+      <button
+        className="burger-menu"
+        onClick={toggleMenu}
+        aria-expanded={burgerStatus}
+        aria-label="Toggle navigation"
+      >
+        <span className={`burger-bar ${burgerStatus ? "clicked" : "unclicked"}`} />
+        <span className={`burger-bar ${burgerStatus ? "clicked" : "unclicked"}`} />
+        <span className={`burger-bar ${burgerStatus ? "clicked" : "unclicked"}`} />
+      </button>
 
-      <div className={`menu ${burgerStatus ? "visible" : "hidden"} `}>
+      <nav className={`menu ${burgerStatus ? "visible" : "hidden"}`}>
         <ul className="menu-items mobile-user-joyride-step text-black">
-          {header.map((mainMenus: any, mainIndex: any) => (
+          {header.map((mainMenus: any, mainIndex: number) => (
             <React.Fragment key={mainIndex}>
               {mainMenus.separateRoute ? (
                 <li
-                  key={mainIndex}
                   className={
                     location.pathname.includes(mainMenus.routes || "") ||
                     mainMenus?.links?.includes(location.pathname) ||
                     (mainMenus.tittle === "Pages" &&
-                      pagesActiveClassArray?.some((name: string | string[]) =>
-                        name.includes(location.pathname),
+                      pagesActiveClassArray?.some((name: string) =>
+                        name.includes(location.pathname)
                       ))
                       ? "active"
                       : ""
@@ -85,54 +74,51 @@ const MobileNavbar = ({
                     activeSubMenu === mainIndex ? "active" : ""
                   }`}
                 >
-                  <Link
-                    to="#"
+                  <button
+                    type="button"
+                    className="submenu-toggle"
                     onClick={() => toggleSubMenu(mainIndex)}
+                    aria-expanded={activeSubMenu === mainIndex}
                   >
                     {mainMenus.tittle} <i className="fas fa-chevron-down"></i>
-                  </Link>
+                  </button>
                   <ul
                     className={`submenu ${
                       activeSubMenu === mainIndex ? "visible" : ""
                     }`}
                   >
-                    {mainMenus.menu?.map((menu: any, menuIndex: any) => (
+                    {mainMenus.menu?.map((menu: any, menuIndex: number) => (
                       <li
                         key={menuIndex}
                         className={`${
                           menu.hasSubRoute ? "has-submenu" : ""
                         } ${
                           menu?.subMenus?.some(
-                            (item) => item.routes === location.pathname
+                            (item: any) => item.routes === location.pathname
                           )
                             ? "active"
                             : ""
                         }`}
                       >
                         {menu.hasSubRoute ? (
-                          <React.Fragment>
-                            <Link to="#" onClick={closeMenu}>
-                              {menu.menuValue}
-                            </Link>
+                          <>
+                            <span className="submenu-label">{menu.menuValue}</span>
                             <ul
                               className={`submenu ${
                                 menu.showSubRoute ? "d-block" : ""
-                              } `}
+                              }`}
                             >
                               {menu.subMenus?.map(
-                                (subMenu: any, subMenuIndex: any) => (
+                                (subMenu: any, subMenuIndex: number) => (
                                   <li key={subMenuIndex}>
-                                    <Link
-                                      to={subMenu.routes}
-                                      onClick={closeMenu}
-                                    >
+                                    <Link to={subMenu.routes} onClick={closeMenu}>
                                       {subMenu.menuValue}
                                     </Link>
                                   </li>
                                 )
                               )}
                             </ul>
-                          </React.Fragment>
+                          </>
                         ) : (
                           <Link
                             to={menu.routes}
@@ -153,6 +139,7 @@ const MobileNavbar = ({
               )}
             </React.Fragment>
           ))}
+
           {token ? (
             <li>
               <Link
@@ -163,9 +150,7 @@ const MobileNavbar = ({
                   closeMenu();
                 }}
               >
-                <span>
-                  <i className="fa-regular fa-user text-white " />
-                </span>
+                <i className="fa-regular fa-user text-white" />
                 <p className="mx-2 text-white font-semibold">Logout</p>
               </Link>
             </li>
@@ -177,9 +162,7 @@ const MobileNavbar = ({
                   to={routes.login}
                   onClick={closeMenu}
                 >
-                  <span>
-                    <i className="fa-regular fa-user" />
-                  </span>
+                  <i className="fa-regular fa-user" />
                   <p className="mx-2">Sign In</p>
                 </Link>
               </li>
@@ -189,16 +172,14 @@ const MobileNavbar = ({
                   to={routes.signup}
                   onClick={closeMenu}
                 >
-                  <span>
-                    <i className="fa-solid fa-lock text-white" />
-                  </span>
+                  <i className="fa-solid fa-lock text-white" />
                   <p className="mx-2 text-white">Sign Up</p>
                 </Link>
               </li>
             </>
           )}
         </ul>
-      </div>
+      </nav>
     </div>
   );
 };
@@ -207,7 +188,7 @@ MobileNavbar.propTypes = {
   header: PropTypes.array.isRequired,
   handleLogout: PropTypes.func.isRequired,
   pagesActiveClassArray: PropTypes.array.isRequired,
-  token: PropTypes.string, // Add token prop type
+  token: PropTypes.any,
 };
 
 export default MobileNavbar;
