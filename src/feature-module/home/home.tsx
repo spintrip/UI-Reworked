@@ -523,11 +523,11 @@ const Home: React.FC = () => {
         <title>Home - Spintrip Car Rentals </title>
         <meta
           name="description"
-          content="Spintrip Car Rentals - Affordable self-drive car rentals in Bangalore. Rent top-notch cars from local hosts and enjoy competitive pricing. Hosts earn exciting commissions by listing their cars with us."
+          content="Spintrip Car Rentals - Affordable self-drive car rentals. Rent top-notch cars from local hosts and enjoy competitive pricing. Hosts earn exciting commissions by listing their cars with us."
         />
         <meta
           name="keywords"
-          content="Spintrip Car Rentals, affordable car rentals Bangalore, self-drive car rentals Bangalore, rent cars Bangalore, top-notch cars Bangalore, local car hosts Bangalore, competitive car rental pricing, car rental commissions, list your car Bangalore, Bangalore car hire, best car rentals Bangalore, car rental deals Bangalore, self-drive cars Bangalore, car rental service Bangalore, rent a car Bangalore, car rental company Bangalore, self-drive rental services, weekend car rentals Bangalore, hourly car rentals Bangalore, economic car rentals Bangalore"
+          content="Spintrip Car Rentals, affordable car rentals, self-drive car rentals, rent cars, top-notch cars, local car hosts, competitive car rental pricing, car rental commissions, list your car, car hire, best car rentals, car rental deals, self-drive cars, car rental service, rent a car, car rental company, self-drive rental services, weekend car rentals, hourly car rentals, economic car rentals"
         ></meta>
       </Helmet>
 

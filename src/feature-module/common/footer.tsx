@@ -114,8 +114,12 @@ const Footer = () => {
                         <PhoneCall />
                       </span>
                       <div className="addr-info">
-                        <Link className="font-mono" to="tel:+91 9071003156">
-                          +91 9071003156
+                        <Link className="font-mono text-sm" to="tel:+91 9501931153">
+                          +91 9501931153
+                        </Link>
+                        <br />
+                        <Link className="font-mono text-sm" to="tel:+91 7569645049">
+                          +91 7569645049
                         </Link>
                       </div>
                     </div>

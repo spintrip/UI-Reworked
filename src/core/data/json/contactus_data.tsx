@@ -3,8 +3,15 @@ const data = [
     type: "phone",
     icon: "feather-phone-call",
     title: "Phone Number",
-    link: "tel:+919071003156",
-    text: "+91 9071003156",
+    link: "tel:+919501931153",
+    text: "+91 9501931153",
+  },
+  {
+    type: "phone",
+    icon: "feather-phone-call",
+    title: "Phone Number",
+    link: "tel:+917569645049",
+    text: "+91 7569645049",
   },
   {
     type: "email",
@@ -13,13 +20,7 @@ const data = [
     link: "mailto:info@spintrip.in",
     text: "Info@spintrip.in",
   },
-  {
-    type: "location",
-    icon: "feather-map-pin",
-    title: "Location",
-    link: "#;",
-    text: "Bangalore, India",
-  },
+
   {
     type: "hours",
     icon: "feather-clock",

@@ -80,11 +80,11 @@ const Contact = () => {
         <title>Contact Us | Spintrip Car Rentals</title>
         <meta
           name="description"
-          content="Contact Spintrip Car Rentals for affordable self-drive car rentals in Bangalore. Our support team is here to assist you with bookings, listings, and any inquiries you may have."
+          content="Contact Spintrip Car Rentals for affordable self-drive car rentals. Our support team is here to assist you with bookings, listings, and any inquiries you may have."
         />
         <meta
           name="keywords"
-          content="contact Spintrip Car Rentals, self-drive car rentals Bangalore, car rental support Bangalore, car rental inquiries, car rental bookings, car listing assistance"
+          content="contact Spintrip Car Rentals, self-drive car rentals, car rental support, car rental inquiries, car rental bookings, car listing assistance"
         />
       </Helmet>
 

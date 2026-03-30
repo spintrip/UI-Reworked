@@ -5,7 +5,7 @@ export const getBlogs = async () => {
     
     try {
        
-        var apiUrl = 'admin/getallblogs';
+        var apiUrl = 'users/blogs'; // Points to the new public route
         const response = await fetch(serverApiUrl + apiUrl, {
             method: 'GET',
             headers: {
@@ -20,7 +20,8 @@ export const getBlogs = async () => {
 
   export const getBlogById = async (id) => {
     try {
-      const response = await fetch(serverApiUrl + `admin/getBlogById/${id}`);
+      // Points to the new public route
+      const response = await fetch(serverApiUrl + `users/blogs/${id}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
