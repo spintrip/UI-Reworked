@@ -488,25 +488,30 @@ const Home: React.FC = () => {
         };
 
         const res = await getBulkEstimates(payload);
-        if (res && res.estimates) {
+        console.log("Search Results from Backend:", res);
+        
+        if (res && res.estimates && Object.keys(res.estimates).length > 0) {
             const blocks = Object.entries(res.estimates).map(([type, est]: [string, any]) => ({
                 cabType: type,
                 ...est
             }));
             setCabBlocks(blocks);
+            
+            // 🔥 Force UI refresh and scroll
             setTimeout(() => {
+                AOS.refresh(); 
                 cabResultsRef.current?.scrollIntoView({ behavior: 'smooth' });
-            }, 100);
+            }, 500);
         } else {
-            setSendError("No cab estimates found for this route.");
+            setCabBlocks([]);
+            setSendError("No cabs found for this route/time. Try again.");
             setDateTimeError(true);
             setTimeout(() => setDateTimeError(false), 5000);
         }
-    } catch (err: any) {
-        console.error("Cab Search Error:", err);
-        setSendError("Failed to find estimates. Please try again.");
+    } catch (err) {
+        console.error("Search Error:", err);
+        setSendError("Search failed. Please check your connection.");
         setDateTimeError(true);
-        setTimeout(() => setDateTimeError(false), 5000);
     } finally {
         setIsCabLoading(false);
     }
