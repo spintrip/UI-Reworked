@@ -135,7 +135,7 @@ const BlogList = () => {
                       <div className="blog grid-blog">
                         <div className="blog-image-list">
                           <Link to={`${route.blogdetails}${blog.blogId}`}>
-                            <img
+                            <ImageWithBasePath
                               className="img-fluid blogList-image w-full h-[200px] object-fit-cover"
                               src={blog.blogImage1}
                               alt={blog.blogName}

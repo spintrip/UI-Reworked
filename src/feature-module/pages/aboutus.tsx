@@ -1,5 +1,6 @@
 import React, { Suspense, useEffect, useState } from "react";
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
+import { androidAppLink } from "../../environment";
 
 // import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -62,27 +63,30 @@ const AboutUs = () => {
         <NotificationBar />
         {/* /Breadscrumb Section */}
         {/* About */}
-        <section className="section about-sec">
+        <section className="section bg-white-reset about-sec overflow-hidden">
           <div className="container">
             <div className="row align-items-center">
               <div className="col-lg-6" data-aos="fade-down">
                 <div className="about-img">
                   
-                  <div className="abt-img">
+                  <div className="abt-img relative">
                     <ImageWithBasePath
                       src="assets/img/pic1.png"
-                      className="img-fluid"
+                      className="img-fluid rounded-4xl shadow-2xl"
                       alt="About us"
+                      style={{ borderRadius: '32px' }}
                     />
                   </div>
                 </div>
               </div>
-              <div className="col-lg-6" data-aos="fade-down">
+              <div className="col-lg-6" data-aos="fade-left">
                 <div className="about-content">
-                  <h6>ABOUT OUR COMPANY</h6>
-                  <h3 className="font-bold mb-3">
-                    Spintrip Car Rentals: Best Solution For Your Travel Needs
-                  </h3>
+                  <div className="spintrip-premium-heading text-left" style={{ textAlign: 'left', marginBottom: '32px' }}>
+                    <h6 className="text-orange-600 font-bold tracking-widest uppercase text-xs mb-4">ABOUT OUR COMPANY</h6>
+                    <h2 style={{ textAlign: 'left', fontSize: '2.5rem' }}>
+                      Best Solution For Your Travel Needs
+                    </h2>
+                  </div>
                   <p>
                     At Spintrip Car Rentals, we pride ourselves on providing
                     top-notch car rental services that cater to all your travel
@@ -118,124 +122,69 @@ const AboutUs = () => {
           </div>
         </section>
         {/* /About */}
-        <div className="row my-5">
-        <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-          <ImageWithBasePath
-            src="assets/img/android-phone-mockup.png"
-            className="phone-prototype-image"
-            alt="Download app"
-          />
-        </div>
-        <div className="col-12 col-md-6 d-flex flex-column px-5 align-items-center justify-content-center">
-          <h2 className="coming-soon text-center">
-            Get the Spintrip Android App!
-          </h2>
-          <p className="text-center mt-3">
-            Experience the convenience of booking and managing your car rentals
-            with just a few taps.
-          </p>
-          <p className="text-center mt-1">
-            Stay ahead with real-time updates, notifications, and more – all in
-            one place.
-          </p>
-          <div className="my-4 d-flex">
-          <a
-            href="/spintrip-app.apk"
-            target="_blank"
-            rel="noopener noreferrer"
-            download
-            className="max-w-[200px] object-fit-cover cursor-pointer"
-            >
-            <ImageWithBasePath
-                src="assets/img/download-apk.svg"
-                className="img-fluid"
-                alt="Download app"
-            />
-            </a>
-
+        
+        {/* App Download Section: Production Hardening */}
+        <section className="section bg-slate-reset overflow-hidden border-y border-slate-100">
+          <div className="container">
+            <div className="row align-items-center">
+              <div className="col-lg-6 col-md-12 d-flex align-items-center justify-content-center" data-aos="fade-right">
+                <ImageWithBasePath
+                  src="assets/img/android-phone-mockup.png"
+                  className="phone-prototype-image hover:scale-105 transition-transform duration-700"
+                  alt="Download app"
+                />
+              </div>
+              <div className="col-lg-6 col-md-12 px-lg-5" data-aos="fade-left">
+                <div className="spintrip-premium-heading text-left" style={{ textAlign: 'left' }}>
+                  <h2 style={{ textAlign: 'left' }}>Get the Spintrip Android App</h2>
+                  <p style={{ marginLeft: '0', maxWidth: '100%' }}>
+                    Experience the convenience of booking and managing your car rentals
+                    with just a few taps. Stay ahead with real-time updates and notifications.
+                  </p>
+                </div>
+                <div className="my-8 flex justify-start">
+                  <a href={androidAppLink} target="_blank" rel="noopener noreferrer" className="hover:opacity-90 transition-opacity">
+                    <ImageWithBasePath
+                        src="assets/img/download-apk.svg"
+                        className="img-fluid shadow-lg rounded-xl"
+                        alt="Download app"
+                        style={{ maxWidth: '220px' }}
+                    />
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-
-       
-      </div>
+        </section>
         {/* services */}
-        <section className="section services bg-light-primary">
-          <div className="service-right">
-            <ImageWithBasePath
-              src="assets/img/bg/service-right.svg"
-              className="img-fluid"
-              alt="services right"
-            />
-          </div>
+        <section className="section bg-white-reset services">
           <div className="container">
             {/* Heading title*/}
-            <div className="section-heading" data-aos="fade-down">
+            <div className="spintrip-premium-heading" data-aos="fade-down">
               <h2>How It Works</h2>
               <p>
                 At Spintrip Car Rentals, renting a car is as easy as 1-2-3.
-                Here’s how it works:
+                Here’s the simple process:
               </p>
             </div>
             {/* /Heading title */}
             <div className="services-work">
-              <div className="row">
-                <div className="col-lg-4 col-md-4 col-12" data-aos="fade-down">
-                  <div className="services-group">
-                    <div className="services-icon border-secondary">
-                      <ImageWithBasePath
-                        className="icon-img bg-secondary"
-                        src="assets/img/icons/services-icon-01.svg"
-                        alt="Choose Locations"
-                      />
-                    </div>
-                    <div className="services-content">
-                      <h3>1. Choose Locations</h3>
-                      <p>
-                        Select the location where you want to pick up your
-                        rental car. We offer numerous pick-up points for your
-                        convenience.
-                      </p>
+              <div className="row g-8">
+                {[
+                  { id: "1", title: "Choose Location", desc: "Select the location where you want to pick up your rental car. We offer numerous pick-up points." },
+                  { id: "2", title: "Pick-Up Spot", desc: "Once you’ve chosen your location, pick up your car at the designated spot. Smooth handover." },
+                  { id: "3", title: "Book your Car", desc: "Book your preferred car online or through our app. Enjoy your drive with total reliability." }
+                ].map((item, index) => (
+                  <div className="col-lg-4 col-md-4 col-12" key={index} data-aos="fade-up" data-aos-delay={index * 100}>
+                    <div className="glass-panel p-10 text-center hover:translate-y-[-8px] transition-all duration-300">
+                      <div className="w-20 h-20 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-6 text-2xl font-black">
+                        {item.id}
+                      </div>
+                      <h3 className="text-xl font-bold mb-4">{item.title}</h3>
+                      <p className="text-slate-500 leading-relaxed">{item.desc}</p>
                     </div>
                   </div>
-                </div>
-                <div className="col-lg-4 col-md-4 col-12" data-aos="fade-down">
-                  <div className="services-group">
-                    <div className="services-icon border-warning">
-                      <ImageWithBasePath
-                        className="icon-img bg-warning"
-                        src="assets/img/icons/services-icon-01.svg"
-                        alt="Choose Locations"
-                      />
-                    </div>
-                    <div className="services-content">
-                      <h3>2. Pick-Up Locations</h3>
-                      <p>
-                        Once you’ve chosen your location, pick up your car at
-                        the designated spot. Our team will ensure a smooth
-                        handover.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-4 col-md-4 col-12" data-aos="fade-down">
-                  <div className="services-group">
-                    <div className="services-icon border-dark">
-                      <ImageWithBasePath
-                        className="icon-img bg-dark"
-                        src="assets/img/icons/services-icon-01.svg"
-                        alt="Choose Locations"
-                      />
-                    </div>
-                    <div className="services-content">
-                      <h3>3. Book your Car</h3>
-                      <p>
-                        Book your preferred car online or through our app. Enjoy
-                        your drive with the assurance of Spintrip's quality and
-                        reliability.
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
@@ -243,93 +192,31 @@ const AboutUs = () => {
         {/* /services */}
 
         {/* Why Choose Us */}
-        <section className="section why-choose">
-          <div className="choose-left">
-            <ImageWithBasePath
-              src="assets/img/bg/choose-left.png"
-              className="img-fluid"
-              alt="Why Choose Us"
-            />
-          </div>
+        <section className="section bg-slate-reset why-choose">
           <div className="container">
             {/* Heading title*/}
-            <div className="section-heading" data-aos="fade-down">
+            <div className="spintrip-premium-heading" data-aos="fade-down">
               <h2>Why Choose Us</h2>
-              <p>
-                Discover the unique benefits of choosing Spintrip Car Rentals
-                for your next journey.
-              </p>
+              <p>Discover the unique benefits of choosing Spintrip Car Rentals for your next journey.</p>
             </div>
             {/* /Heading title */}
             <div className="why-choose-group">
-              <div className="row">
-                <div
-                  className="col-lg-4 col-md-6 col-12 d-flex"
-                  data-aos="fade-down"
-                >
-                  <div className="card flex-fill">
-                    <div className="card-body">
-                      <div className="choose-img choose-black">
-                        <ImageWithBasePath
-                          src="assets/img/icons/bx-user-check.svg"
-                          alt=""
-                        />
+              <div className="row g-8">
+                {[
+                  { title: "Personalized Service", desc: "Tailored rental experiences designed to meet your specific travel needs.", icon: "assets/img/icons/bx-user-check.svg" },
+                  { title: "Convenient Locations", desc: "Strategically placed pick-up points across the city for total accessibility.", icon: "assets/img/icons/bx-user-check.svg" },
+                  { title: "Exceptional Value", desc: "Competitive rates and transparent pricing ensuring the best deal every time.", icon: "assets/img/icons/bx-user-check.svg" }
+                ].map((item, index) => (
+                  <div className="col-lg-4 col-md-6 col-12 d-flex" key={index} data-aos="fade-up" data-aos-delay={index * 100}>
+                    <div className="glass-panel p-10 flex-fill hover:scale-105 transition-all duration-300 bg-white">
+                      <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mb-8">
+                        <ImageWithBasePath src={item.icon} alt={item.title} style={{ width: '32px' }} />
                       </div>
-                      <div className="choose-content">
-                        <h4>Personalized Service</h4>
-                        <p>
-                          We provide personalized service to ensure your rental
-                          experience is seamless and tailored to your needs.
-                        </p>
-                      </div>
+                      <h4 className="text-xl font-black mb-4">{item.title}</h4>
+                      <p className="text-slate-500 leading-relaxed">{item.desc}</p>
                     </div>
                   </div>
-                </div>
-                <div
-                  className="col-lg-4 col-md-6 col-12 d-flex"
-                  data-aos="fade-down"
-                >
-                  <div className="card flex-fill">
-                    <div className="card-body">
-                      <div className="choose-img choose-secondary">
-                        <ImageWithBasePath
-                          src="assets/img/icons/bx-user-check.svg"
-                          alt=""
-                        />
-                      </div>
-                      <div className="choose-content">
-                        <h4>Convenient Locations</h4>
-                        <p>
-                          Our pick-up and drop-off locations are strategically
-                          placed for your convenience, making your travel
-                          hassle-free.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="col-lg-4 col-md-6 col-12 d-flex"
-                  data-aos="fade-down"
-                >
-                  <div className="card flex-fill">
-                    <div className="card-body">
-                      <div className="choose-img choose-primary">
-                        <ImageWithBasePath
-                          src="assets/img/icons/bx-user-check.svg"
-                          alt=""
-                        />
-                      </div>
-                      <div className="choose-content">
-                        <h4>Exceptional Value</h4>
-                        <p>
-                          Enjoy competitive rates and exceptional value with
-                          Spintrip Car Rentals, ensuring you get the best deal.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
@@ -339,11 +226,10 @@ const AboutUs = () => {
         <section className="section about-testimonial testimonials-section">
           <div className="container">
             {/* Heading title*/}
-            <div className="section-heading" data-aos="fade-down">
-              <h2 className="title text-white">What People say about us? </h2>
-              <p className="description text-white">
-                Our customers love us! Here are some of the things they have to
-                say about their experiences with Spintrip Car Rentals.
+            <div className="spintrip-premium-heading dark-section p-10 rounded-4xl" data-aos="fade-down">
+              <h2 className="text-white-important">What People Say</h2>
+              <p className="text-slate-300">
+                Discover why thousands of travelers choose Spintrip for their luxury journeys and daily commutes.
               </p>
             </div>
             {/* /Heading title */}
@@ -371,12 +257,9 @@ const AboutUs = () => {
           {/* FAQ  */}
           <section className="section faq-section bg-light-primary">
             <div className="container">
-              <div className="section-heading" data-aos="fade-down">
+              <div className="spintrip-premium-heading" data-aos="fade-down">
                 <h2>Frequently Asked Questions</h2>
-                <p>
-                  Have questions? We have answers to the most frequently asked
-                  questions about our car rental services.
-                </p>
+                <p>Have questions? We have answers to help you get started with your next journey.</p>
               </div>
               <div className="faq-info">
                 {faqData.map((faq, index) => (

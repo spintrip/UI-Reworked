@@ -4,6 +4,8 @@ import { all_routes } from "../router/all_routes";
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 import MobileNavbar from "./mobile_menu/mobileNavbar";
 import { useDropdown } from './DropdownContext';
+import { useDispatch } from "react-redux";
+import { setAuthToken } from "../redux/action";
 
 
 const Header = () => {
@@ -13,6 +15,7 @@ const Header = () => {
   const [token, setToken] = useState<any>(localStorage.getItem("token"));
   const [host, setHost] = useState(localStorage.getItem("Host"));
   const { activeSubMenu, setActiveSubMenu } = useDropdown();
+  const dispatch = useDispatch();
 
   // useEffect(() => {
   //   if (!run) {
@@ -32,10 +35,19 @@ const Header = () => {
   }, [token, host]);
 
   const handleLogout = () => {
+    // Thoroughly clear all session data mirroring the app's auth_controller
     localStorage.removeItem("authToken");
     localStorage.removeItem("Host");
+    localStorage.removeItem("UserRole");
+    localStorage.removeItem("user"); // Clear user metadata if exists
+    
+    // Clear Redux state
+    dispatch(setAuthToken(""));
+    
     setToken(null);
     setHost(null);
+    
+    // Smooth redirect to home
     navigate(routes.home); 
     window.location.reload();
   };
@@ -179,13 +191,7 @@ const Header = () => {
           showSubRoute: false,
           subMenus: [],
         },
-        {
-          menuValue: "Payment",
-          routes: routes.payment,
-          hasSubRoute: false,
-          showSubRoute: false,
-          subMenus: [],
-        },
+
         {
           menuValue: "Profile",
           clasName: "Profile-upload",
@@ -259,32 +265,24 @@ const Header = () => {
   ];
   return (
     <>
-      <header className="header">
+      <header className="header header-five glass-header">
         <div className="container-fluid">
-          <nav className="navbar navbar-expand-lg header-nav bg-transparent">
+          <nav className="navbar navbar-expand-lg header-nav">
             <div className="navbar-header">
-              <Link
-                to={host === "1" ? routes.hostdashboard : routes.home}
-                className=""
-              >
+              <Link id="mobile_btn" to="#">
+                <span className="bar-icon">
+                  <span />
+                  <span />
+                  <span />
+                </span>
+              </Link>
+              <Link to={host === "1" ? routes.hostdashboard : routes.home} className="navbar-brand logo">
                 <ImageWithBasePath
-                  src={
-                    host === "1"
-                      ? "assets/img/Spintrip_logo-host.png"
-                      : "assets/img/Spintrip_logo.png"
-                  }
-                  className="navbar-logo-custom"
+                  src={host === "1" ? "assets/img/Spintrip_logo-host.png" : "assets/img/Spintrip_logo.png"}
+                  className="img-fluid navbar-logo-custom"
                   alt="Logo"
                 />
               </Link>
-              <div className="mobile-navbar">
-                <MobileNavbar
-                  header={header}
-                  handleLogout={handleLogout}
-                  pagesActiveClassArray={pagesActiveClassArray}
-                  token={token}
-                />
-              </div>
             </div>
             <div className="main-menu-wrapper">
               <div className="menu-header">
@@ -362,9 +360,7 @@ const Header = () => {
                         <li className={location.pathname.includes(routes.wishlist) ? "active" : ""}>
                           <Link to={routes.wishlist}>Wishlist</Link>
                         </li>
-                        <li className={location.pathname.includes(routes.payment) ? "active" : ""}>
-                          <Link to={routes.payment}>Payment</Link>
-                        </li>
+
                         <li className={location.pathname.includes(routes.settings) ? "active" : ""}>
                           <Link to={routes.settings}>Profile</Link>
                         </li>
@@ -393,13 +389,11 @@ const Header = () => {
                   <>
                     <li className="nav-item">
                       <Link
-                        className="nav-link header-login"
+                        className="nav-link header-login-premium"
                         to={routes.home}
                         onClick={handleLogout}
                       >
-                        <span>
-                          <i className="fa-regular fa-user" />
-                        </span>
+                        <i className="fa-regular fa-user me-2" />
                         Logout
                       </Link>
                     </li>
@@ -415,18 +409,14 @@ const Header = () => {
                 ) : (
                   <>
                     <li className="nav-item" onClick={() => {}}>
-                      <Link className="nav-link header-login" to={routes.login}>
-                        <span>
-                          <i className="fa-regular fa-user" />
-                        </span>
+                      <Link className="nav-link header-login-premium" to={routes.login}>
+                        <i className="fa-regular fa-user me-2" />
                         Sign In
                       </Link>
                     </li>
                     <li className="nav-item signup-button" onClick={() => {}}>
-                      <Link className="nav-link header-reg" to={routes.signup}>
-                        <span>
-                          <i className="fa-solid fa-lock" />
-                        </span>
+                      <Link className="nav-link header-reg-premium" to={routes.signup}>
+                        <i className="fa-solid fa-lock me-2" />
                         Sign Up
                       </Link>
                     </li>

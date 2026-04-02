@@ -3,6 +3,7 @@ import { Navigate, Route } from "react-router";
 import { all_routes } from "./all_routes";
 import Home from "../home/home";
 import SignUp from "../authentication/signup";
+import Onboarding from "../authentication/onboarding";
 import Login from "../authentication/login";
 import ForgotPassword from "../authentication/forgotpassword";
 import ResetPassword from "../authentication/resetpassword";
@@ -191,6 +192,12 @@ export const blogroutes = [
 ];
 
 export const authenticationRoute = [
+  {
+    path: routes.onboarding,
+    name: "onboarding",
+    element: <Onboarding />,
+    route: Route,
+  },
   {
     path: routes.signup,
     name: "signup",

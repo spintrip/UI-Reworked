@@ -77,10 +77,11 @@ const AboutCompany = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-lg-3" data-aos="fade-down">
-                <div className="about-company-content">
-                  <h6 className="font-weight-bold">Best Solution For Your Travel Needs</h6>
-                  <p className="font-italic">
+              <div className="col-lg-4" data-aos="fade-down">
+                <div className="spintrip-premium-heading text-left mb-6" style={{ textAlign: 'left' }}>
+                  <h6 className="text-orange-600 font-bold tracking-widest uppercase text-xs mb-4">OUR PROMISE</h6>
+                  <h2 style={{ textAlign: 'left', fontSize: '2.5rem' }}>Best Solution For Your Travel Needs</h2>
+                  <p className="text-slate-500 text-lg mt-4 mb-0">
                   A top-tier car rental experience tailored to your needs—whether it's for business, a family getaway, or a special occasion.
                   </p>
                   <p>
@@ -137,10 +138,7 @@ const AboutCompany = () => {
                 <a className="tmna-sticky-tabs-link" onClick={scrollToOurHistory} title="Our History">Our History</a>
                 <div className="vertical-line"></div>
               </div>
-              <div className="navItem-sticky">
-                <a className="tmna-sticky-tabs-link" onClick={scrollToOurleadership} title="Our Leadership">Our Leadership</a>
-                <div className="vertical-line"></div>
-              </div>
+
               <div className="navItem-sticky">
                 <a className="tmna-sticky-tabs-link" onClick={scrollToSpintripWay} title="The Spintrip Way">The Spintrip Way</a>
               </div>
@@ -158,7 +156,7 @@ const AboutCompany = () => {
           </div>
           <div className="container">
             {/* Heading title*/}
-            <div className="section-heading" data-aos="fade-down">
+            <div className="spintrip-premium-heading" data-aos="fade-down">
               <h2>The Spintrip Effect</h2>
             </div>
             {/* /Heading title */}
@@ -189,8 +187,8 @@ const AboutCompany = () => {
     
 
         {/* Why Choose Us */}
-        <section ref={PhilosophyinPractice} className="section">
-            <div className="section-heading" data-aos="fade-down">
+        <section ref={PhilosophyinPractice} className="section bg-slate-reset">
+            <div className="spintrip-premium-heading" data-aos="fade-down">
               <h2>Philosophy in Practice</h2>
             </div>
             <div className="stickyNavFiller" data-aos="fade-up">
@@ -257,67 +255,7 @@ const AboutCompany = () => {
             </div>
           </div>
         </section>
-        {/* About us Testimonials */}
-        <section ref={ourleadership} className="leadership-section">
-          <div className="section-heading" data-aos="fade-down">
-            <h2>Our Leadership</h2>
-          </div>
-          <div className="leadership-row">
-            {/* CEO */}
-            <div className="leadership-profile">
-              <h4>CEO</h4>
-              <div className="leadership-img-profile" data-aos="fade-down">
-              <ImageWithBasePath
-                  className="leadership-img"
-                  src="assets/img/ceo.jpg"
-                  alt="Choose Locations"
-                />
-              </div>
-              <div className="leadership-name">
-                <h4>Pranjal Saxena</h4>
-              </div>
-              <div className="leadership-story">
-                <p>Our CEO leads SpinTrip with a vision to revolutionize car rentals by blending cutting-edge technology and customer-centric services.</p>
-              </div>
-            </div>
-            
-            {/* CTO */}
-            <div className="leadership-profile">
-              <h4>CTO</h4>
-              <div className="leadership-img-profile" data-aos="fade-down">
-                <ImageWithBasePath
-                  src="assets/img/cto.jpg"
-                  className="leadership-img"
-                  alt="CTO"
-                />
-              </div>
-              <div className="leadership-name">
-                <h4>Saswat Pandey</h4>
-              </div>
-              <div className="leadership-story">
-                <p>Our CTO spearheads innovation at SpinTrip, ensuring that our platform remains technologically advanced and user-friendly.</p>
-              </div>
-            </div>
 
-            {/* CSO */}
-            <div className="leadership-profile">
-              <h4>CSO</h4>
-              <div className="leadership-img-profile" data-aos="fade-down">
-              <ImageWithBasePath
-                  className="leadership-img"
-                  src="assets/img/cso.jpg"
-                  alt="Choose Locations"
-                />
-              </div>
-              <div className="leadership-name">
-                <h4>Pratyay Mazumdar</h4>
-              </div>
-              <div className="leadership-story">
-                <p>Our CSO focuses on strategic growth, building partnerships, and expanding SpinTrip's reach in the car rental industry.</p>
-              </div>
-            </div>
-          </div>
-        </section>
 
         <section ref={thespintripway} className="section way-effect bg-light-secondary">
           <div className="container">

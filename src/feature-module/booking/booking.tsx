@@ -6,6 +6,8 @@ import { Button, Modal } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { all_routes } from "../router/all_routes";
 import useScrollToTop from "../../hooks/useScrollToTop";
+import { createBooking } from "../api/Booking";
+import { getProfile } from "../api/Profile";
 interface CarBookingDetailsState {
   carBookingDetails: any; // Replace `any` with the actual type if known
 }
@@ -20,6 +22,23 @@ const Booking = () => {
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [userProfile, setUserProfile] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const response = await getProfile();
+        if (response && response.profile) {
+          setUserProfile(response.profile);
+        }
+      } catch (err) {
+        console.error("Error fetching profile details", err);
+      }
+    };
+    fetchProfileData();
+  }, []);
 
   useEffect(() => {
     if (bookingConfirmed && !showErrorModal) {
@@ -27,8 +46,30 @@ const Booking = () => {
     }
   }, [bookingConfirmed, showErrorModal, carBookingDetails]);
 
-  const handlePlaceOrder = () => {
-    setBookingConfirmed(true);
+  const handlePlaceOrder = async () => {
+    if (!carBookingDetails) return;
+    setIsLoading(true);
+    try {
+      // payload matches what createBooking from api/Booking.js requires
+      const payload = {
+        vehicleid: carBookingDetails.vehicleid || carBookingDetails.carId,
+        startDate: carBookingDetails.startTripDate,
+        endDate: carBookingDetails.endTripDate,
+        startTime: carBookingDetails.startTripTime,
+        endTime: carBookingDetails.endTripTime,
+        features: []
+      };
+      const response = await createBooking(payload);
+      if (response && response.booking) {
+        setBookingConfirmed(true);
+        setShowSuccessModal(true);
+      }
+    } catch (err: any) {
+      setErrorMsg(err.message || "Something went wrong during booking.");
+      setShowErrorModal(true);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -115,10 +156,10 @@ const Booking = () => {
                       <Link to="#">Edit</Link>
                     </div>
                     <ul className="address-info">
-                      <li>Casandra</li>
-                      <li>casandra@example.com</li>
-                      <li>+1 73940 45355</li>
-                      <li>45, 4th Avenue Mark Street USA</li>
+                      <li>{userProfile?.fullName || "Guest User"}</li>
+                      <li>{userProfile?.email || "No Email"}</li>
+                      <li>{userProfile?.phone || "No Phone"}</li>
+                      <li>{userProfile?.address || "No Address"}</li>
                     </ul>
                   </div>
                   <div className="col-lg-6">
@@ -140,9 +181,9 @@ const Booking = () => {
                 <Button
                   className="btn btn-primary d-flex align-items-center w-full justify-content-center"
                   onClick={handlePlaceOrder}
-                  disabled={bookingConfirmed}
+                  disabled={bookingConfirmed || isLoading}
                 >
-                  <span>Place Order</span>
+                  <span>{isLoading ? "Processing..." : "Place Order"}</span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -170,9 +211,9 @@ const Booking = () => {
 
       <Modal show={showErrorModal} onHide={() => setShowErrorModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Error</Modal.Title>
+          <Modal.Title>Booking Error</Modal.Title>
         </Modal.Header>
-        <Modal.Body>{}</Modal.Body>
+        <Modal.Body>{errorMsg}</Modal.Body>
       </Modal>
 
       <Modal

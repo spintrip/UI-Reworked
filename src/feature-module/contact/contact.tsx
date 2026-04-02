@@ -104,11 +104,10 @@ const Contact = () => {
                     key={index}
                     className="col-lg-3 col-md-6 col-12 d-flex"
                     data-aos="fade-down"
-                    data-aos-duration={1200}
                     data-aos-delay="0.1"
                   >
-                    <div className="single-contact-info flex-fill border">
-                      <span>
+                    <div className="single-contact-info flex-fill glass-panel hover:translate-y-[-8px] transition-all duration-300 border-0 shadow-sm rounded-3xl p-4 text-center">
+                      <span className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-3 text-orange-600 text-2xl">
                         <i className={info.icon} />
                       </span>
                       <h3>{info.title}</h3>
@@ -128,23 +127,26 @@ const Contact = () => {
             </div>
 
             <div
-              className="form-info-area border"
-              data-aos="fade-down"
-              data-aos-duration={500}
-              data-aos-delay="0.5"
+              className="form-info-area mt-5"
+              data-aos="fade-up"
+              data-aos-duration={800}
+              data-aos-delay="0.2"
             >
-              <div className="row  bg-white d-flex d-flex align-items-center justify-content-center">
-                <div className="col-lg-6 d-flex d-flex align-items-center justify-content-center rounded">
+              <div className="row bg-white rounded-4xl shadow-2xl overflow-hidden align-items-stretch border border-slate-100">
+                <div className="col-lg-6 d-flex align-items-center justify-content-center p-0 bg-orange-50">
                   <ImageWithBasePath
                     src="assets/img/contact-main.png"
-                    className="contact-image"
+                    className="contact-image w-100 h-100 object-cover"
                     alt="Contact"
                   />
                 </div>
-                <div className="col-lg-6 rounded p-2">
+                <div className="col-lg-6 p-5 p-lg-10">
                   <form onSubmit={handleSubmit}>
                     <div className="row">
-                      <h2 className="font-semibold mb-5">Get in touch!</h2>
+                      <div className="spintrip-premium-heading text-left mb-6" style={{ textAlign: 'left' }}>
+                        <h2 style={{ textAlign: 'left', fontSize: '2rem' }}>Get in touch!</h2>
+                        <p className="text-slate-500 mb-0">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+                      </div>
                       <div className="col-md-12">
                         <div className="input-block">
                           <label>
@@ -212,17 +214,17 @@ const Contact = () => {
                       </div>
                     </div>
 
-                    <div className="mt-10">
+                    <div className="mt-8">
                       <button
                         type="submit"
-                        disabled={!token}
-                        className="contact-button"
+                        disabled={!token || loading}
+                        className="btn btn-primary w-100 rounded-pill py-3 font-bold text-lg hover:shadow-lg transition-all"
                       >
                         {loading ? (
-                          <> Processing</>
+                          <> <i className="fa fa-spinner fa-spin mr-2"></i> Processing</>
                         ) : (
                           // eslint-disable-next-line react/no-unescaped-entities
-                          <>Let's talk</>
+                          <>Let's talk <i className="feather icon-arrow-right ms-2"></i></>
                         )}
                       </button>
                     </div>

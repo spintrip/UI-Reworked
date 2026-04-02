@@ -145,11 +145,15 @@
 					flex-shrink: 0;
 				}
 				.addr-info {
-					@extend %display-flex-center;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					gap: 4px; /* Added slight gap for readability */
 					a {	
 						font-weight: 500;
 						font-size: $__font__size__18;
 						color: #FFFFFF;
+						line-height: 1.4;
 					}
 				}
 			}

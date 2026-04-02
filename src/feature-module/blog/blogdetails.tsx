@@ -4,6 +4,7 @@ import { useParams, Link } from "react-router-dom";
 //import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 // import { all_routes } from "../router/all_routes";
 import { getBlogById } from "../api/Blogs";
+import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 import useScrollToTop from "../../hooks/useScrollToTop";
 import { Helmet } from "react-helmet";
 
@@ -59,7 +60,7 @@ const BlogDetails = () => {
       <div
         className="blogbanner"
         style={{
-          backgroundImage: `url(${blog.blogImage1})`,
+          backgroundImage: `url(${blog.blogImage1.startsWith('/') ? blog.blogImage1 : `/${blog.blogImage1}`})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           marginTop: "80px",
@@ -118,7 +119,7 @@ const BlogDetails = () => {
           <div className="row">
             <div className="col-lg-6 col-md-6">
               <div className="bloginner-img">
-                <img
+                <ImageWithBasePath
                   src={blog.blogImage1}
                   alt={blog.blogName}
                   className="img-fluid"
@@ -127,7 +128,7 @@ const BlogDetails = () => {
             </div>
             <div className="col-lg-6 col-md-6">
               <div className="bloginner-img">
-                <img
+                <ImageWithBasePath
                   src={blog.blogImage2}
                   alt={blog.blogName}
                   className="img-fluid"

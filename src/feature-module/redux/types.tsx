@@ -54,6 +54,7 @@ export interface Location {
   lng: number;
   address: string;
   isValidLocation: boolean;
+  city?: string;
 }
 
 export interface Car {

@@ -12,6 +12,7 @@ interface ListingSidebarProps {
   >;
   handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   resetFilters: () => void;
+  dynamicFeatures: string[];
 }
 
 const ListingSidebar: React.FC<ListingSidebarProps> = ({
@@ -20,6 +21,7 @@ const ListingSidebar: React.FC<ListingSidebarProps> = ({
   setSelectedFilters,
   handleSearchChange,
   resetFilters,
+  dynamicFeatures,
 }) => {
 
   const handleCheckboxChange = (title: string, value: string) => {
@@ -41,6 +43,7 @@ const ListingSidebar: React.FC<ListingSidebarProps> = ({
     Capacity: ["5 Seater", "7 Seater"],
     "Price (INR/Hr)": ["< 200", "200-400", "> 400"],
     Ratings: ["1 ⭐", "2 ⭐", "3 ⭐", "4 ⭐", "5 ⭐"],
+    ...(dynamicFeatures.length > 0 ? { Features: dynamicFeatures } : {}),
   };
 
   return (

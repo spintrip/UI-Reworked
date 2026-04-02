@@ -15,7 +15,7 @@
      } 
     &:before {
 		content: "";
-        background: url(../../../../assets/img/breadcrumbleft.png) no-repeat;
+        background: url(/assets/img/breadcrumbleft.png) no-repeat;
         position: absolute;
         bottom: 0;
         left: 0;
@@ -28,7 +28,7 @@
 	}
     &:after {
 		content: "";
-        background: url(../../../../assets/img/breadcrumbright.png) no-repeat;
+        background: url(/assets/img/breadcrumbright.png) no-repeat;
         position: absolute;
         bottom: 50px;
         right: 130px;

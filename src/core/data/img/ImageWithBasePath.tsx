@@ -9,6 +9,7 @@ interface Image {
   width?: number;
   id?: string;
   loading?: "lazy" | "eager"; // Restrict to the specific values
+  style?: React.CSSProperties;
 }
 
 const ImageWithBasePath = (props: Image) => {
@@ -22,6 +23,7 @@ const ImageWithBasePath = (props: Image) => {
       alt={props.alt}
       width={props.width}
       id={props.id}
+      style={props.style}
       loading={props.loading || "lazy"} // Apply the loading attribute, defaulting to lazy
     />
   );

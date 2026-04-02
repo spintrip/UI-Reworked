@@ -7,11 +7,14 @@ interface LocationInputProps {
     lat: number;
     lng: number;
     address: string;
+    city?: string;
     isValidLocation: boolean;
   }) => void;
   setInputValue: (value: string) => void; // Add this prop
   setHasSuggestions: (hasSuggestions: boolean) => void;
   initialValue?: string; // Add initialValue as an optional prop
+  placeholder?: string;
+  inputRef?: React.RefObject<HTMLInputElement> | any;
 }
 
 // Declare the google object on the window
@@ -41,6 +44,8 @@ const LocationInput: React.FC<LocationInputProps> = ({
   setInputValue,
   setHasSuggestions,
   initialValue = "",
+  placeholder = "Enter City, Airport, or Address",
+  inputRef,
 }) => {
   const autocompleteRef = useRef<HTMLInputElement>(null);
   const [suggestions, setSuggestions] = useState<string[]>([]);
@@ -61,6 +66,7 @@ const LocationInput: React.FC<LocationInputProps> = ({
         lat: 0,
         lng: 0,
         address: "",
+        city: "",
         isValidLocation: false,
       });
     }
@@ -103,6 +109,7 @@ const LocationInput: React.FC<LocationInputProps> = ({
       lat: 0,
       lng: 0,
       address: "",
+      city: "",
       isValidLocation: false,
     });
   };
@@ -114,17 +121,44 @@ const LocationInput: React.FC<LocationInputProps> = ({
     const geocoder = new window.google.maps.Geocoder();
     geocoder.geocode(
       { address: suggestion },
-      (results: { geometry: { location: any } }[], status: any) => {
+      (results: { geometry: { location: any }; address_components: any[] }[], status: any) => {
         if (
           status === window.google.maps.GeocoderStatus.OK &&
           results &&
           results[0]
         ) {
           const location = results[0].geometry.location;
+          let extractedCity = "";
+          if (results[0].address_components) {
+              for (const comp of results[0].address_components) {
+                  if (comp.types.includes("locality")) {
+                      extractedCity = comp.long_name;
+                      break;
+                  }
+              }
+              if (!extractedCity) {
+                  for (const comp of results[0].address_components) {
+                      if (comp.types.includes("administrative_area_level_3") || comp.types.includes("administrative_area_level_2")) {
+                          extractedCity = comp.long_name;
+                          break;
+                      }
+                  }
+              }
+          }
+          
+          // Aggressive fallback to prevent 500 server error on empty city
+          if (!extractedCity && suggestion) {
+              const parts = suggestion.split(',').map(s => s.trim());
+              if (parts.length >= 3) extractedCity = parts[parts.length - 3];
+              else if (parts.length >= 2) extractedCity = parts[parts.length - 2];
+              else extractedCity = parts[0] || "";
+          }
+
           setLocation({
             lat: location.lat(),
             lng: location.lng(),
             address: suggestion,
+            city: extractedCity,
             isValidLocation: true,
           });
         } else {
@@ -132,6 +166,7 @@ const LocationInput: React.FC<LocationInputProps> = ({
             lat: 0,
             lng: 0,
             address: "",
+            city: "",
             isValidLocation: false,
           });
         }
@@ -140,13 +175,13 @@ const LocationInput: React.FC<LocationInputProps> = ({
   };
 
   return (
-    <div className="location-input-container" style={{paddingTop: '12px'}}>
+    <div className="location-input-container">
       <input
         type="text"
-        ref={autocompleteRef}
+        ref={inputRef || autocompleteRef}
         value={inputValue}
         onChange={handleInputChange}
-        placeholder="Enter City, Airport, or Address"
+        placeholder={placeholder}
         className="form-control bg-light border border-secondary py-4 text-black font-raleway"
         disabled={!scriptLoaded} // Disable the input until the script is loaded
         style={{ fontSize: "14px" }}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import Breadcrumbs from "../common/Breadcrumbs";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Select, { SingleValue } from "react-select";
@@ -154,7 +154,9 @@ const ListingGrid: React.FC = () => {
       const startDate = date1.format("YYYY-MM-DD");
       const endDate = date2.format("YYYY-MM-DD");
       const startTimeStr = startTime.format("HH:mm");
-      const endTimeStr = endTime.format("HH:mm");
+      // Force end-time to mirror start-time for Self-Drive since the end-time scope was functionally removed from UI
+      const endTimeStr = vehicletype === "2" ? startTimeStr : endTime.format("HH:mm");
+      
       const vehicles = await findVehicles(
         vehicletype,
         startDate,
@@ -267,6 +269,17 @@ const ListingGrid: React.FC = () => {
       );
     }
 
+    const dynamicFeatures = (() => {
+       if (!response) return [];
+       const features = new Set<string>();
+       response.forEach((car: any) => {
+           if (car.booleanSpecs) {
+               Object.keys(car.booleanSpecs).forEach(key => features.add(key));
+           }
+       });
+       return Array.from(features);
+    })();
+
     Object.entries(selectedFilters).forEach(([key, values]) => {
       if (values && values.length > 0) {
         filteredCars = filteredCars.filter(
@@ -274,6 +287,7 @@ const ListingGrid: React.FC = () => {
             Additional: { type: string, FuelType: any, Sevenseater: any };
             pricing: { costPerHr: number };
             rating: any;
+            booleanSpecs?: { [key: string]: boolean };
           }) => {
             switch (key) {
               case "Category":
@@ -314,6 +328,8 @@ const ListingGrid: React.FC = () => {
                   return rating >= lowerBound && rating <= upperBound;
 
                 });
+              case "Features":
+                return values.every((feature) => car.booleanSpecs && car.booleanSpecs[feature] === true);
               default:
                 return true;
             }
@@ -377,7 +393,7 @@ const ListingGrid: React.FC = () => {
     }
 
     if (
-      date1.isSame(date2, 'day') && (
+      date1.isSame(date2, 'day') && vehicletype !== "2" && (
         endTime.isBefore(startTime) ||
         endTime.isSame(startTime) ||
         endTime.diff(startTime, 'hours') < 1
@@ -417,7 +433,8 @@ const ListingGrid: React.FC = () => {
       const startDate = date1.format("YYYY-MM-DD");
       const endDate = date2.format("YYYY-MM-DD");
       const startTimeStr = startTime.format("HH:mm");
-      const endTimeStr = endTime.format("HH:mm");
+      // Force end-time to mirror start-time for Self-Drive
+      const endTimeStr = vehicletype === "2" ? startTimeStr : endTime.format("HH:mm");
 
       setLoading(true);
       const response = await findVehicles(
@@ -834,6 +851,7 @@ const ListingGrid: React.FC = () => {
                   setSelectedFilters={setSelectedFilters}
                   handleSearchChange={handleSearchChange}
                   resetFilters={resetFilters}
+                  dynamicFeatures={response ? Array.from(new Set(response.flatMap((car: any) => car.booleanSpecs ? Object.keys(car.booleanSpecs) : []))) : []}
                 />
               </div>
             </div>

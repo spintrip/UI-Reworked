@@ -61,6 +61,7 @@ export const all_routes = {
   userBookingCancelled: "/user/user-booking-cancelled",
   userBookingInprogress: "/user/user-booking-inprogress",
   userBookings: "/user/user-bookings",
+  userBookingUpcoming: "/user/user-booking-upcoming",
   payment: "/user/user-payment",
   settings: "/user/user-settings",
   security: "/user/user-security",
@@ -71,5 +72,5 @@ export const all_routes = {
   integration: "/user/user-integration",
   wallet: "/user/user-wallet",
   bookingcancelled: "/user/user-booking-cancelled",
-  userBookingUpcoming: "/user/user-booking-upcoming",
+  onboarding: "/authentication/onboarding",
 };

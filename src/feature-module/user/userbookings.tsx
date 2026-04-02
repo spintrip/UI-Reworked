@@ -50,6 +50,10 @@ interface Booking {
   cancelDate: string | null;
   cancelReason: string | null;
   transaction: Transaction | null;
+  vehicletype: number;
+  otp: string | number;
+  pickup?: { address: string };
+  destination?: { address: string };
 }
 
 interface Transaction {
@@ -439,7 +443,7 @@ const UserBookings = () => {
   const pickup = (res: Booking) => {
     return (
       <p>
-        {res.pickupDeliveryLocation1}
+        {res.vehicletype === 3 ? res.pickup?.address : res.pickupDeliveryLocation1}
         <span className="d-block">
           {res.startTripDate} / {res.startTripTime}
         </span>
@@ -450,7 +454,7 @@ const UserBookings = () => {
   const dropoff = (res: Booking) => {
     return (
       <p>
-        {res.dropoffLocation1}
+        {res.vehicletype === 3 ? res.destination?.address : res.dropoffLocation1}
         <span className="d-block">
           {res.endTripDate} / {res.endTripTime}
         </span>
@@ -637,7 +641,7 @@ const UserBookings = () => {
                                   All Bookings
                                 </Link>
                               </li>
-                              {/* <li>
+                              <li>
                                 <Link
                                   className={
                                     activeTab === "requested" ? "active" : ""
@@ -647,7 +651,7 @@ const UserBookings = () => {
                                 >
                                   Requested
                                 </Link>
-                              </li> */}
+                              </li>
                               <li>
                                 <Link
                                   className={
@@ -756,13 +760,6 @@ const UserBookings = () => {
                                 />
                               </label>
                             </div>
-                            <Link
-                              to={routes.listinggrid}
-                              className="btn btn-add"
-                            >
-                              <i className="feather-plus-circle" />
-                              Add Booking
-                            </Link>
                           </div>
                         </div>
                       </div>
@@ -947,15 +944,34 @@ const UserBookings = () => {
                               </p>
                             </div>
                           </div>
-                          <div className="col-lg-4 col-md-6">
-                            <div className="booking-view">
-                              <h6>End Date & Time</h6>
-                              <p>
-                                {selectedBooking.endTripDate},{" "}
-                                {selectedBooking.endTripTime}
+                          <div className="col-lg-6 col-md-12 mt-3">
+                            <div className="booking-view border-left-primary pl-3">
+                              <h6 className="text-muted small uppercase">Pickup Location</h6>
+                              <p className="font-semibold text-dark">
+                                {selectedBooking.vehicletype === 3 
+                                  ? selectedBooking.pickup?.address 
+                                  : selectedBooking.pickupDeliveryLocation1 || "Not specified"}
                               </p>
                             </div>
                           </div>
+                          <div className="col-lg-6 col-md-12 mt-3">
+                            <div className="booking-view border-left-primary pl-3">
+                              <h6 className="text-muted small uppercase">Drop-off Location</h6>
+                              <p className="font-semibold text-dark">
+                                {selectedBooking.vehicletype === 3 
+                                  ? selectedBooking.destination?.address 
+                                  : selectedBooking.dropoffLocation1 || "Not specified"}
+                              </p>
+                            </div>
+                          </div>
+                          {selectedBooking.vehicletype === 3 && selectedBooking.status === 1 && (
+                            <div className="col-lg-4 col-md-6">
+                              <div className="booking-view">
+                                <h6>Ride OTP</h6>
+                                <p className="text-primary font-bold text-2xl tracking-widest">{selectedBooking.otp || '----'}</p>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -1535,25 +1551,13 @@ const UserBookings = () => {
                       <h6>Booking Details</h6>
                     </div>
                     <div className="row">
-                      <div className="col-lg-4 col-md-6">
-                        <div className="booking-view">
-                          <h6>Booking Type</h6>
-                          <p>Pickup</p>
-                        </div>
-                      </div>
-                      <div className="col-lg-4 col-md-6">
+                      <div className="col-lg-12 mb-3">
                         <div className="booking-view">
                           <h6>Status</h6>
                           {status(selectedBooking)}
                         </div>
                       </div>
-                      <div className="col-lg-4 col-md-6">
-                        <div className="booking-view">
-                          <h6>Booked On</h6>
-                          <p>{bookedOn(selectedBooking)}</p>
-                        </div>
-                      </div>
-                      <div className="col-lg-4 col-md-6">
+                      <div className="col-lg-6 col-md-6 mb-3">
                         <div className="booking-view">
                           <h6>Start Date & Time</h6>
                           <p>
@@ -1562,12 +1566,32 @@ const UserBookings = () => {
                           </p>
                         </div>
                       </div>
-                      <div className="col-lg-4 col-md-6">
+                      <div className="col-lg-6 col-md-6 mb-3">
                         <div className="booking-view">
                           <h6>End Date & Time</h6>
                           <p>
                             {selectedBooking.endTripDate},{" "}
                             {selectedBooking.endTripTime}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="col-lg-6 col-md-12 mt-3 text-start">
+                        <div className="booking-view border-left-primary pl-3 text-start">
+                          <h6 className="text-muted small uppercase">Pickup Location</h6>
+                          <p className="font-semibold text-dark text-wrap">
+                            {selectedBooking.vehicletype === 3 
+                              ? selectedBooking.pickup?.address 
+                              : selectedBooking.pickupDeliveryLocation1 || "Not specified"}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="col-lg-6 col-md-12 mt-3 text-start">
+                        <div className="booking-view border-left-primary pl-3 text-start">
+                          <h6 className="text-muted small uppercase">Drop-off Location</h6>
+                          <p className="font-semibold text-dark text-wrap">
+                            {selectedBooking.vehicletype === 3 
+                              ? selectedBooking.destination?.address 
+                              : selectedBooking.dropoffLocation1 || "Not specified"}
                           </p>
                         </div>
                       </div>
@@ -1658,26 +1682,13 @@ const UserBookings = () => {
                       <h6>Booking Details</h6>
                     </div>
                     <div className="row">
-                      <div className="col-lg-4 col-md-6">
-                        <div className="booking-view">
-                          <h6>Booking Type</h6>
-                          <p>Pickup</p>
-                        </div>
-                      </div>
-                      <div className="col-lg-4 col-md-6">
+                      <div className="col-lg-12 mb-3">
                         <div className="booking-view">
                           <h6>Status</h6>
                           {status(selectedBooking)}
-                          <h6>{cancelDate}</h6>
                         </div>
                       </div>
-                      <div className="col-lg-4 col-md-6">
-                        <div className="booking-view">
-                          <h6>Booked On</h6>
-                          <p>{bookedOn(selectedBooking)}</p>
-                        </div>
-                      </div>
-                      <div className="col-lg-4 col-md-6">
+                      <div className="col-lg-6 col-md-6 mb-3">
                         <div className="booking-view">
                           <h6>Start Date & Time</h6>
                           <p>
@@ -1686,12 +1697,32 @@ const UserBookings = () => {
                           </p>
                         </div>
                       </div>
-                      <div className="col-lg-4 col-md-6">
+                      <div className="col-lg-6 col-md-6 mb-3">
                         <div className="booking-view">
                           <h6>End Date & Time</h6>
                           <p>
                             {selectedBooking.endTripDate},{" "}
                             {selectedBooking.endTripTime}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="col-lg-6 col-md-12 mt-3 text-start">
+                        <div className="booking-view border-left-primary pl-3 text-start">
+                          <h6 className="text-muted small uppercase">Pickup Location</h6>
+                          <p className="font-semibold text-dark text-wrap">
+                            {selectedBooking.vehicletype === 3 
+                              ? selectedBooking.pickup?.address 
+                              : selectedBooking.pickupDeliveryLocation1 || "Not specified"}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="col-lg-6 col-md-12 mt-3 text-start">
+                        <div className="booking-view border-left-primary pl-3 text-start">
+                          <h6 className="text-muted small uppercase">Drop-off Location</h6>
+                          <p className="font-semibold text-dark text-wrap">
+                            {selectedBooking.vehicletype === 3 
+                              ? selectedBooking.destination?.address 
+                              : selectedBooking.dropoffLocation1 || "Not specified"}
                           </p>
                         </div>
                       </div>
@@ -1785,25 +1816,13 @@ const UserBookings = () => {
                       <h6>Booking Details</h6>
                     </div>
                     <div className="row">
-                      <div className="col-lg-4 col-md-6">
-                        <div className="booking-view">
-                          <h6>Booking Type</h6>
-                          <p>Pickup</p>
-                        </div>
-                      </div>
-                      <div className="col-lg-4 col-md-6">
+                      <div className="col-lg-12 mb-3">
                         <div className="booking-view">
                           <h6>Status</h6>
                           {status(selectedBooking)}
                         </div>
                       </div>
-                      <div className="col-lg-4 col-md-6">
-                        <div className="booking-view">
-                          <h6>Booked On</h6>
-                          <p>{bookedOn(selectedBooking)}</p>
-                        </div>
-                      </div>
-                      <div className="col-lg-4 col-md-6">
+                      <div className="col-lg-6 col-md-6 mb-3">
                         <div className="booking-view">
                           <h6>Start Date & Time</h6>
                           <p>
@@ -1812,12 +1831,32 @@ const UserBookings = () => {
                           </p>
                         </div>
                       </div>
-                      <div className="col-lg-4 col-md-6">
+                      <div className="col-lg-6 col-md-6 mb-3">
                         <div className="booking-view">
                           <h6>End Date & Time</h6>
                           <p>
                             {selectedBooking.endTripDate},{" "}
                             {selectedBooking.endTripTime}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="col-lg-6 col-md-12 mt-3">
+                        <div className="booking-view border-left-primary pl-3">
+                          <h6 className="text-muted small uppercase">Pickup Location</h6>
+                          <p className="font-semibold text-dark text-wrap">
+                            {selectedBooking.vehicletype === 3 
+                              ? selectedBooking.pickup?.address 
+                              : selectedBooking.pickupDeliveryLocation1 || "Not specified"}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="col-lg-6 col-md-12 mt-3">
+                        <div className="booking-view border-left-primary pl-3">
+                          <h6 className="text-muted small uppercase">Drop-off Location</h6>
+                          <p className="font-semibold text-dark text-wrap">
+                            {selectedBooking.vehicletype === 3 
+                              ? selectedBooking.destination?.address 
+                              : selectedBooking.dropoffLocation1 || "Not specified"}
                           </p>
                         </div>
                       </div>
