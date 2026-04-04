@@ -526,7 +526,7 @@
 
 .banner-section {
     
-    background-image: url('../../../../public/assets/hero-banner.webp');
+    background-image: url('/assets/hero-banner.webp');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -2532,21 +2532,23 @@
       width: 100%; /* Adjust width for smaller mobile devices */
     }
   }
-  
+
   @media (max-width: 479px) {
     .suggestions-list {
       width: 80%; /* Adjust width for the smallest screens */
     }
   }
+
   .brand-icon{
     max-width: 100%;
   }
+
   .faq-icon{
     margin: 10px;
     max-width: 100%;
     width: 25px;
-
   }
+
   .homepage-error{
     background-color: rgb(171, 11, 11);
     color: #ffffff;
@@ -2554,6 +2556,7 @@
     padding: 5px;
     margin: 5px;
   }
+
   .listing-error{
     background-color: rgb(211, 104, 9);
     color: #ffffff;
@@ -2578,14 +2581,16 @@
         justify-content: center;
     }
   }
+
   .vehicle-pick-container{
     margin-left: 10vw;
   }
+
   .vehicle-selected {        
     @include margin-padding(0 0 14px, null);
     text-align: center;
     position: $__relative;
-    border: 4px solid rgb(255, 111, 0);;
+    border: 4px solid rgb(255, 111, 0);
     width: 83%;
     height: 93%;
     margin: 5px 10px 10px 70px;
@@ -2611,9 +2616,9 @@
     @include respond-below(custom991) {
         margin: 5px 10px 10px 10px;
         padding: 10px;
-        
     }
   }
+
   .vehicle-unselected {        
     @include margin-padding(0 0 14px, null);
     text-align: center;
@@ -2643,10 +2648,10 @@
     @include respond-below(custom991) {
         margin: 5px 10px 10px 10px;
         padding: 10px;
-        
     }
   }
-  .checkbox {
+
+.checkbox {
     /* Hide the default appearance */
     appearance: none;
     -webkit-appearance: none;
@@ -2657,208 +2662,9 @@
     border-radius: 4px;
     background-color: white;
     cursor: pointer;
-    position: relative; /* Category Explorer: Balanced Scaling */
-.airbnb-cat-wrapper {
-    .cat-item-modern {
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 12px; /* More breathing room */
-        padding: 16px 24px;
-        transition: all 0.3s ease;
-        border-bottom: 3px solid transparent; 
-        
-        .cat-icon-box {
-            width: 56px; /* Scaled up from small */
-            height: 56px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #f1f5f9;
-            border-radius: 16px;
-            color: #64748b;
-            transition: all 0.3s ease;
-            
-            svg {
-                font-size: 32px; /* Authority Icon Size */
-            }
-        }
-        
-        .cat-label {
-            font-size: 1rem; /* Clear, Legible Label */
-            font-weight: 900;
-            color: #64748b;
-        }
-
-        &.is-active {
-            border-bottom-color: var(--primary-spintrip);
-            .cat-icon-box {
-                background: var(--primary-spintrip);
-                color: #fff;
-            }
-            .cat-label {
-                color: #1e293b;
-            }
-        }
-
-        &:hover:not(.is-active) {
-            .cat-icon-box {
-                background: #e2e8f0;
-                color: #1e293b;
-            }
-        }
-    }
-}
-  
-    /* Transition for smooth effect */
-    transition: background-color 0.3s, border-color 0.3s;
-  }
-
-  /* Cinematic Section: Seamless Experience */
-  .section-heading {
-      h2 {
-          color: #ffffff !important;
-          font-size: 2.75rem;
-          text-transform: none;
-      }
-  }
-  
-  .philosophy-image {
-      max-width: 85%;
-      margin-bottom: 40px;
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 50px 100px -30px rgba(0, 0, 0, 0.9);
-      border: 1px solid rgba(255, 255, 255, 0.1); 
-      
-      &:hover {
-          transform: scale(1.02);
-      }
-  }
-
-  .philosophy-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      max-width: 850px;
-      margin: 0 auto;
-      
-      h4 {
-          color: #ffffff !important;
-          font-weight: 900;
-          font-size: 2.25rem;
-          margin-bottom: 20px;
-          letter-spacing: -0.02em;
-      }
-      
-      .purpose-para {
-          font-size: 1.25rem;
-          line-height: 1.8;
-          color: #cbd5e1 !important; 
-          font-weight: 500;
-          padding: 0 20px;
-      }
-  }
-  
-  .checkbox:checked {
-    background-color: #ff6f00; /* Change to your desired color */
-    border-color: #ff6f00;
-  }
-  
-  /* Add a custom tick using pseudo-element */
-  /* Why Spintrip Section Polish */
-.why-spintrip-section {
-    padding: 120px 0 !important; /* Premium vertical breathing */
-    background: #ffffff;
-    
-    .why-spintrip-title {
-        font-size: 3.5rem !important;
-        font-weight: 900 !important;
-        color: #1e293b !important;
-        margin-bottom: 24px !important;
-        line-height: 1.1;
-        letter-spacing: -0.04em;
-    }
-    
-    .why-spintrip-subtitle {
-        font-size: 1.15rem !important;
-        color: #717171 !important;
-        max-width: 650px;
-        margin: 0 auto 80px !important; 
-        line-height: 1.6;
-    }
-}
-  
-  .checkbox:hover {
-    border-color: #555;
-  }
-  
-  /* Airbnb Modern FAQ: Final Refinement */
-.airbnb-faq-wrapper {
-    .faq-item-modern {
-        border-bottom: 1px solid #ebebeb; /* Airbnb specific separator color */
-        
-        &:first-of-type {
-            border-top: 1px solid #ebebeb;
-        }
-
-        .faq-trigger-btn {
-            display: flex;
-            width: 100%;
-            align-items: center;
-            justify-content: space-between;
-            padding: 32px 0;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            text-align: left;
-            transition: all 0.2s ease;
-
-            &:hover {
-                .faq-question-text {
-                    color: #000;
-                }
-            }
-
-            .faq-question-text {
-                font-size: 1.5rem;
-                font-weight: 800; /* Airbnb Bold */
-                color: #222222;
-                letter-spacing: -0.02em;
-                line-height: 1.25;
-            }
-
-            .faq-chevron {
-                font-size: 1.5rem;
-                color: #717171;
-                transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            }
-        }
-
-        .faq-content-modern {
-            max-height: 0;
-            overflow: hidden;
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-
-            &.is-open {
-                max-height: 500px;
-                opacity: 1;
-                padding-bottom: 32px;
-            }
-
-            p {
-                font-size: 1.15rem;
-                color: #717171;
-                line-height: 1.75;
-                max-width: 800px;
-            }
-        }
-    }
+    position: relative;
 }
 
-  /* Airbnb Category Bar */
 .airbnb-cat-wrapper {
     display: flex;
     justify-content: center;

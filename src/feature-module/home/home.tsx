@@ -49,6 +49,7 @@ import { getProfile } from "../api/Profile";
 import GoogleMapRoute from "../common/GoogleMapRoute";
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
+import { serverUrl } from "../../environment";
 //import { useJoyride } from "../common/JoyrideContext";
 
 interface Brand {
@@ -423,12 +424,12 @@ const Home: React.FC = () => {
         return;
     }
 
-    // Business Rule: Minimum 3-Hour Lead Time for Cabs
-    const pickupDateTime = dayjs(date1).hour(startTime.hour()).minute(startTime.minute());
+    // Business Rule: Minimum 3-Hour Lead Time for Cabs (with 5-min grace period)
+    const pickupDateTime = dayjs(date1).hour(startTime.hour()).minute(startTime.minute()).second(0);
     const now = dayjs();
     const diffInMinutes = pickupDateTime.diff(now, 'minute');
 
-    if (diffInMinutes < 180) {
+    if (diffInMinutes < 175) {
         setSendError("Pickup must be at least 3 hours from now for premium reliability.");
         setDateTimeError(true);
         setTimeout(() => setDateTimeError(false), 5000);
@@ -470,6 +471,11 @@ const Home: React.FC = () => {
            return;
         }
 
+        // 🔥 Dynamic Category Discovery
+        const activeCabTypes = (availRes && availRes.cabTypes && availRes.cabTypes.length > 0) 
+            ? availRes.cabTypes 
+            : ["Mini", "Sedan", "SUV", "12 Seater"];
+
         const payload = {
             origin: {
                 latitude: pickupLocation.lat,
@@ -481,7 +487,7 @@ const Home: React.FC = () => {
                 longitude: dropLocation.lng,
                 address: dropLocation.address
             } : null,
-            cabTypes: ["Mini", "Sedan", "SUV", "12 Seater"],
+            cabTypes: activeCabTypes, // Now Dynamic based on DB!
             bookingType: finalCabServiceType,
             address: pickupLocation.address,
             city: pickupLocation.city || ""
@@ -857,24 +863,21 @@ const Home: React.FC = () => {
         ></meta>
       </Helmet>
 
-
       {/* Banner */}
       <section className="banner-section banner-section-five">
         <div className="container">
-          <div className="home-banner">
-            <div className="row align-items-center">
-              <div className="col-lg-10 mx-auto text-center hero-content-v2" data-aos="fade-up">
-                <div className="banner-content banner-content-five">
-                  <div className="hero-intro-badge">
-                    <span>👑 India's Premiere Car Service</span>
-                  </div>
-                  <h1 className="text-gradient elite-hero-title">
-                    Drive the Extraordinary
-                  </h1>
-                  <p className="subtitle-premium mx-auto" style={{ fontSize: '1.4rem', marginTop: '32px', opacity: '1', maxWidth: '850px', textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}>
-                    Experience seamless self-drive rentals and premium cab services curated for those who demand the best in every journey.
-                  </p>
+          <div className="row align-items-center">
+            <div className="col-lg-7" data-aos="fade-right">
+              <div className="banner-content banner-content-five" style={{ textAlign: 'left' }}>
+                <div className="hero-intro-badge mb-4" style={{ textAlign: 'left' }}>
+                   <span className="text-white-important">👑 India's Premiere Car Service</span>
                 </div>
+                <h1 className="text-gradient elite-hero-title mb-4" style={{ textAlign: 'left' }}>
+                  Drive the Extraordinary
+                </h1>
+                <p className="subtitle-premium" style={{ textAlign: 'left', fontSize: '1.4rem', marginTop: '24px', opacity: '1', maxWidth: '650px', textShadow: '0 2px 10px rgba(0,0,0,0.3)', margin: '0' }}>
+                  Experience seamless self-drive rentals and premium cab services curated for those who demand the best in every journey.
+                </p>
               </div>
             </div>
           </div>
@@ -1342,7 +1345,7 @@ const Home: React.FC = () => {
                     <div className="listing-item border shadow-sm cursor-pointer hover-translate-y bg-white rounded-3 overflow-hidden" onClick={() => handleRentNowClick(vehicle)}>
                       <div className="listing-img position-relative">
                         <img
-                          src={vehicle.vehicleImage1 || "/assets/img/noimgfound.webp"}
+                          src={vehicle.vehicleImage1 ? (vehicle.vehicleImage1.startsWith('http') ? vehicle.vehicleImage1 : `${serverUrl}${vehicle.vehicleImage1}`) : "/assets/img/noimgfound.webp"}
                           className="img-fluid w-100"
                           alt={vehicle.vehicleModel}
                           style={{ height: '220px', objectFit: 'cover' }}
