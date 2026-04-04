@@ -135,10 +135,11 @@ const BlogList = () => {
                       <div className="blog grid-blog">
                         <div className="blog-image-list">
                           <Link to={`${route.blogdetails}${blog.blogId}`}>
-                            <ImageWithBasePath
+                            <img
                               className="img-fluid blogList-image w-full h-[200px] object-fit-cover"
-                              src={blog.blogImage1}
+                              src={blog.blogImage1 && blog.blogImage1.startsWith('http') ? blog.blogImage1 : `${serverUrl}${blog.blogImage1}`}
                               alt={blog.blogName}
+                              onError={(e: any) => { e.target.src = "/assets/img/blog/blog-1.jpg"; }}
                             />
                           </Link>
                         </div>
