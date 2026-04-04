@@ -7,6 +7,7 @@ import { getBlogById } from "../api/Blogs";
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 import useScrollToTop from "../../hooks/useScrollToTop";
 import { Helmet } from "react-helmet";
+import { serverUrl } from "../../environment";
 
 type Blog = {
   blogId: string;
@@ -60,7 +61,7 @@ const BlogDetails = () => {
       <div
         className="blogbanner"
         style={{
-          backgroundImage: `url(${blog.blogImage1.startsWith('/') ? blog.blogImage1 : `/${blog.blogImage1}`})`,
+          backgroundImage: `url(${blog.blogImage1 && (blog.blogImage1.startsWith('http') || blog.blogImage1.startsWith('https')) ? blog.blogImage1 : `${serverUrl}${blog.blogImage1}`})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           marginTop: "80px",
@@ -119,19 +120,21 @@ const BlogDetails = () => {
           <div className="row">
             <div className="col-lg-6 col-md-6">
               <div className="bloginner-img">
-                <ImageWithBasePath
-                  src={blog.blogImage1}
+                <img
+                  src={blog.blogImage1 && (blog.blogImage1.startsWith('http') || blog.blogImage1.startsWith('https')) ? blog.blogImage1 : `${serverUrl}${blog.blogImage1}`}
                   alt={blog.blogName}
-                  className="img-fluid"
+                  className="img-fluid rounded-lg"
+                  onError={(e: any) => { e.target.src = "/assets/img/blog/blog-1.jpg"; }}
                 />
               </div>
             </div>
             <div className="col-lg-6 col-md-6">
               <div className="bloginner-img">
-                <ImageWithBasePath
-                  src={blog.blogImage2}
+                <img
+                  src={blog.blogImage2 && (blog.blogImage2.startsWith('http') || blog.blogImage2.startsWith('https')) ? blog.blogImage2 : `${serverUrl}${blog.blogImage2}`}
                   alt={blog.blogName}
-                  className="img-fluid"
+                  className="img-fluid rounded-lg"
+                  onError={(e: any) => { e.target.src = "/assets/img/blog/blog-2.jpg"; }}
                 />
               </div>
             </div>

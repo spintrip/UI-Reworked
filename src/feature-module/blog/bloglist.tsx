@@ -6,6 +6,7 @@ import { all_routes } from "../router/all_routes";
 import { getBlogs } from "../api/Blogs";
 import { Helmet } from "react-helmet";
 import useScrollToTop from "../../hooks/useScrollToTop";
+import { serverUrl } from "../../environment";
 
 type Blog = {
   blogId: string;
@@ -137,7 +138,7 @@ const BlogList = () => {
                           <Link to={`${route.blogdetails}${blog.blogId}`}>
                             <img
                               className="img-fluid blogList-image w-full h-[200px] object-fit-cover"
-                              src={blog.blogImage1 && blog.blogImage1.startsWith('http') ? blog.blogImage1 : `${serverUrl}${blog.blogImage1}`}
+                              src={blog.blogImage1 && (blog.blogImage1.startsWith('http') || blog.blogImage1.startsWith('https')) ? blog.blogImage1 : `${serverUrl}${blog.blogImage1}`}
                               alt={blog.blogName}
                               onError={(e: any) => { e.target.src = "/assets/img/blog/blog-1.jpg"; }}
                             />
