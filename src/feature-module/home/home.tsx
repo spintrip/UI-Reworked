@@ -441,11 +441,11 @@ const Home: React.FC = () => {
     // Smart Route Architecture
     if (cabServiceType === 'Local' && dropLocation) {
         const distance = calculateDistanceInKm(pickupLocation.lat, pickupLocation.lng, dropLocation.lat, dropLocation.lng);
-        if (distance > 50) {
+        if (distance > 300) {
             finalCabServiceType = 'Outstation';
             setCabServiceType('Outstation');
             // Premium Alert Replacement
-            setSendError("Trip > 50km: Switched to Outstation.");
+            setSendError("Trip > 300km: Switched to Outstation.");
             setDateTimeError(true);
             setTimeout(() => setDateTimeError(false), 5000);
         }
@@ -497,10 +497,17 @@ const Home: React.FC = () => {
         console.log("Search Results from Backend:", res);
         
         if (res && res.estimates && Object.keys(res.estimates).length > 0) {
+            const sortOrder = ['mini', 'sedan', 'suv'];
             const blocks = Object.entries(res.estimates).map(([type, est]: [string, any]) => ({
                 cabType: type,
                 ...est
-            }));
+            })).sort((a, b) => {
+                const indexA = sortOrder.indexOf(a.cabType.toLowerCase());
+                const indexB = sortOrder.indexOf(b.cabType.toLowerCase());
+                const rankA = indexA === -1 ? 999 : indexA;
+                const rankB = indexB === -1 ? 999 : indexB;
+                return rankA - rankB;
+            });
             setCabBlocks(blocks);
             
             // 🔥 Force UI refresh and scroll

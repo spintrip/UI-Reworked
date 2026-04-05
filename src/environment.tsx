@@ -11,6 +11,6 @@ export const contact_us_email_user_id = "vFZ6CDExuldWi_d7a";
 export const GTM_ID="AW-16679044411"
 
 
-export const androidAppLink = 'https://drive.google.com/file/d/1dIocq2elRRu9DFdbIuccu9oMeDm48K3t/view'
+export const androidAppLink = 'https://play.google.com/store/apps/details?id=com.spintrip_car_rentals.app'
 
 export const iosAppLink  = 'https://apps.apple.com/in/app/spintrip-car-rentals/id6503087661'

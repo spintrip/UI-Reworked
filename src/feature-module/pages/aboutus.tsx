@@ -142,7 +142,7 @@ const AboutUs = () => {
                     with just a few taps. Stay ahead with real-time updates and notifications.
                   </p>
                 </div>
-                <div className="my-8 flex justify-start">
+                <div className="my-8 flex flex-wrap justify-start gap-4">
                   <a href={androidAppLink} target="_blank" rel="noopener noreferrer" className="hover:opacity-90 transition-opacity">
                     <ImageWithBasePath
                         src="assets/img/download-apk.svg"
@@ -151,6 +151,14 @@ const AboutUs = () => {
                         style={{ maxWidth: '220px' }}
                     />
                   </a>
+                  <div className="opacity-40 grayscale cursor-not-allowed hidden md:block">
+                    <ImageWithBasePath
+                        src="assets/img/app-ios.svg"
+                        className="img-fluid shadow-sm"
+                        alt="App Store Coming Soon"
+                        style={{ maxWidth: '220px' }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
