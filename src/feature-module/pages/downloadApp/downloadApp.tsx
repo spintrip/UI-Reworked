@@ -81,7 +81,6 @@ const DownloadApp = () => {
             />
             </div>
             </Link>
-            {iosAppLink !== "#" ? (
               <Link to={iosAppLink}>
                 <div className="col-12 my-2 d-flex align-items-center justify-content-center object-fit-cover">
                   <ImageWithBasePath
@@ -91,16 +90,6 @@ const DownloadApp = () => {
                   />
                 </div>
               </Link>
-            ) : (
-              <div className="col-12 my-2 d-flex flex-column align-items-center justify-content-center opacity-50 cursor-not-allowed">
-                <ImageWithBasePath
-                  src="assets/img/app-ios.svg"
-                  className="img-fluid"
-                  alt="App Store Coming Soon"
-                />
-                <span className="badge bg-warning text-dark mt-2">Coming Soon</span>
-              </div>
-            )}
 
           </div>
         </div>

@@ -80,38 +80,71 @@ const HostPrivacyPolicy: React.FC = () => {
                   <li>Violation of any applicable laws</li>
                 </ul>
 
-                <h3 className="mt-5" data-aos="fade-down">Fees and Payments</h3>
-
-                <h4 data-aos="fade-down">Subscription Fees</h4>
+                <h1 className="text-black mt-2 mb-5" style={{fontSize:'32px', fontWeight:'700'}} data-aos="fade-down">
+                  Spintrip Dealer & Host Policy (Platform Intermediary Rules)
+                </h1>
                 <p data-aos="fade-down">
-                  Dealers must pay a subscription fee based on the plan and features availed.
+                  This policy governs the relationship between Spintrip (the &ldquo;Platform&rdquo;) and independent automotive rental dealers and fleet owners (&ldquo;Dealers/Hosts&rdquo;).
+                </p>
+                <p data-aos="fade-down" style={{fontWeight: 'bold'}}>
+                  By listing your vehicles on Spintrip, you acknowledge that Spintrip is an IT Intermediary and you are an independent service provider. You are solely responsible for all legal and operational aspects of your rental or transport business.
                 </p>
 
-                <h4 data-aos="fade-down">Taxes</h4>
+                <h2 className="mt-5 mb-3" data-aos="fade-down">
+                  1. Customer Data Confidentiality
+                </h2>
                 <p data-aos="fade-down">
-                  Dealers are responsible for all taxes applicable to their business activities through the Platform.
+                  As a Dealer/Host, you will receive customer names, phone numbers, and booking details. You agree to:
                 </p>
-
-                <h3 className="mt-5" data-aos="fade-down">Liability Disclaimer</h3>
                 <ul data-aos="fade-down">
-                  <li>Spintrip is only a software service provider.</li>
-                  <li>It does not accept liability for disputes, losses, damages, or misconduct during rentals.</li>
+                  <li><strong>Exclusive Use:</strong> Use customer data ONLY for the purpose of fulfilling the specific booking through Spintrip.</li>
+                  <li><strong>No Data Misuse:</strong> You are strictly prohibited from contacting customers for marketing, promotional, or any other unauthorized purpose after the booking is completed.</li>
+                  <li><strong>Confidentiality:</strong> Treat all customer information as strictly confidential. Any misuse of customer data will result in permanent account termination and potential legal action by Spintrip.</li>
                 </ul>
 
-                <h3 className="mt-5" data-aos="fade-down">Privacy</h3>
-                <p data-aos="fade-down">
-                  Information is handled per our <a href="https://www.spintrip.in/policy#privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>. Use of the Platform implies your consent.
+                <h2 className="mt-5 mb-3" data-aos="fade-down">
+                  2. Compliance & Licenses
+                </h2>
+                <ul data-aos="fade-down">
+                  <li><strong>The Dealer/Host must possess all required legal permits</strong>, including Commercial Permits, Fitness Certificates, and Rent-a-Cab Scheme licenses (as applicable).</li>
+                  <li><strong>Insurance:</strong> You must maintain comprehensive commercial insurance for every vehicle listed. Spintrip provides no insurance coverage.</li>
+                  <li><strong>Document Audits:</strong> Spintrip reserves the right to audit your documents at any time. Failure to provide valid documentation will result in immediate suspension.</li>
+                </ul>
+
+                <h2 className="mt-5 mb-3" data-aos="fade-down">
+                  3. Independent Financial Responsibility
+                </h2>
+                <ul data-aos="fade-down">
+                  <li><strong>Trip Fare Collection:</strong> You are responsible for collecting the remaining Trip Fare directly from the Customer. Spintrip is not liable for any payment defaults by the Customer for the Trip Fare portion.</li>
+                  <li><strong>Taxes:</strong> You are responsible for paying all applicable taxes (GST, etc.) on the Trip Fare you receive directly from the Customer.</li>
+                </ul>
+
+                <h2 className="mt-5 mb-3" data-aos="fade-down">
+                  4. Safe Harbor Indemnity
+                </h2>
+                <p data-aos="fade-down" style={{color: 'red', fontWeight: 'bold'}}>
+                  You agree to indemnify and hold Spintrip, its directors, and employees harmless from any and all claims, damages, or legal costs arising from: (a) your vehicle condition, (b) driver behavior, (c) trip accidents, (d) misuse of customer data, or (e) regulatory non-compliance.
                 </p>
 
-                <h3 className="mt-5" data-aos="fade-down">Dispute Resolution</h3>
+                <h2 className="mt-5 mb-3" data-aos="fade-down">
+                  5. Account Termination
+                </h2>
                 <p data-aos="fade-down">
-                  Spintrip is not responsible for mediating disputes between Dealers and customers. Dealers must resolve disputes independently.
+                  Spintrip reserves the right to terminate any Dealer/Host account found to be in violation of these platform rules, especially regarding customer data misuse or unlicensed vehicle operation.
                 </p>
-
-                <h3 className="mt-5" data-aos="fade-down">Policy Updates</h3>
-                <p data-aos="fade-down">
-                  Spintrip may revise these policies at any time. Updates are effective immediately upon publication. Dealers should check policies periodically.
+                
+                <h2 className="mt-5 mb-3" data-aos="fade-down" style={{color: '#primary'}}>
+                  6. Special Provision for Private Vehicle (White Plate) Discovery
+                </h2>
+                <p data-aos="fade-down" style={{fontWeight: 'bold', fontStyle: 'italic'}}>
+                  Spintrip offers a "Shared Discovery Marketplace" mode specifically for private vehicle owners. By listing a private vehicle (White Plate) on the Platform, you agree to the following additional terms:
                 </p>
+                <ul data-aos="fade-down">
+                  <li><strong>Marketplace Designation:</strong> You acknowledge that for private vehicles, Spintrip is strictly a <strong>Marketing & Discovery platform</strong> providing a "Peer-to-Peer Connection" service. Spintrip does NOT handle commercial rental bookings or payments for this segment.</li>
+                  <li><strong>Regulatory Risk:</strong> You are 100% liable for compliance with the Motor Vehicles Act regarding the usage of private vehicles. Spintrip does NOT encourage or facilitate illegal commercial hiring.</li>
+                  <li><strong>Fault Acknowledgment:</strong> In the event of vehicle impounding, seizure, or RTO fines, you assume full responsibility and indemnify Spintrip against all legal consequences. Spintrip's role is limited to the digital introduction of users.</li>
+                  <li><strong>Discovery Only:</strong> You agree not to represent Spintrip as a transport provider or rental agency to authorities or third parties.</li>
+                </ul>
 
                 <p className="mt-4" data-aos="fade-down">
                   By registering on the Platform and using Spintrip’s services, you agree to comply with these Dealer Policies and acknowledge that Spintrip acts only as a software service provider, providing you with tools and resources to enhance your rental business.

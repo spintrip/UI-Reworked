@@ -16,19 +16,9 @@ const FeePolicy = () => {
           <div className="row">
             <div className="col-lg-12">
               <div className="terms-policy">
-                <h1 className="text-black mb-5" style={{ fontSize: '32px', fontWeight: '700' }}>
-                  Spintrip Dealer Services Fee Policy
+                <h1 className="text-black mt-2 mb-5" style={{fontSize:'32px', fontWeight:'700'}} data-aos="fade-down">
+                  Spintrip Platform Fee & Cancellation Policy
                 </h1>
-  
-                <h2 className="mb-4">Introduction</h2>
-                <p>
-                  Spintrip Dealer Services is a subscription-based software platform enabling automotive rental
-                  dealers (“Dealers”) to manage their bookings and connect with customers (“Customers”). Spintrip
-                  provides a robust marketplace for Dealers to boost their business while maintaining complete
-                  financial independence over booking revenue. Spintrip does not charge a commission or retain any
-                  share of the booking amount; 100% of the payment received for rentals is transferred directly to the
-                  Dealer.
-                </p>
                 <p>This document outlines the subscription fees and policies applicable to Dealers for using Spintrip’s services.</p>
   
                 <hr />
