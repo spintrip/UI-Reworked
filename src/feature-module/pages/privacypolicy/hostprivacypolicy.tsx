@@ -103,12 +103,23 @@ const HostPrivacyPolicy: React.FC = () => {
                 </ul>
 
                 <h2 className="mt-5 mb-3" data-aos="fade-down">
-                  2. Compliance & Licenses
+                  2. Role-Based Compliance & Licenses
                 </h2>
+                <h3 className="my-2" data-aos="fade-down">
+                  2.1 Professional Cab Vendors (Yellow Plate)
+                </h3>
                 <ul data-aos="fade-down">
-                  <li><strong>The Dealer/Host must possess all required legal permits</strong>, including Commercial Permits, Fitness Certificates, and Rent-a-Cab Scheme licenses (as applicable).</li>
-                  <li><strong>Insurance:</strong> You must maintain comprehensive commercial insurance for every vehicle listed. Spintrip provides no insurance coverage.</li>
-                  <li><strong>Document Audits:</strong> Spintrip reserves the right to audit your documents at any time. Failure to provide valid documentation will result in immediate suspension.</li>
+                  <li><strong>Permits:</strong> You MUST possess valid Commercial Permits, Badges, and Fitness Certificates as required by the RTO.</li>
+                  <li><strong>Driver Checks:</strong> You are responsible for background verification of all drivers assigned to trips.</li>
+                  <li><strong>Vehicle Type:</strong> Strictly no private (White Plate) vehicles allowed in the Cab Discovery stream.</li>
+                </ul>
+                <h3 className="my-2" data-aos="fade-down">
+                  2.2 Self-Drive Hosts (P2P / Asset Sharing)
+                </h3>
+                <ul data-aos="fade-down">
+                  <li><strong>Safety First:</strong> You are responsible for ensuring the vehicle is mechanically sound and safe for user-operation.</li>
+                  <li><strong>Discovery Acknowledgment:</strong> You acknowledge that for Self-Drive, Spintrip is a <strong>Peer-to-Peer introducer</strong>. You assume 100% liability for operational misuse or registration disputes.</li>
+                  <li><strong>Permits:</strong> You acknowledge the difference between "Rent-a-Cab" licenses and "Peer-to-Peer Sharing" and accept all associated regulatory risks.</li>
                 </ul>
 
                 <h2 className="mt-5 mb-3" data-aos="fade-down">

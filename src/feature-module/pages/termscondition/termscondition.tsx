@@ -20,16 +20,22 @@ const TermsCondition: React.FC = () => {
               Spintrip: A Marketing & Discovery Platform Policies
             </h1>
             <h2 className="mt-5 mb-3" data-aos="fade-down">
-              1. Platform Identity & Role
+              1. Platform Discovery Streams
             </h2>
+            <h3 className="my-2" data-aos="fade-down">
+              1.1 Cab Discovery Service (Chauffeur-Driven)
+            </h3>
             <p data-aos="fade-down">
-              Welcome to Spintrip (the &ldquo;Platform&rdquo;), which includes <a href="https://www.spintrip.in">www.spintrip.in</a> (the &ldquo;Site&rdquo;) and the Spintrip mobile application (the &ldquo;App&rdquo;). The Platform is owned and operated by Spintrip Car Rentals Pvt Ltd (&ldquo;Spintrip&rdquo;, &ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;).
+              Spintrip acts as a <strong>Marketing Discovery Platform</strong> for independent professional transport vendors. We connect you with certified vendors who provide driver-accompanied commercial vehicles (Yellow Plates). Spintrip does not employ drivers or manage fleet operations.
+            </p>
+            <h3 className="my-2" data-aos="fade-down">
+              1.2 Self-Drive Discovery Service (Rental/Marketplace)
+            </h3>
+            <p data-aos="fade-down">
+              Spintrip provides a <strong>Software-as-a-Service (SaaS) Marketplace</strong> specifically for automotive rental dealers and Peer-to-Peer hosts. In this stream, Spintrip is strictly an introduction tool. All operational liability for vehicle roadworthiness and RTO registration (White/Yellow Plates) lies with the Host.
             </p>
             <p data-aos="fade-down" style={{fontWeight: 'bold'}}>
-              IMPORTANT LEGAL STATUS: Spintrip is an "Information Technology Intermediary" as defined under Section 2(1)(w) of the IT Act, 2000 and a "Software-as-a-Service (SaaS)" marketing discovery platform. We are NOT a transport provider, common carrier, or rental agency. We solely provide a digital marketplace for discovery and lead generation.
-            </p>
-            <p data-aos="fade-down">
-              Spintrip facilitates automotive rental dealers and fleet owners (&ldquo;Dealers/Hosts&rdquo;) in connecting with customers (&ldquo;Customers&rdquo;). Spintrip does not own, manage, lease, or control any vehicles listed on the Platform. All transport and rental services are provided by independent third-party Dealers/Hosts.
+              IMPORTANT LEGAL STATUS: Spintrip is an "Information Technology Intermediary" as defined under Section 2(1)(w) of the IT Act, 2000. We are NOT a transport provider, common carrier, or rental agency.
             </p>
 
             <h2 className="mt-5 mb-3" data-aos="fade-down">
